@@ -266,3 +266,8 @@ img {
   user-drag: none;
   pointer-events: auto;
 }
+
+/* Hide the reCAPTCHA badge (verification on Login/SignUp still runs) */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}

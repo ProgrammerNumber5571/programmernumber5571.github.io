@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useLanguage } from './LanguageContext.jsx';
 import { verifyRecaptcha } from '../lib/recaptcha.js';
+import { RecaptchaNotice } from './RecaptchaNotice.jsx';
 
 export function Login() {
   const { t } = useLanguage();
@@ -169,6 +170,8 @@ export function Login() {
             {t.signUpLink}
           </Link>
         </p>
+
+        <RecaptchaNotice />
       </div>
     </div>
   );

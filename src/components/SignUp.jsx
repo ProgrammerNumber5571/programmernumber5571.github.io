@@ -6,6 +6,7 @@ import { Button } from '../components/ui/Button';
 import { useLanguage } from './LanguageContext.jsx';
 import { defaultProfile, saveProfile } from './userProfileStore.js';
 import { verifyRecaptcha } from '../lib/recaptcha.js';
+import { RecaptchaNotice } from './RecaptchaNotice.jsx';
 
 export function Signup() {
   const { t } = useLanguage();
@@ -235,6 +236,8 @@ export function Signup() {
             {t.signInLink}
           </Link>
         </p>
+
+        <RecaptchaNotice />
       </div>
     </div>
   );
