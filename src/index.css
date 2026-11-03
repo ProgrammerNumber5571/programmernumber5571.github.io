@@ -235,26 +235,87 @@ html.custom-cursor * {
 }
 
 /* ---- Liquid Glass mode (toggle in Settings, on by default) -------------
-   Translucent, blurred surfaces in the spirit of iOS 26's Liquid Glass.
-   Cards pick it up automatically via .bg-card; overlaid panels (modal,
-   cart sidebar, dropdowns, sticky bars) opt in with .glass-panel. */
+   Real Liquid Glass rather than plain frosting. Glass surfaces are nav.fixed,
+   .glass-panel (modals, cart sidebar, dropdowns, sticky bars) and anything
+   opted in with .lg-lens. Three layers work together:
+   1. Refraction: src/lib/liquidGlass.js bakes a lens map per surface and bends
+      the page behind it via an SVG backdrop-filter. Only Chromium can run that
+      (html.lg-refract); Safari/Firefox fall back to a frosted blur.
+   2. Specular rim light: --lg-spec (generated highlight image) plus a sheen
+      that follows the pointer, both as background layers, so they work anywhere.
+   3. Adaptive tint: glass is tinted with --background, so light/dark just work.
+   Plain .bg-card cards get a CSS-only frosted + rim treatment; a lens per card
+   would be far too heavy for the album grids. */
+html.liquid-glass {
+  --lg-blur: 3px; /* kept small so the refraction stays visible */
+  --lg-frost: 22px; /* used where refraction is unavailable */
+  --lg-sat: 1.8;
+  --lg-bright: 1.08;
+  --lg-tint: 0.34;
+  --lg-rim: inset 0 0 0 0.5px rgb(255 255 255 / 0.16), inset 1px 1px 0 rgb(255 255 255 / 0.22),
+    inset -1px -1px 0 rgb(255 255 255 / 0.08), inset 0 0 22px rgb(255 255 255 / 0.04);
+  --lg-drop: 0 12px 40px -10px rgb(0 0 0 / 0.5);
+  --lg-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+
+html.liquid-glass.light {
+  --lg-tint: 0.5;
+  --lg-bright: 1.04;
+  --lg-rim: inset 0 0 0 0.5px rgb(255 255 255 / 0.7), inset 1px 1px 0 rgb(255 255 255 / 0.9),
+    inset -1px -1px 0 rgb(0 0 0 / 0.05), inset 0 0 22px rgb(255 255 255 / 0.25);
+  --lg-drop: 0 12px 36px -10px rgb(0 0 0 / 0.22);
+}
+
 html.liquid-glass .bg-card {
   background-color: hsl(var(--card) / 0.55);
   border-color: hsl(var(--border) / 0.6);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
   backdrop-filter: blur(18px) saturate(1.6);
+  box-shadow: var(--lg-shadow), var(--lg-rim);
 }
 
-html.liquid-glass nav.fixed {
-  background-color: hsl(var(--background) / 0.5);
-  -webkit-backdrop-filter: blur(24px) saturate(1.8);
-  backdrop-filter: blur(24px) saturate(1.8);
+html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens) {
+  background-color: hsl(var(--background) / var(--lg-tint));
+  background-image: radial-gradient(
+      240px circle at var(--lg-mx, 18%) var(--lg-my, -30%),
+      rgb(255 255 255 / 0.1),
+      transparent 70%
+    ),
+    var(--lg-spec, none);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-backdrop-filter: blur(var(--lg-frost)) saturate(var(--lg-sat)) brightness(var(--lg-bright));
+  backdrop-filter: blur(var(--lg-frost)) saturate(var(--lg-sat)) brightness(var(--lg-bright));
+  box-shadow: var(--lg-shadow), var(--lg-rim), var(--lg-drop);
 }
 
-html.liquid-glass .glass-panel {
-  background-color: hsl(var(--background) / 0.62);
-  -webkit-backdrop-filter: blur(26px) saturate(1.7);
-  backdrop-filter: blur(26px) saturate(1.7);
+/* Chromium: bend the page behind the glass (the filter is set per element by liquidGlass.js) */
+html.liquid-glass.lg-refract :is(nav.fixed, .glass-panel, .lg-lens) {
+  -webkit-backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-blur)) saturate(var(--lg-sat))
+    brightness(var(--lg-bright));
+  backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-blur)) saturate(var(--lg-sat))
+    brightness(var(--lg-bright));
+}
+
+/* A surface inside another one (the nav's dropdowns) has no lens of its own and
+   can't see the page through its parent, so it must not inherit the parent's
+   lens or highlight, and is made more solid instead. */
+html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens) :is(.glass-panel, .lg-lens) {
+  --lg-spec: none;
+  --lg-filter: blur(0px);
+  --lg-mx: 18%;
+  --lg-my: -30%;
+  --lg-tint: 0.88;
+}
+
+@media (prefers-contrast: more), (prefers-reduced-transparency: reduce) {
+  html.liquid-glass {
+    --lg-tint: 0.94;
+  }
+  html.liquid-glass.lg-refract :is(nav.fixed, .glass-panel, .lg-lens) {
+    -webkit-backdrop-filter: blur(var(--lg-frost));
+    backdrop-filter: blur(var(--lg-frost));
+  }
 }
 
 /* Disable image dragging */
