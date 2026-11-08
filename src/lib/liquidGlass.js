@@ -58,7 +58,7 @@ function toURL(imageData) {
   return canvas.toDataURL('image/png');
 }
 
-function buildMaps(w, h, radius, bezel, strength, dpr) {
+function buildMaps(w, h, radius, bezel, strength, dpr, gain) {
   const scale = Math.min(Math.min(dpr, 2), Math.sqrt(MAX_PIXELS / (w * h)));
   const iw = Math.max(1, Math.round(w * scale));
   const ih = Math.max(1, Math.round(h * scale));
@@ -126,7 +126,7 @@ function buildMaps(w, h, radius, bezel, strength, dpr) {
       const back = facing < 0 ? Math.pow(-facing, 0.8) : 0;
       const weight = Math.min(1, 0.2 + 0.8 * lit + 0.55 * back);
       const rim = 0.9 * Math.exp(-(d * d) / 1.7) + 0.26 * Math.exp(-d / (0.3 * bezel + 1));
-      sd[o + 3] = Math.min(255, rim * weight * 255);
+      sd[o + 3] = Math.min(255, rim * weight * gain * 255);
     }
   }
 
@@ -228,10 +228,11 @@ export function initLiquidGlass() {
     const radius = cornerRadius(getComputedStyle(el), w, h);
     const bezel = clamp(num(el.dataset.lgBezel, Math.min(w, h) * 0.24), 8, 26);
     const strength = num(el.dataset.lgStrength, bezel * 1.5);
-    const key = [w, h, radius.toFixed(1), bezel.toFixed(1), strength.toFixed(1), dpr].join('|');
+    const gain = el.classList.contains('lg-btn') ? 0.4 : 1; // buttons get a subtler rim
+    const key = [w, h, radius.toFixed(1), bezel.toFixed(1), strength.toFixed(1), dpr, gain].join('|');
     if (key === entry.key) return;
 
-    const maps = getMaps(key, () => buildMaps(w, h, radius, bezel, strength, dpr));
+    const maps = getMaps(key, () => buildMaps(w, h, radius, bezel, strength, dpr, gain));
     let filter = null;
     if (!entry.specOnly) {
       const id = `lg-${++counter}`;

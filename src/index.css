@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap');
+/* Fonts (Playfair Display, Inter, Figtree) load from <link> tags in index.html:
+   @import here would make the browser fetch the CSS first and only then discover them. */
 
 @tailwind base;
 @tailwind components;
@@ -289,12 +288,42 @@ html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens) {
   box-shadow: var(--lg-shadow), var(--lg-rim), var(--lg-drop);
 }
 
+/* The nav spans the whole viewport, so rim light along its edges just reads as a
+   stray white line: keep the soft pointer sheen and drop the edge highlights. */
+html.liquid-glass nav.fixed {
+  background-image: radial-gradient(
+    240px circle at var(--lg-mx, 18%) var(--lg-my, -30%),
+    rgb(255 255 255 / 0.1),
+    transparent 70%
+  );
+  box-shadow: var(--lg-shadow), var(--lg-drop);
+}
+
 /* Chromium: bend the page behind the glass (the filter is set per element by liquidGlass.js) */
 html.liquid-glass.lg-refract :is(nav.fixed, .glass-panel, .lg-lens) {
   -webkit-backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-blur)) saturate(var(--lg-sat))
     brightness(var(--lg-bright));
   backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-blur)) saturate(var(--lg-sat))
     brightness(var(--lg-bright));
+}
+
+/* Panels hold text and forms, so they get a denser tint and a softer backdrop than
+   the nav: the page behind still tints the glass, but can't compete with the content. */
+html.liquid-glass .glass-panel.glass-panel {
+  --lg-tint: 0.78;
+  --lg-blur: 14px;
+  /* no outline: no rim light, no edge highlight image, no border line */
+  border-color: transparent;
+  background-image: radial-gradient(
+    240px circle at var(--lg-mx, 18%) var(--lg-my, -30%),
+    rgb(255 255 255 / 0.06),
+    transparent 70%
+  );
+  box-shadow: var(--lg-shadow), var(--lg-drop);
+}
+
+html.liquid-glass.light .glass-panel {
+  --lg-tint: 0.8;
 }
 
 /* A surface inside another one (the nav's dropdowns) has no lens of its own and
@@ -318,19 +347,18 @@ html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens) :is(.glass-panel, .lg-l
 html.liquid-glass {
   --lg-btn-frost: 10px; /* used where refraction is unavailable */
   --lg-btn-blur: 2px;
-  --lg-btn-clear: rgb(255 255 255 / 0.1);
-  --lg-btn-clear-hover: rgb(255 255 255 / 0.18);
-  --lg-btn-rim: inset 0 0 0 0.5px rgb(255 255 255 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.4),
-    inset 0 -1px 0 rgb(255 255 255 / 0.1), inset 0 0 14px rgb(255 255 255 / 0.08);
-  --lg-btn-drop: 0 4px 14px -4px rgb(0 0 0 / 0.45);
+  /* flat dark glass with a hairline rim: the page shows through, no gloss or glow */
+  --lg-btn-clear: rgb(0 0 0 / 0.28);
+  --lg-btn-clear-hover: rgb(55 55 55 / 0.36);
+  --lg-btn-rim: inset 0 0 0 1px rgb(255 255 255 / 0.13), inset 0 1px 0 rgb(255 255 255 / 0.08);
+  --lg-btn-drop: 0 1px 2px rgb(0 0 0 / 0.14);
 }
 
 html.liquid-glass.light {
-  --lg-btn-clear: hsl(var(--foreground) / 0.07);
-  --lg-btn-clear-hover: hsl(var(--foreground) / 0.13);
-  --lg-btn-rim: inset 0 0 0 0.5px rgb(255 255 255 / 0.8), inset 0 1px 0 rgb(255 255 255 / 0.95),
-    inset 0 -1px 0 rgb(0 0 0 / 0.06), inset 0 0 14px rgb(255 255 255 / 0.3);
-  --lg-btn-drop: 0 4px 14px -4px rgb(0 0 0 / 0.2);
+  --lg-btn-clear: hsl(var(--background) / 0.45);
+  --lg-btn-clear-hover: hsl(var(--background) / 0.68);
+  --lg-btn-rim: inset 0 0 0 1px rgb(0 0 0 / 0.08), inset 0 1px 0 rgb(255 255 255 / 0.7);
+  --lg-btn-drop: 0 1px 3px rgb(0 0 0 / 0.12);
 }
 
 html.liquid-glass .lg-btn {
@@ -340,12 +368,12 @@ html.liquid-glass .lg-btn {
   border-color: transparent;
   background-color: var(--lg-btn-tint);
   background-image: var(--lg-btn-gloss),
-    radial-gradient(70px circle at var(--lg-mx, 50%) var(--lg-my, -60%), rgb(255 255 255 / 0.24), transparent 70%),
+    radial-gradient(70px circle at var(--lg-mx, 50%) var(--lg-my, -60%), rgb(255 255 255 / 0.1), transparent 70%),
     var(--lg-spec, none);
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  -webkit-backdrop-filter: blur(var(--lg-btn-frost)) saturate(1.8) brightness(1.1);
-  backdrop-filter: blur(var(--lg-btn-frost)) saturate(1.8) brightness(1.1);
+  -webkit-backdrop-filter: blur(var(--lg-btn-frost)) saturate(1.6);
+  backdrop-filter: blur(var(--lg-btn-frost)) saturate(1.6);
   box-shadow: var(--lg-shadow), var(--lg-btn-rim), var(--lg-btn-drop);
   -webkit-tap-highlight-color: transparent;
   /* release: springs back past 1 and settles */
@@ -354,24 +382,19 @@ html.liquid-glass .lg-btn {
 }
 
 html.liquid-glass.lg-refract .lg-btn {
-  -webkit-backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-btn-blur)) saturate(1.8) brightness(1.1);
-  backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-btn-blur)) saturate(1.8) brightness(1.1);
+  -webkit-backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-btn-blur)) saturate(1.6);
+  backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-btn-blur)) saturate(1.6);
 }
 
+/* Primary/destructive are the same flat glass, just tinted with the accent. */
 html.liquid-glass .lg-btn-prominent {
-  --lg-btn-tint: hsl(var(--primary) / 0.74);
-  --lg-btn-gloss: linear-gradient(180deg, rgb(255 255 255 / 0.32), rgb(255 255 255 / 0) 58%);
-  --lg-btn-drop: 0 8px 20px -8px hsl(var(--primary) / 0.75);
+  --lg-btn-tint: hsl(var(--primary) / 0.5);
   color: #fff;
-  text-shadow: 0 1px 1px rgb(0 0 0 / 0.2);
 }
 
 html.liquid-glass .lg-btn-danger {
-  --lg-btn-tint: hsl(var(--destructive) / 0.74);
-  --lg-btn-gloss: linear-gradient(180deg, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0) 58%);
-  --lg-btn-drop: 0 8px 20px -8px hsl(var(--destructive) / 0.7);
+  --lg-btn-tint: hsl(var(--destructive) / 0.5);
   color: #fff;
-  text-shadow: 0 1px 1px rgb(0 0 0 / 0.2);
 }
 
 /* Ghost: just content until it is hovered, focused or pressed. */
@@ -389,10 +412,10 @@ html.liquid-glass .lg-btn.lg-btn-ghost:not(:hover):not(:focus-visible):not(:acti
     --lg-btn-tint: var(--lg-btn-clear-hover);
   }
   html.liquid-glass .lg-btn-prominent:hover {
-    --lg-btn-tint: hsl(var(--primary) / 0.86);
+    --lg-btn-tint: hsl(var(--primary) / 0.62);
   }
   html.liquid-glass .lg-btn-danger:hover {
-    --lg-btn-tint: hsl(var(--destructive) / 0.86);
+    --lg-btn-tint: hsl(var(--destructive) / 0.62);
   }
 }
 
@@ -404,11 +427,11 @@ html.liquid-glass .lg-btn:active:not(:disabled) {
 }
 
 html.liquid-glass .lg-btn-prominent:active:not(:disabled) {
-  --lg-btn-tint: hsl(var(--primary) / 0.94);
+  --lg-btn-tint: hsl(var(--primary) / 0.72);
 }
 
 html.liquid-glass .lg-btn-danger:active:not(:disabled) {
-  --lg-btn-tint: hsl(var(--destructive) / 0.94);
+  --lg-btn-tint: hsl(var(--destructive) / 0.72);
 }
 
 /* A button inside other glass shouldn't inherit the parent's highlight/lens;
@@ -446,6 +469,109 @@ html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens, .lg-btn) .lg-btn {
   }
   html.liquid-glass .lg-btn-danger {
     --lg-btn-tint: hsl(var(--destructive));
+  }
+}
+
+/* ---- Favorite (heart) button animation ------------------------------------
+   Favoriting: the button bumps, the heart squashes then pops past full size and
+   settles, a ring expands and eight sparks fly out. Unfavoriting: a quick shrink.
+   The fill fades in and out, and hovering makes the heart lean in. */
+.fav-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fav-heart {
+  transition: scale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), fill-opacity 0.25s ease;
+}
+
+.fav-btn:hover .fav-heart {
+  scale: 1.14;
+}
+
+.fav-btn.fav-on {
+  animation: fav-bump 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fav-btn.fav-on .fav-heart {
+  animation: fav-pop 0.65s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.fav-btn.fav-off .fav-heart {
+  animation: fav-drop 0.35s ease-out;
+}
+
+.fav-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fav-ring {
+  position: absolute;
+  inset: -45%;
+  border-radius: 9999px;
+  border: 2px solid hsl(var(--primary));
+  opacity: 0;
+  animation: fav-ring 0.6s ease-out;
+}
+
+.fav-spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  opacity: 0;
+  animation: fav-spark 0.65s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+.fav-spark:nth-child(even) {
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  background: #fff;
+  animation-delay: 0.04s;
+}
+
+@keyframes fav-bump {
+  0% { scale: 1; }
+  25% { scale: 0.88; }
+  60% { scale: 1.14; }
+  100% { scale: 1; }
+}
+@keyframes fav-pop {
+  0% { transform: scale(1); }
+  20% { transform: scale(0.55); }
+  55% { transform: scale(1.5) rotate(-10deg); }
+  78% { transform: scale(0.92) rotate(5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes fav-drop {
+  0% { transform: scale(1); }
+  45% { transform: scale(0.7); }
+  100% { transform: scale(1); }
+}
+@keyframes fav-ring {
+  0% { transform: scale(0.3); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes fav-spark {
+  0% { transform: rotate(var(--a)) translateY(-6px) scale(0.6); opacity: 1; }
+  100% { transform: rotate(var(--a)) translateY(-30px) scale(0); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fav-btn.fav-on,
+  .fav-btn.fav-on .fav-heart,
+  .fav-btn.fav-off .fav-heart,
+  .fav-burst {
+    animation: none;
+  }
+  .fav-btn:hover .fav-heart {
+    scale: none;
   }
 }
 

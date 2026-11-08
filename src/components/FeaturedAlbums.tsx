@@ -181,7 +181,7 @@ export const FeaturedAlbums = () => {
                   {album.image && (
                     <div className="absolute inset-0 flex items-center justify-start pl-4">
                       <div className="w-40 h-40 rounded-lg overflow-hidden shadow-xl">
-                        <img
+                        <img loading="lazy" decoding="async"
                           src={Array.isArray(album.image) ? album.image[0] : album.image}
                           alt={`${album.title} cover`}
                           className="w-full h-full object-cover"

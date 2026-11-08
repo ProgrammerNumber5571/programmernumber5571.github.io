@@ -192,7 +192,7 @@ const ArtistPage = () => {
             <div className="flex items-center gap-6 p-4 rounded-lg hover:bg-muted/50 transition-all">
               <div className="relative w-40 h-40 flex-shrink-0">
                 {latestAlbum.image ? (
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={Array.isArray(latestAlbum.image) ? latestAlbum.image[0] : latestAlbum.image}
                     alt={latestAlbum.title}
                     className="w-full h-full object-cover rounded-lg shadow-2xl"
@@ -266,7 +266,7 @@ const ArtistPage = () => {
                 {album.image ? (
                   <div className="absolute inset-0 flex items-center justify-start pl-2">
                     <div className="w-40 h-40 rounded-lg overflow-hidden shadow-xl">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src={Array.isArray(album.image) ? album.image[0] : album.image}
                         alt={`${album.title} cover`}
                         className="w-full h-full object-cover"

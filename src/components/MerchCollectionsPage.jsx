@@ -183,7 +183,7 @@ export const MerchCollectionsPage = () => {
                   >
                     {collection.banner || collection.image ? (
                       <div className="absolute inset-0 bg-black">
-                        <img
+                        <img loading="lazy" decoding="async"
                           src={collection.banner || collection.image}
                           alt={collection.artist}
                           className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
@@ -227,7 +227,7 @@ export const MerchCollectionsPage = () => {
                       >
                         <div className="aspect-square rounded-lg overflow-hidden mb-3 bg-black">
                           {item.image ? (
-                            <img
+                            <img loading="lazy" decoding="async"
                               src={item.image}
                               alt={item.title}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

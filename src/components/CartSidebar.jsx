@@ -56,7 +56,7 @@ export function CartSidebar({ isOpen, onClose }) {
               {cart.lines.edges.map(({ node: item }) => (
                 <div key={item.id} className="flex gap-4 p-4 bg-card rounded-lg border border-border">
                   {/* Product Image */}
-                  <img 
+                  <img loading="lazy" decoding="async" 
                     src={item.merchandise.image?.url || '/placeholder.png'} 
                     alt={item.merchandise.product.title}
                     className="w-20 h-20 object-cover rounded"

@@ -378,7 +378,7 @@ const AlbumPage = () => {
                     onClick={() => { setSelectedImage(index); setImageError(false); }}
                     className={`flex-shrink-0 w-28 h-28 rounded-lg overflow-hidden border-3 transition-all ${selectedImage === index ? "border-primary shadow-xl scale-105 ring-2 ring-primary/50" : "border-border hover:border-primary/50"}`}
                   >
-                    <img src={img.url} alt={`${img.type} ${index + 1}`} className="w-full h-full object-contain" />
+                    <img loading="lazy" decoding="async" src={img.url} alt={`${img.type} ${index + 1}`} className="w-full h-full object-contain" />
                   </button>
                 ))}
               </div>
@@ -392,7 +392,7 @@ const AlbumPage = () => {
                 <span className="bg-gray-400 text-black border px-2 py-1 rounded text-xs font-bold self-center select-none">E</span>
               )}
             </div>
-            <div className="flex items-center gap-2 text-2xl hover:text-primary hover:underline transition-colors">
+            <div className="flex items-center gap-2 text-2xl">
               {artistList.map((artist, idx) => {
                 const slug = String(artist).toLowerCase().replace(/,/g, '').replace(/\$/g, '').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                 return (
@@ -400,7 +400,7 @@ const AlbumPage = () => {
                     {artist === "Various Artists" ? (
                       <span className="cursor-default select-none">{artist}</span>
                     ) : (
-                      <Link to={`/artist/${slug}`} className="hover:text-primary transition-colors">{artist}</Link>
+                      <Link to={`/artist/${slug}`} className="hover:text-primary hover:underline transition-colors">{artist}</Link>
                     )}
                     {idx < artistList.length - 1 && <span className="mx-2">&</span>}
                   </span>
@@ -479,7 +479,7 @@ const AlbumPage = () => {
                           }}
                           className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${selectedVariant === variant.id ? "border-primary ring-2 ring-primary/50" : "border-border hover:border-primary/50"}`}
                         >
-                          <img src={variant.image} alt={variant.name} className="w-full h-full object-cover" />
+                          <img loading="lazy" decoding="async" src={variant.image} alt={variant.name} className="w-full h-full object-cover" />
                           <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-1 text-center">
                             <p className="text-xs text-white font-medium truncate">{variant.name}</p>
                           </div>
@@ -822,7 +822,7 @@ const AlbumPage = () => {
                       className="group"
                     >
                       <div className="relative aspect-square rounded-lg overflow-hidden mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
-                        <img
+                        <img loading="lazy" decoding="async"
                           src={Array.isArray(recommendedAlbum.image)
                             ? recommendedAlbum.image[0]
                             : recommendedAlbum.image

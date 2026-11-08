@@ -54,7 +54,7 @@ export const CartPage = () => {
                   key={item.id}
                   className="flex gap-5 p-5 bg-card rounded-xl border border-border hover:border-primary/40 transition-colors"
                 >
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={item.merchandise.image?.url || '/placeholder.png'}
                     alt={item.merchandise.product.title}
                     className="w-24 h-24 sm:w-28 sm:h-28 object-cover rounded-lg bg-muted flex-shrink-0"

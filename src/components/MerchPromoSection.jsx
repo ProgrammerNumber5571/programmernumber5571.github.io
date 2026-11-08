@@ -39,7 +39,7 @@ export function MerchPromoSection() {
                 <div className="relative z-10 text-center">
                   <div className="mb-4 flex justify-center">
                     <div className="w-48 h-48 rounded-lg overflow-hidden shadow-2xl transform group-hover:scale-105 transition-transform">
-                      <img
+                      <img loading="lazy" decoding="async"
                         src={featuredMerch[0].image}
                         alt={featuredMerch[0].title}
                         className="w-full h-full object-cover"
@@ -69,7 +69,7 @@ export function MerchPromoSection() {
                 className="group flex items-center gap-4 p-4 rounded-lg bg-card border border-border hover:border-primary hover:shadow-lg transition-all"
               >
                 <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform"

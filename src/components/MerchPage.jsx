@@ -267,7 +267,7 @@ export const MerchPage = () => {
                 >
                   <div className="aspect-square bg-card rounded-lg overflow-hidden border border-border mb-3 group-hover:shadow-lg transition-shadow">
                     {relatedItem.image ? (
-                      <img
+                      <img loading="lazy" decoding="async"
                         src={relatedItem.image}
                         alt={relatedItem.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

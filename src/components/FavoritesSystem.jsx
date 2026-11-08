@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../Firebase/Firebase.js';
 import { useAuth } from '../contexts/authContext';
@@ -119,19 +119,29 @@ export const FavoritesProvider = ({ children }) => {
 
 export const FavoriteButton = ({ albumId, size = "default", className = "" }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
-  const [isAnimating, setIsAnimating] = useState(false);
+  // 'on' / 'off' plays the matching animation; burst restarts the sparks on each favorite
+  const [motion, setMotion] = useState(null);
+  const [burst, setBurst] = useState(0);
+  const resetTimer = useRef(0);
+
+  useEffect(() => () => clearTimeout(resetTimer.current), []);
+
+  const favorited = isFavorite(albumId);
 
   const handleClick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    setIsAnimating(true);
-    await toggleFavorite(albumId);
-    
-    setTimeout(() => setIsAnimating(false), 300);
-  };
 
-  const favorited = isFavorite(albumId);
+    clearTimeout(resetTimer.current);
+    if (favorited) {
+      setMotion('off');
+    } else {
+      setMotion('on');
+      setBurst((n) => n + 1);
+    }
+    resetTimer.current = setTimeout(() => setMotion(null), 800);
+    await toggleFavorite(albumId);
+  };
   
   const sizeClasses = {
     small: "w-8 h-8",
@@ -151,26 +161,38 @@ export const FavoriteButton = ({ albumId, size = "default", className = "" }) =>
     <button
       type="button"
       onClick={handleClick}
-      className={`${sizeClasses[size]} rounded-full flex items-center justify-center transition-all ${
-        favorited 
-          ? 'bg-blue-500 hover:bg-blue-600 text-white' 
+      className={`fav-btn lg-btn ${favorited ? 'lg-btn-prominent' : 'lg-btn-clear'} ${sizeClasses[size]} rounded-full flex items-center justify-center transition-colors ${
+        favorited
+          ? 'bg-blue-500 hover:bg-blue-600 text-white'
           : 'bg-card hover:bg-secondary border border-border text-foreground'
-      } ${isAnimating ? 'scale-125' : 'scale-100'} ${className}`}
+      } ${motion ? `fav-${motion}` : ''} ${className}`}
       aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
+      aria-pressed={favorited}
     >
-      <svg
-        className={`${iconSizes[size]} transition-all ${isAnimating ? 'scale-110' : 'scale-100'}`}
-        fill={favorited ? "currentColor" : "none"}
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
-        />
-      </svg>
+      <span className="fav-stage">
+        {motion === 'on' && (
+          <span key={burst} className="fav-burst" aria-hidden="true">
+            <span className="fav-ring" />
+            {Array.from({ length: 8 }, (_, i) => (
+              <span key={i} className="fav-spark" style={{ '--a': `${i * 45}deg` }} />
+            ))}
+          </span>
+        )}
+        <svg
+          className={`fav-heart ${iconSizes[size]}`}
+          fill="currentColor"
+          fillOpacity={favorited ? 1 : 0}
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
+          />
+        </svg>
+      </span>
     </button>
   );
 };

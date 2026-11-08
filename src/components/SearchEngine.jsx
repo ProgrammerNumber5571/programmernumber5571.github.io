@@ -91,7 +91,7 @@ export function SearchEngine({ albums }) {
                 className="w-full flex items-center gap-3 p-3 hover:bg-muted transition-colors text-left"
               >
                 {albumImage && (
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={albumImage}
                     alt={album.title}
                     className="w-12 h-12 rounded object-cover flex-shrink-0"
@@ -119,7 +119,7 @@ export function SearchEngine({ albums }) {
                   className="w-full flex items-center gap-3 p-3 hover:bg-muted transition-colors text-left"
                 >
                   {item.image && (
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={item.image}
                       alt={item.title}
                       className="w-12 h-12 rounded object-cover flex-shrink-0"
