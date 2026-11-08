@@ -74,11 +74,33 @@ export function PromoBanner() {
     setCurrentSlide((prev) => (prev - 1 + promos.length) % promos.length);
   };
 
+  // Touch: swipe left/right to change slide (only clearly horizontal swipes count,
+  // so vertical page scrolling over the banner still works)
+  const touchStart = useRef(null);
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const handleTouchEnd = (e) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - start.x;
+    const dy = touch.clientY - start.y;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (dx < 0) nextSlide();
+      else prevSlide();
+    }
+  };
+
   return (
     <div
       className="relative w-full h-[380px] sm:h-[540px] md:h-[720px] lg:h-[850px] overflow-hidden group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       <div 
         className="flex transition-transform duration-700 ease-out h-full"
@@ -127,7 +149,7 @@ export function PromoBanner() {
           e.preventDefault();
           prevSlide();
         }}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20"
+        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 [@media(hover:none)]:hidden transition-opacity z-20"
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
@@ -137,7 +159,7 @@ export function PromoBanner() {
           e.preventDefault();
           nextSlide();
         }}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20"
+        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 [@media(hover:none)]:hidden transition-opacity z-20"
       >
         <ChevronRight className="w-6 h-6" />
       </button>
@@ -147,7 +169,9 @@ export function PromoBanner() {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all ${
+            aria-label={`${index + 1} / ${promos.length}`}
+            aria-current={index === currentSlide}
+            className={`relative before:absolute before:-inset-x-1.5 before:-inset-y-4 before:content-[''] w-2 h-2 rounded-full transition-all ${
               index === currentSlide 
                 ? 'bg-white w-8' 
                 : 'bg-white/50 hover:bg-white/75'

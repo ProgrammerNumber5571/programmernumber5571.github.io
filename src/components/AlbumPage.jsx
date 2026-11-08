@@ -387,7 +387,7 @@ const AlbumPage = () => {
 
           <div className="mb-10 space-y-4">
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-5xl font-spotify font-black tracking-tight">{album.title}</h1>
+              <h1 className="text-3xl sm:text-5xl font-spotify font-black tracking-tight break-words min-w-0">{album.title}</h1>
               {album.isExplicit && (
                 <span className="bg-gray-400 text-black border px-2 py-1 rounded text-xs font-bold self-center select-none">E</span>
               )}
@@ -794,16 +794,19 @@ const AlbumPage = () => {
           </div>
 
           {/* Mobile: price + add-to-cart stay visible while scrolling */}
-          <div className="glass-panel md:hidden fixed bottom-0 inset-x-0 z-40 bg-background/95 backdrop-blur border-t border-border px-4 py-3 flex items-center justify-between gap-4">
-            <p className="text-xl font-serif font-bold">{(album.price * quantity).toFixed(2)} ₼</p>
-            <Button
-              onClick={handleAddToCart}
-              disabled={cartLoading}
-              className="font-bold px-6 bg-primary text-primary-foreground"
-            >
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              {cartLoading ? t.adding : t.addToCart}
-            </Button>
+          <div className="glass-panel md:hidden fixed bottom-0 inset-x-0 z-40 bg-background/95 backdrop-blur border-t border-border px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
+            <p className="text-xl font-serif font-bold shrink-0">{(album.price * quantity).toFixed(2)} ₼</p>
+            <div className="flex items-center gap-3 min-w-0">
+              <FavoriteButton albumId={album.id} size="medium" className="shrink-0" />
+              <Button
+                onClick={handleAddToCart}
+                disabled={cartLoading}
+                className="font-bold px-5 bg-primary text-primary-foreground min-w-0"
+              >
+                <ShoppingCart className="mr-2 h-4 w-4 shrink-0" />
+                <span className="truncate">{cartLoading ? t.adding : t.addToCart}</span>
+              </Button>
+            </div>
           </div>
 
           <div className="mt-16 pt-8 border-t border-border">

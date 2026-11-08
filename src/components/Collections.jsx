@@ -84,13 +84,13 @@ export const Collections = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-6 py-12">
-        <Link to="/" className="text-primary hover:underline mb-4 inline-block">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <Link to="/" className="text-primary hover:underline mb-4 inline-flex items-center min-h-11">
           ← {t.back}
         </Link>
 
-        <div className="mb-12">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4">
+        <div className="mb-8 sm:mb-12">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold mb-4">
             {t.allCollection}
           </h1>
           <p className="text-muted-foreground text-lg">
@@ -99,16 +99,16 @@ export const Collections = () => {
         </div>
 
         {/* Filter + Sort Controls */}
-        <div className="mb-8 flex flex-wrap gap-6 items-center">
+        <div className="mb-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:gap-6 sm:items-center [&>div]:min-w-0">
           {/* Genre Filter */}
           <div>
-            <label className="text-muted-foreground font-medium mr-2">
+            <label className="block mb-1 text-sm sm:inline sm:mb-0 sm:text-base text-muted-foreground font-medium sm:mr-2">
               {t.filterByGenre}
             </label>
             <select
               value={genreFilter}
               onChange={(e) => setGenreFilter(e.target.value)}
-              className="border border-border rounded px-3 py-2 bg-card text-foreground"
+              className="w-full sm:w-auto h-11 sm:h-auto border border-border rounded px-3 py-2 bg-card text-foreground"
             >
               <option value="All">{t.all}</option>
               {[...new Set(albums.map((album) => album.genre))].map((genre) => (
@@ -121,13 +121,13 @@ export const Collections = () => {
 
           {/* Year Filter */}
           <div>
-            <label className="text-muted-foreground font-medium mr-2">
+            <label className="block mb-1 text-sm sm:inline sm:mb-0 sm:text-base text-muted-foreground font-medium sm:mr-2">
               {t.filterByYear}
             </label>
             <select
               value={yearFilter}
               onChange={(e) => setYearFilter(e.target.value)}
-              className="border border-border rounded px-3 py-2 bg-card text-foreground"
+              className="w-full sm:w-auto h-11 sm:h-auto border border-border rounded px-3 py-2 bg-card text-foreground"
             >
               <option value="All">{t.all}</option>
               {[...new Set(albums.map((album) => album.year))].map((year) => (
@@ -140,13 +140,13 @@ export const Collections = () => {
 
           {/* Artist Filter */}
           <div>
-            <label className="text-muted-foreground font-medium mr-2">
+            <label className="block mb-1 text-sm sm:inline sm:mb-0 sm:text-base text-muted-foreground font-medium sm:mr-2">
               {t.filterByArtist}
             </label>
             <select
               value={artistFilter}
               onChange={(e) => setArtistFilter(e.target.value)}
-              className="border border-border rounded px-3 py-2 bg-card text-foreground"
+              className="w-full sm:w-auto h-11 sm:h-auto border border-border rounded px-3 py-2 bg-card text-foreground"
             >
               <option value="All">{t.all}</option>
               {[...new Set(albums.map((album) => album.artist))].map((artist) => (
@@ -158,13 +158,13 @@ export const Collections = () => {
           </div>
 
           <div>
-            <label className="text-muted-foreground font-medium mr-2">
+            <label className="block mb-1 text-sm sm:inline sm:mb-0 sm:text-base text-muted-foreground font-medium sm:mr-2">
               {t.sortByPrice}
             </label>
             <select
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
-              className="border border-border rounded px-3 py-2 bg-card text-foreground"
+              className="w-full sm:w-auto h-11 sm:h-auto border border-border rounded px-3 py-2 bg-card text-foreground"
             >
               <option value="none">{t.sortNone}</option>
               <option value="cheap">{t.sortCheap}</option>
@@ -174,14 +174,14 @@ export const Collections = () => {
         </div>
 
         {/* Albums Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-8">
           {filteredAlbums.map((album) => {
             const accentColors = getAccentColors(album.accentColor);
             return (
               <Link
                 to={`/album/${album.id}`}
                 key={album.id}
-                className={`group relative bg-card rounded-xl p-6 border transition-all duration-300 cursor-pointer ${accentColors.border} hover:shadow-lg`}
+                className={`group relative bg-card rounded-xl p-4 sm:p-6 border transition-all duration-300 cursor-pointer ${accentColors.border} hover:shadow-lg`}
                 onMouseEnter={() => setHoveredId(album.id)}
                 onMouseLeave={() => setHoveredId(null)}
               >

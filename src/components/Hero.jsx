@@ -34,13 +34,14 @@ export const Hero = () => {
       <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+        {/* minmax(0, 1fr): without it the single mobile column grows to the widest child (the vinyl art) and pushes the text off-screen */}
+        <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-8 min-w-0">
             <div className="space-y-4">
               <p className="text-primary font-medium tracking-widest text-sm uppercase animate-fade-in">
                 {t.heroTag}
               </p>
-              <h1 className="text-5xl md:text-7xl font-serif font-bold leading-tight animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold leading-tight animate-fade-in" style={{ animationDelay: "0.1s" }}>
                 {t.heroNew} <br />KEN CARSON -
                 <span className="text-gradient block">XPERIMENT</span>
               </h1>
@@ -62,7 +63,7 @@ export const Hero = () => {
               </Button>
             </div>
 
-            <div className="flex gap-12 pt-8 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+            <div className="flex gap-8 sm:gap-12 pt-8 animate-fade-in" style={{ animationDelay: "0.4s" }}>
               <div>
                 <p className="text-3xl font-serif font-bold text-gradient">100+</p>
                 <p className="text-sm text-muted-foreground">{t.statVinyl}</p>

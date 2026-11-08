@@ -51,14 +51,14 @@ export const Nav = ({ albums }) => {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+            <a href="/" className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <div className="w-10 h-10 shrink-0 rounded-full bg-primary flex items-center justify-center">
                 <div className="w-3 h-3 rounded-full bg-background" />
               </div>
-              <span className="font-serif text-2xl font-bold tracking-tight">Backrooms</span>
+              <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight truncate">Backrooms</span>
             </a>
 
             <div className="hidden md:flex items-center gap-8">
@@ -74,7 +74,7 @@ export const Nav = ({ albums }) => {
             </div>
 
             {/* Action buttons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 sm:gap-4 shrink-0">
               {/* Search toggle */}
               <Button
                 variant="ghost"
@@ -103,8 +103,8 @@ export const Nav = ({ albums }) => {
                 )}
               </Button>
 
-              {/* Favorites */}
-              <Button variant="ghost" size="icon" className="text-foreground relative" asChild>
+              {/* Favorites (on phones this lives in the menu: the bar is too narrow for every icon) */}
+              <Button variant="ghost" size="icon" className="hidden md:inline-flex text-foreground relative" asChild>
                 <Link to="/favorites" aria-label={t.favoritesTitle}>
                   <Heart className="w-5 h-5" />
                   <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
@@ -118,7 +118,7 @@ export const Nav = ({ albums }) => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setSettingsOpen(true)}
-                className="text-foreground"
+                className="hidden md:inline-flex text-foreground"
                 aria-label={t.settings}
               >
                 <SettingsIcon className="w-5 h-5" />
@@ -133,6 +133,8 @@ export const Nav = ({ albums }) => {
                 size="icon"
                 className="md:hidden text-foreground"
                 onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? t.closeWindow : "Menu"}
+                aria-expanded={isOpen}
               >
                 {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </Button>
@@ -158,6 +160,26 @@ export const Nav = ({ albums }) => {
                   {link.name}
                 </button>
               ))}
+              <div className="mt-3 pt-3 border-t border-border">
+                <Link
+                  to="/favorites"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 w-full py-3 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Heart className="w-5 h-5" />
+                  <span className="flex-1">{t.favoritesTitle}</span>
+                  <span className="min-w-5 h-5 px-1.5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
+                    {favoritesCount}
+                  </span>
+                </Link>
+                <button
+                  onClick={() => { setIsOpen(false); setSettingsOpen(true); }}
+                  className="flex items-center gap-3 w-full py-3 text-left text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <SettingsIcon className="w-5 h-5" />
+                  {t.settings}
+                </button>
+              </div>
             </div>
           )}
         </div>
