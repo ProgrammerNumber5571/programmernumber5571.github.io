@@ -1,3 +1,5 @@
+import { optimizeMedia } from "../lib/cloudinary.js";
+
 const antagonistDaggerShirt = {
   front: "https://res.cloudinary.com/deroy68n9/image/upload/v1769007844/Antagonist-Tour-2.0-Dagger-T-Shi_q4fagc.png",
   additionalImages: ["https://res.cloudinary.com/deroy68n9/image/upload/v1769007842/Antagonist-Tour-2.0-Dagger-T-Shirt1_zvfoyr.png"],
@@ -199,7 +201,7 @@ const HL2WhiteFlamesHat = {
   front: "https://res.cloudinary.com/deroy68n9/image/upload/v1769013823/TRUCKER_white_1_jcfxfb.gif",
 };
 
-export const MerchCategories = [
+const rawMerchCategories = [
   {
     name: "ANTAGONIST 2.0",
     banner: "https://res.cloudinary.com/deroy68n9/image/upload/v1768919988/antagonist2.0_Logo_mbxh8k.png",
@@ -214,7 +216,9 @@ export const MerchCategories = [
   },
 ];
 
-export const Merch = [
+export const MerchCategories = optimizeMedia(rawMerchCategories);
+
+const rawMerch = [
   {
     id: 1,
     title: "ANTAGONIST 2.0 FUTBOLKA",
@@ -790,3 +794,5 @@ export const Merch = [
     description: "Daxili suya davamlı PU örtüklü 100% neylon.",
   },
 ];
+
+export const Merch = optimizeMedia(rawMerch);

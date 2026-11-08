@@ -1,4 +1,6 @@
-/* 
+import { optimizeMedia } from "../lib/cloudinary.js";
+
+/*
   TEMPLATES:
 
 
@@ -660,7 +662,26 @@ const MadeInParis = {
   vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1785483351/pierre-bourne-made-in-paris-2lp_wT5B6_qmwmd2.png"]
 };
 
-export const albums = [
+const unmusique = {
+  cover: "https://res.cloudinary.com/deroy68n9/image/upload/80f3009b-538f-9724-c27e-06e62ec2957d_rc0hpe.webp",
+  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1790002724/LBunmusiquevinyl1_uyhk0i.webp",
+    ["https://res.cloudinary.com/deroy68n9/image/upload/v1790002737/Disks_6_v6n2fk.png"]
+  ]
+}
+
+const unmusiqueCD = {
+  cover: "https://upload.wikimedia.org/wikipedia/en/6/6a/Lucy_Bedroque_-_Unmusique.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original",
+  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1790002718/LBunmusiqueCD1_8cc251c1-38f8-4c08-855d-74c05a96f272_xs4az0.webp",
+    ["https://res.cloudinary.com/deroy68n9/image/upload/v1790002719/LBunmusiqueCD2_2722541f-37b8-4fd5-b830-b07871c39038_i9sqgg.webp"]
+  ]
+};
+
+const sororiteLP = {
+  cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1790002717/1402178-sororite_182255-51761539_bcw08f.jpg",
+  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1790002733/Untitled_lfr0ft.png"]
+};
+
+const rawAlbums = [
   {
     id: 1,
     title: "VULTURES 1 (2LP)",
@@ -4796,4 +4817,138 @@ export const albums = [
       ru: "Саундтрек к Spider-Man: Into the Spider-Verse — американскому анимационному фильму 2018 года производства Sony Pictures Animation, основанному на воплощении персонажа Marvel Comics Человека-паука в лице Miles Morales, — состоит из саундтрека с оригинальными песнями, написанными для фильма и вдохновлёнными им, и оригинальной музыки, сочинённой Daniel Pemberton. В саундтреке звучат песни в исполнении ряда артистов, включая Vince Staples, Jaden Smith, Nicki Minaj, Lil Wayne, Ski Mask the Slump God, Ty Dolla Sign, Post Malone, Swae Lee, Anuel AA, Thutmose, Coi Leray, а также ныне покойных Juice Wrld и XXXTentacion. Он вышел 14 декабря 2018 года, в один день с премьерой фильма в кинотеатрах.",
     },
   },
+  {
+    id: 95,
+    title: "Unmusique (LP)",
+    releaseDate: "16 May 2025",
+    duration: "17 mahnı, 40 dəqiqə",
+    label: "deadAir",
+    spotifyAlbumId: "4hP6GKbrQjCCeJ8B0MfBXQ",
+    artist: ["Lucy Bedroque"],
+    price: 99.99,
+    genre: "Hip-Hop/Rap",
+    year: 2025,
+    isNew: true,
+    isExplicit: true,
+    image: unmusique.cover,
+    vinylImages: unmusique.vinyl,
+    vinylColor: "clear",
+    sleeveColor: "white",
+    accentColor: "white",
+    format: "vinyl",
+    description: {
+      az: "Unmusique — amerikalı musiqiçi Lucy Bedroque tərəfindən hazırlanmış debüt miksteypdir və 16 may 2025-ci ildə DeadAir Records etiketi ilə işıq üzü gördü. Digicore, pop, EDM və elektro janrlarını bir qədər industrial təsirlərlə birləşdirən bu layihədə Prettifun və Jackzebra qonaq kimi iştirak edir. Miksteyp tənqidçilər tərəfindən müsbət qarşılandı və 22 iyul 2025-ci ildə CD və vinyl formatlarında da buraxıldı.",
+      en: "Unmusique is the debut mixtape from American musician Lucy Bedroque, released through DeadAir Records on May 16, 2025. Drawing on digicore, pop, EDM and electro with a touch of industrial, it features guest appearances from Prettifun and Jackzebra. The project was well received by critics and followed with a CD and vinyl edition on July 22, 2025.",
+      ru: "Unmusique — дебютный микстейп американского музыканта Lucy Bedroque, выпущенный лейблом DeadAir Records 16 мая 2025 года. В его звучании сочетаются digicore, поп, EDM и электро с лёгким налётом индастриала, а гостями стали Prettifun и Jackzebra. Микстейп получил положительные отзывы критиков, а 22 июля 2025 года вышло издание на CD и виниле.",
+    },
+    tracklist: [
+      { id: 1, name: "Speakers Never Learn", duration: "2:15", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6Iodj4D95GuCEXThCZAQue" },
+      { id: 2, name: "G6 Anthem", duration: "3:15", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0rq8Vr1Rwjgf97tAcT9EkN" },
+      { id: 3, name: "Ultraviolet", duration: "3:07", isExplicit: true, features: "Lucy Bedroque & Prettifun", spotifyEmbed: "https://open.spotify.com/embed/track/104jLL4MVRqvqFJHbAx8vZ" },
+      { id: 4, name: "2010 Justin Bieber", duration: "1:52", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5WIGbrfNMvFeCQOx5XykBO" },
+      { id: 5, name: "Smackdown", duration: "2:18", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7kAi27hSQ7AC2Rxcg8a8Ns" },
+      { id: 6, name: "Fenty Face", duration: "2:14", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/43U3Z78I4uoAPsy42MIVSl" },
+      { id: 7, name: "Made in Italy", duration: "2:06", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/594D8fV0WXBgZ58n6ezgND" },
+      { id: 8, name: "Tout Naturel", duration: "2:31", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0A0FrmoICOQTDbnUQuBYn6" },
+      { id: 9, name: "Finish Him", duration: "1:43", isExplicit: true, features: "Lucy Bedroque & Jackzebra", spotifyEmbed: "https://open.spotify.com/embed/track/6iHxEQfviJ4xUpumfmpXRC" },
+      { id: 10, name: "Ouija", duration: "2:08", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1Wpy14vO2GAorH6d9XVPJu" },
+      { id: 11, name: "I Am Impossible", duration: "1:58", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/3sUwKYPGWdJh2uNmexndza" },
+      { id: 12, name: "Cara Mia", duration: "2:34", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7jmTEcuZbQOJKtG7mXEjEN" },
+      { id: 13, name: "Ignorant", duration: "2:13", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6IyyPhSRdLrUSJXAMTOyCz" },
+      { id: 14, name: "One of Us Is Lying", duration: "3:19", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4divPEANeDkW7sEMs3ZIQd" },
+      { id: 15, name: "Unmusique", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7wIArLmHOZ28usEPHGOQSZ" },
+      { id: 16, name: "Cat's Eye", duration: "1:59", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/33JzAD3Scbj9uCZOOYhlFr" },
+      { id: 17, name: "Yes, You May", duration: "1:53", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2VRYSgoKZZamsXCqcGnEIG" },
+    ],
+  },
+  {
+    id: 96,
+    title: "Unmusique (CD)",
+    releaseDate: "16 May 2025",
+    duration: "17 mahnı, 40 dəqiqə",
+    label: "deadAir",
+    spotifyAlbumId: "4hP6GKbrQjCCeJ8B0MfBXQ",
+    artist: ["Lucy Bedroque"],
+    price: 49.99,
+    genre: "Hip-Hop/Rap",
+    year: 2025,
+    isNew: true,
+    isExplicit: true,
+    image: unmusiqueCD.cover,
+    vinylImages: unmusiqueCD.vinyl,
+    accentColor: "white",
+    format: "cd",
+    description: {
+      az: "Unmusique — amerikalı musiqiçi Lucy Bedroque tərəfindən hazırlanmış debüt miksteypdir və 16 may 2025-ci ildə DeadAir Records etiketi ilə işıq üzü gördü. Digicore, pop, EDM və elektro janrlarını bir qədər industrial təsirlərlə birləşdirən bu layihədə Prettifun və Jackzebra qonaq kimi iştirak edir. Miksteyp tənqidçilər tərəfindən müsbət qarşılandı və 22 iyul 2025-ci ildə CD və vinyl formatlarında da buraxıldı.",
+      en: "Unmusique is the debut mixtape from American musician Lucy Bedroque, released through DeadAir Records on May 16, 2025. Drawing on digicore, pop, EDM and electro with a touch of industrial, it features guest appearances from Prettifun and Jackzebra. The project was well received by critics and followed with a CD and vinyl edition on July 22, 2025.",
+      ru: "Unmusique — дебютный микстейп американского музыканта Lucy Bedroque, выпущенный лейблом DeadAir Records 16 мая 2025 года. В его звучании сочетаются digicore, поп, EDM и электро с лёгким налётом индастриала, а гостями стали Prettifun и Jackzebra. Микстейп получил положительные отзывы критиков, а 22 июля 2025 года вышло издание на CD и виниле.",
+    },
+    tracklist: [
+      { id: 1, name: "Speakers Never Learn", duration: "2:15", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6Iodj4D95GuCEXThCZAQue" },
+      { id: 2, name: "G6 Anthem", duration: "3:15", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0rq8Vr1Rwjgf97tAcT9EkN" },
+      { id: 3, name: "Ultraviolet", duration: "3:07", isExplicit: true, features: "Lucy Bedroque & Prettifun", spotifyEmbed: "https://open.spotify.com/embed/track/104jLL4MVRqvqFJHbAx8vZ" },
+      { id: 4, name: "2010 Justin Bieber", duration: "1:52", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5WIGbrfNMvFeCQOx5XykBO" },
+      { id: 5, name: "Smackdown", duration: "2:18", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7kAi27hSQ7AC2Rxcg8a8Ns" },
+      { id: 6, name: "Fenty Face", duration: "2:14", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/43U3Z78I4uoAPsy42MIVSl" },
+      { id: 7, name: "Made in Italy", duration: "2:06", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/594D8fV0WXBgZ58n6ezgND" },
+      { id: 8, name: "Tout Naturel", duration: "2:31", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0A0FrmoICOQTDbnUQuBYn6" },
+      { id: 9, name: "Finish Him", duration: "1:43", isExplicit: true, features: "Lucy Bedroque & Jackzebra", spotifyEmbed: "https://open.spotify.com/embed/track/6iHxEQfviJ4xUpumfmpXRC" },
+      { id: 10, name: "Ouija", duration: "2:08", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1Wpy14vO2GAorH6d9XVPJu" },
+      { id: 11, name: "I Am Impossible", duration: "1:58", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/3sUwKYPGWdJh2uNmexndza" },
+      { id: 12, name: "Cara Mia", duration: "2:34", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7jmTEcuZbQOJKtG7mXEjEN" },
+      { id: 13, name: "Ignorant", duration: "2:13", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6IyyPhSRdLrUSJXAMTOyCz" },
+      { id: 14, name: "One of Us Is Lying", duration: "3:19", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4divPEANeDkW7sEMs3ZIQd" },
+      { id: 15, name: "Unmusique", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7wIArLmHOZ28usEPHGOQSZ" },
+      { id: 16, name: "Cat's Eye", duration: "1:59", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/33JzAD3Scbj9uCZOOYhlFr" },
+      { id: 17, name: "Yes, You May", duration: "1:53", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2VRYSgoKZZamsXCqcGnEIG" },
+    ],
+  },
+  {
+    id: 97,
+    title: "Sororite (LP)",
+    releaseDate: "22 July 2025",
+    duration: "21 mahnı, 65 dəqiqə",
+    label: "deadAir",
+    artist: ["Lucy Bedroque"],
+    price: 99.99,
+    genre: "Hip-Hop/Rap",
+    year: 2025,
+    isNew: true,
+    isExplicit: true,
+    image: sororiteLP.cover,
+    vinylImages: sororiteLP.vinyl,
+    accentColor: "white",
+    format: "cd",
+    description: {
+      az: "Sororite — amerikalı musiqiçi Lucy Bedroque-nin toplu albomudur və 22 iyul 2025-ci ildə deadAir Records etiketi ilə işıq üzü görüb. Albom Sisterhood LP-si ilə yanaşı, Amy və Fête de la Vanille EP-lərindən götürülmüş materialları 21 mahnıda bir araya gətirir və Bedroque-nin əvvəlki repertuarının digicore səsini əks etdirir.",
+      en: "Sororite is a compilation by American musician Lucy Bedroque, released through deadAir Records on July 22, 2025. It gathers material from the Sisterhood LP alongside the Amy and Fête de la Vanille EPs across 21 tracks, drawing together the digicore-leaning sound of Bedroque's earlier catalog.",
+      ru: "Sororite — сборник американского музыканта Lucy Bedroque, выпущенный лейблом deadAir Records 22 июля 2025 года. Он объединяет материал с альбома Sisterhood и с мини-альбомов Amy и Fête de la Vanille в 21 треке, отражая digicore-звучание более ранних релизов Bedroque.",
+    },
+    tracklist: [
+      { id: 1, name: "GLUTGIRL66", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/23Xfo9Y7M7sKQRQqYeuM1s" },
+      { id: 2, name: "SORORITY", duration: "3:18", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5S5iSPQ8gkI3Y2pfkp4YlQ" },
+      { id: 3, name: "TAKE ME BACK", duration: "2:51", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/693Mmeh4BkBqG5i6GaoX14" },
+      { id: 4, name: "WEEP TODAY", duration: "2:29", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6ZqeVIc9OR926dtwVrSPYz" },
+      { id: 5, name: "WALLS OF JERICHO", duration: "3:18", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0EWSy178ZPfNj04cb3QSBo" },
+      { id: 6, name: "HYDROXYCUT (TAKE IT ALL)", duration: "2:28", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/3NXKBr7m17be3ORHUvPrqg" },
+      { id: 7, name: "À QUI DE DROIT", duration: "2:43", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4NV0FlnnJcdMKIOlKkeE0R" },
+      { id: 8, name: "MADAME LUCY", duration: "2:55", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/79eeuMsVcImeoS0LXfZnHg" },
+      { id: 9, name: "KELLY KELLY", duration: "3:21", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4cWyEcpC6pqJEsS8NgGKJM" },
+      { id: 10, name: "USE YOUR WINGS", duration: "4:12", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2NmxUrX1sNBmVQjWOLXQ0J" },
+      { id: 11, name: "INFINITUDE // UROBOROS", duration: "5:44", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6MvsRCt7fro67PV9X1ILtl" },
+      { id: 12, name: "SISTERHOOD (LOVE, HER.)", duration: "3:00", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/3n4blG5eQN10jGA5LnNt6W" },
+      { id: 13, name: "I Am, She Is, We Are", duration: "3:39", isExplicit: false, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0yCuKRVjcu5PX5qZR2kfgy" },
+      { id: 14, name: "How to Pretend", duration: "3:44", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4IKG0oDjlYYJKSGhPxaoSd" },
+      { id: 15, name: "Mimosa", duration: "2:46", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4VORsp3UUBJeBGIYRSaIQz" },
+      { id: 16, name: "Hot Boy", duration: "1:48", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2w8sI6Kva15o8lzGfV8Ejq" },
+      { id: 17, name: "Knot Me", duration: "4:04", isExplicit: false, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0VPvBUyR4zsW8NOJwQQYDR" },
+      { id: 18, name: "Pretty Peach", duration: "3:01", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/3UUqrT7zv2TPUm8P0oBiov" },
+      { id: 19, name: "Altruism Kills", duration: "1:56", isExplicit: false, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2cljuYbOighVMTxp2tfw4i" },
+      { id: 20, name: "Sweet Pitcher", duration: "2:50", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6jGTimlQWsUQt6GshB5rTw" },
+      { id: 21, name: "Lift, Jump, Exhale", duration: "2:32", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0QM0MUw4u1X96lE5E8aJjJ" },
+    ],
+  },
 ];
+
+// Cloudinary images are served as AVIF/WebP at auto quality (see lib/cloudinary.js)
+export const albums = optimizeMedia(rawAlbums);

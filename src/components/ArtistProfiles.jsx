@@ -1,4 +1,6 @@
-export const artistProfiles = {
+import { optimizeMedia } from "../lib/cloudinary.js";
+
+const rawArtistProfiles = {
   "Playboi Carti": {
     banner: "https://res.cloudinary.com/deroy68n9/image/upload/v1768751199/playboiCarti_banner_n8qpjf.jpg",
     profileImage: "https://res.cloudinary.com/deroy68n9/image/upload/v1768751234/playboiCarti_pfp_fzma49.png",
@@ -117,5 +119,16 @@ export const artistProfiles = {
   "Camila Cabello": {
     banner: "https://res.cloudinary.com/deroy68n9/image/upload/v1777305859/Camila-Cabello-press-photo-Bad-Things-Still-1-PC-Drew-Levin-billboard-1548_0_wgph1j.jpg",
     profileImage: "https://res.cloudinary.com/deroy68n9/image/upload/v1777305770/ami-identity-8f1a193175612e1ca5cde75c8e8f331d-2025-04-04T05-22-43.481Z_cropped_ew15sm.png"
+  },
+  "Lucy Bedroque": {
+    banner: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages-prod.dazeddigital.com%2F1350%2Fazure%2Fdazed-prod%2F1440%2F7%2F1447821.jpg&f=1&nofb=1&ipt=2147a5796d9110e9dae48dfb37297d90e6f4658b7aeb93ec9d1bf76997992d10",
+    profileImage: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.scdn.co%2Fimage%2Fab6761610000e5eb100cfd4653979ed518fbf28f&f=1&nofb=1&ipt=75785761a099404c3788763751254e2b09bd041afec0bd49f24a49d71e22c32d",
+    description: {
+      az: "Lucy Bedroque amerikalı musiqiçidir; digicore, pop, EDM və elektro janrlarını bir qədər industrial təsirlərlə birləşdirir. 16 may 2025-ci ildə DeadAir Records etiketi ilə çıxan debüt miksteypi Unmusique tənqidçilər tərəfindən müsbət qarşılandı.",
+      en: "Experimental vocalist and producer Lucy Bedroque pulls from microgenres like digikore and hexd to create their blown-out, bright anthems. Debuting in full with 2023’s Sisterhood (under alias Lostrushi), they made their stamp on the underground with 2025’s deconstructive Unmusique.",
+      ru: "Lucy Bedroque — американская музыкантка, чья музыка сочетает в себе digicore, поп, EDM и электро с оттенком индастриала. Её дебютный микстейп Unmusique, выпущенный через DeadAir Records 16 мая 2025 года, был положительно воспринят критиками.",
+    }
   }
 };
+
+export const artistProfiles = optimizeMedia(rawArtistProfiles);
