@@ -355,14 +355,14 @@ const AlbumPage = () => {
             </div>
 
             {selectedImage > 0 && (
-              <button onClick={() => setSelectedImage(s => s - 1)} className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronLeft /></button>
+              <button onClick={() => setSelectedImage(s => s - 1)} className="lg-btn lg-btn-clear absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronLeft /></button>
             )}
             {selectedImage < galleryImages.length - 1 && (
-              <button onClick={() => setSelectedImage(s => s + 1)} className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronRight /></button>
+              <button onClick={() => setSelectedImage(s => s + 1)} className="lg-btn lg-btn-clear absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronRight /></button>
             )}
 
             {album.animatedCover && selectedImage === 0 && (
-              <button onClick={() => setShowAnimated(!showAnimated)} className="absolute top-4 right-4 bg-black/60 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black/80 transition-all z-20">
+              <button onClick={() => setShowAnimated(!showAnimated)} className="lg-btn lg-btn-clear absolute top-4 right-4 bg-black/60 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black/80 transition-all z-20">
                 {showAnimated ? `📹 ${t.animated}` : `🖼️ ${t.static}`}
               </button>
             )}
@@ -504,11 +504,11 @@ const AlbumPage = () => {
                 <div className="border-t border-border pt-6">
                   <h3 className="text-lg font-semibold mb-3">{t.quantity}</h3>
                   <div className="flex items-center gap-4">
-                    <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition flex items-center justify-center">
+                    <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="lg-btn lg-btn-clear w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition flex items-center justify-center">
                       <span className="text-xl font-bold">-</span>
                     </button>
                     <span className="text-2xl font-bold w-12 text-center">{quantity}</span>
-                    <button onClick={() => setQuantity(q => Math.min(4, q + 1))} disabled={quantity >= 4} className="w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed">
+                    <button onClick={() => setQuantity(q => Math.min(4, q + 1))} disabled={quantity >= 4} className="lg-btn lg-btn-clear w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed">
                       <span className="text-xl font-bold">+</span>
                     </button>
                   </div>

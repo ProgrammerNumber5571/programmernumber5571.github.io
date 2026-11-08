@@ -1,6 +1,6 @@
 // Real "Liquid Glass" for the web: refraction and specular rim light, not just blur.
 //
-// For every glass surface (nav.fixed, .glass-panel, .lg-lens) this bakes two images
+// For every glass surface (nav.fixed, .glass-panel, .lg-lens, .lg-btn) this bakes two images
 // from a physical model of a convex glass bezel (surface slope -> Snell's law):
 //   1. a displacement map (R = x shift, G = y shift) that feeds an SVG
 //      feDisplacementMap. Used as `backdrop-filter: url(#...)` it bends the page
@@ -11,7 +11,7 @@
 //      which works in every browser.
 // Surfaces are found by selector, so components only need the existing class names.
 
-const SURFACES = 'nav.fixed, .glass-panel, .lg-lens';
+const SURFACES = 'nav.fixed, .glass-panel, .lg-lens, .lg-btn';
 const NS = 'http://www.w3.org/2000/svg';
 
 const IOR = 1.5; // refractive index of the glass
@@ -232,10 +232,13 @@ export function initLiquidGlass() {
     if (key === entry.key) return;
 
     const maps = getMaps(key, () => buildMaps(w, h, radius, bezel, strength, dpr));
-    const id = `lg-${++counter}`;
-    const filter = buildFilter(id, w, h, maps.dispURL, maps.shift);
-    defs.appendChild(filter);
-    if (refract) el.style.setProperty('--lg-filter', `url(#${id})`);
+    let filter = null;
+    if (!entry.specOnly) {
+      const id = `lg-${++counter}`;
+      filter = buildFilter(id, w, h, maps.dispURL, maps.shift);
+      defs.appendChild(filter);
+      if (refract) el.style.setProperty('--lg-filter', `url(#${id})`);
+    }
     el.style.setProperty('--lg-spec', `url("${maps.specURL}")`);
 
     const previous = entry.filter;
@@ -256,8 +259,13 @@ export function initLiquidGlass() {
   function register(el) {
     // A surface nested inside another one can't see the page through it, so only
     // outermost surfaces get a lens (nested ones keep the CSS-only treatment).
-    if (registry.has(el) || el.parentElement?.closest(SURFACES)) return;
-    const entry = { el, key: '', filter: null, timer: 0, observer: null };
+    // Buttons are the exception: nested or ghost ones still get the rim highlight
+    // ("specOnly"), they just don't refract.
+    const nested = Boolean(el.parentElement?.closest(SURFACES));
+    const isButton = el.classList.contains('lg-btn');
+    if (registry.has(el) || (nested && !isButton)) return;
+    const specOnly = nested || el.classList.contains('lg-btn-ghost');
+    const entry = { el, specOnly, key: '', filter: null, timer: 0, observer: null };
     entry.observer = new ResizeObserver(() => {
       clearTimeout(entry.timer);
       entry.timer = setTimeout(() => refresh(entry), entry.key ? 120 : 0);

@@ -9,11 +9,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        // lg-btn* classes only do anything while Liquid Glass is on (see index.css)
+        default: "lg-btn lg-btn-prominent bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive: "lg-btn lg-btn-danger bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline: "lg-btn lg-btn-clear border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary: "lg-btn lg-btn-clear bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "lg-btn lg-btn-ghost hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

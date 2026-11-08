@@ -38,7 +38,7 @@ export function CartSidebar({ isOpen, onClose }) {
           </div>
           <button 
             onClick={onClose}
-            className="p-2 hover:bg-muted rounded-lg transition"
+            className="lg-btn lg-btn-ghost p-2 hover:bg-muted rounded-lg transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -74,7 +74,7 @@ export function CartSidebar({ isOpen, onClose }) {
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity - 1)}
                         disabled={loading || item.quantity <= 1}
-                        className="w-7 h-7 rounded border border-border hover:bg-muted transition disabled:opacity-50"
+                        className="lg-btn lg-btn-clear w-7 h-7 rounded border border-border hover:bg-muted transition disabled:opacity-50"
                       >
                         -
                       </button>
@@ -82,7 +82,7 @@ export function CartSidebar({ isOpen, onClose }) {
                       <button
                         onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         disabled={loading || item.quantity >= 4}
-                        className="w-7 h-7 rounded border border-border hover:bg-muted transition disabled:opacity-50"
+                        className="lg-btn lg-btn-clear w-7 h-7 rounded border border-border hover:bg-muted transition disabled:opacity-50"
                       >
                         +
                       </button>
