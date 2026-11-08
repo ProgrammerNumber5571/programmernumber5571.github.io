@@ -39,8 +39,10 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const classes = cn(buttonVariants({ variant, size, className }));
     const Comp = asChild ? Slot : "button";
-    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
+    const glass = variant !== "link";
+    return <Comp className={cn(classes, glass && "lg-btn-lib")} ref={ref} {...props} />;
   },
 );
 Button.displayName = "Button";

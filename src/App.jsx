@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { applyStoredUserSettings } from './components/applyUserSettings.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "./components/ui/Toaster";
+import { GlassFilter } from "./components/ui/GlassLayer";
 import { Toaster as Sonner } from "./components/ui/Sonner";
 import { TooltipProvider } from "./components/ui/Tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -64,6 +65,7 @@ function App() {
           <AuthProvider>
             <FavoritesProvider>
               <ShopifyCartProvider>
+                <GlassFilter />
                 <Toaster />
                 <Sonner />
                 <Router>

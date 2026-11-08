@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useRef } from 'react';
+﻿import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../Firebase/Firebase.js';
 import { useAuth } from '../contexts/authContext';
@@ -161,7 +161,7 @@ export const FavoriteButton = ({ albumId, size = "default", className = "" }) =>
     <button
       type="button"
       onClick={handleClick}
-      className={`fav-btn lg-btn ${favorited ? 'lg-btn-prominent' : 'lg-btn-clear'} ${sizeClasses[size]} rounded-full flex items-center justify-center transition-colors ${
+      className={`fav-btn lg-btn lg-btn-lib ${favorited ? 'lg-btn-prominent' : 'lg-btn-clear'} ${sizeClasses[size]} rounded-full flex items-center justify-center transition-colors ${
         favorited
           ? 'bg-blue-500 hover:bg-blue-600 text-white'
           : 'bg-card hover:bg-secondary border border-border text-foreground'

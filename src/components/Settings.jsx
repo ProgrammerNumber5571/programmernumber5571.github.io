@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { X, Type, MousePointer, Zap, Palette, Sun, Moon, Languages, Disc, Droplets } from "lucide-react";
 import { Button } from "./ui/Button.tsx";
 import { useLanguage } from "./LanguageContext.jsx";
@@ -87,7 +87,7 @@ export const Settings = ({ isOpen, onClose }) => {
             <h2 className="text-2xl font-bold tracking-tight">{t.settings}</h2>
             <p className="text-sm text-muted-foreground">{t.customize}</p>
           </div>
-          <button onClick={onClose} className="lg-btn lg-btn-ghost p-2 hover:bg-muted rounded-full transition-colors">
+          <button onClick={onClose} className="lg-btn lg-btn-lib lg-btn-ghost p-2 hover:bg-muted rounded-full transition-colors">
             <X className="w-6 h-6" />
           </button>
         </div>

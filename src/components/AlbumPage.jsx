@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+﻿import { useState, useRef, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "./ui/Button.tsx";
 import {
   ArrowLeft, ChevronLeft, ChevronRight, ShoppingCart,
-  Star, MessageSquare, ListMusic, Info, Reply, Play, Pause, Video
+  Star, MessageSquare, ListMusic, Info, Reply, Play, Pause, Video, Mic, Clock, Disc3, X, Calendar, Music
 } from "lucide-react";
 import { albums } from "./Albums.jsx";
 import { FavoriteButton } from './FavoritesSystem';
@@ -15,7 +15,11 @@ import { toast } from 'sonner';
 import { useAuth } from '../contexts/authContext';
 import { loadInteractions, addInteraction, addReplyToInteraction } from './albumInteractions.js';
 import { usePageTitle } from './usePageTitle.js';
+import { useCoverPalette } from '../lib/coverPalette.js';
 import { cleanAlbumTitle } from './spotifyClient.js';
+
+// Descriptions longer than this are cut off; clicking one opens the full text with the album's details
+const DESCRIPTION_LIMIT = 220;
 
 // Per-album recommendations: same artist first, then same genre, shuffled
 // deterministically by album id so every album shows its own stable set,
@@ -103,9 +107,10 @@ const AlbumPage = () => {
   const album = albums.find((a) => a.id === parseInt(albumId || "", 10));
   usePageTitle(album?.title);
 
-  // iOS 26 Apple Music-style backdrop: the cover itself, heavily blurred,
-  // glowing behind the top of the page and dissolving into the background
+  // Apple Music-style backdrop: a mesh of the cover's own colours (see lib/coverPalette.js).
+  // If the colours can't be read, fall back to the cover itself, heavily blurred.
   const coverForTint = Array.isArray(album?.image) ? album.image[0] : album?.image;
+  const palette = useCoverPalette(coverForTint);
 
   const { data: spotifyData, loading: spotifyLoading } = useSpotifyTracklist(album);
 
@@ -115,6 +120,18 @@ const AlbumPage = () => {
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
+  const [showDetails, setShowDetails] = useState(false);
+  const [detailsClosing, setDetailsClosing] = useState(false);
+  const closeDetails = () => {
+    setDetailsClosing(true);
+    setTimeout(() => { setShowDetails(false); setDetailsClosing(false); }, 220);
+  };
+  useEffect(() => {
+    if (!showDetails) return;
+    const onKey = (e) => e.key === "Escape" && closeDetails();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showDetails]);
   const scrollContainerRef = useRef(null);
 
   const [interactions, setInteractions] = useState([]);
@@ -317,7 +334,26 @@ const AlbumPage = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      {coverForTint && (
+      {palette && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none cover-backdrop" aria-hidden="true">
+          {/* the whole page takes on the cover's deep base colour (dark theme only) */}
+          <div className="absolute inset-0 [.light_&]:hidden" style={{ backgroundColor: palette.base }} />
+          {/* soft colour blobs across the top that melt into the base */}
+          <div
+            className="absolute inset-x-0 top-0 h-[1100px] [.light_&]:opacity-40"
+            style={{
+              backgroundImage: [
+                `radial-gradient(55% 42% at 14% 16%, ${palette.blobs[0]}, transparent 72%)`,
+                `radial-gradient(48% 38% at 80% 6%, ${palette.blobs[1]}, transparent 72%)`,
+                `radial-gradient(75% 50% at 52% 44%, ${palette.blobs[2]}, transparent 78%)`,
+              ].join(', '),
+              WebkitMaskImage: 'linear-gradient(to bottom, #000 45%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, #000 45%, transparent 100%)',
+            }}
+          />
+        </div>
+      )}
+      {palette === null && coverForTint && (
         <div className="absolute inset-x-0 top-0 h-[560px] overflow-hidden pointer-events-none" aria-hidden="true">
           <div
             className="absolute inset-0 scale-125"
@@ -355,14 +391,14 @@ const AlbumPage = () => {
             </div>
 
             {selectedImage > 0 && (
-              <button onClick={() => setSelectedImage(s => s - 1)} className="lg-btn lg-btn-clear absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronLeft /></button>
+              <button onClick={() => setSelectedImage(s => s - 1)} className="lg-btn lg-btn-lib lg-btn-clear absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronLeft /></button>
             )}
             {selectedImage < galleryImages.length - 1 && (
-              <button onClick={() => setSelectedImage(s => s + 1)} className="lg-btn lg-btn-clear absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronRight /></button>
+              <button onClick={() => setSelectedImage(s => s + 1)} className="lg-btn lg-btn-lib lg-btn-clear absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronRight /></button>
             )}
 
             {album.animatedCover && selectedImage === 0 && (
-              <button onClick={() => setShowAnimated(!showAnimated)} className="lg-btn lg-btn-clear absolute top-4 right-4 bg-black/60 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black/80 transition-all z-20">
+              <button onClick={() => setShowAnimated(!showAnimated)} className="lg-btn lg-btn-lib lg-btn-clear absolute top-4 right-4 bg-black/60 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-black/80 transition-all z-20">
                 {showAnimated ? `📹 ${t.animated}` : `🖼️ ${t.static}`}
               </button>
             )}
@@ -440,22 +476,90 @@ const AlbumPage = () => {
             ))}
           </div>
 
+          {showDetails && album.description && (
+            <div
+              className={`fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm ${detailsClosing ? "details-out" : "details-in"}`}
+              onClick={closeDetails}
+              role="presentation"
+            >
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-label={t.description}
+                onClick={(e) => e.stopPropagation()}
+                className="glass-panel relative w-full max-w-2xl overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+              >
+                <div className="max-h-[85vh] overflow-y-auto overflow-x-hidden p-6">
+                <button
+                  type="button"
+                  onClick={closeDetails}
+                  aria-label="Close"
+                  className="lg-btn lg-btn-lib lg-btn-ghost absolute top-4 right-4 p-2 rounded-full"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+                <div className="flex items-center gap-4 pr-10">
+                  {coverForTint && <img src={coverForTint} alt="" className="w-20 h-20 rounded-lg object-cover shrink-0" />}
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t.description}</p>
+                    <h2 className="text-2xl font-bold leading-tight truncate">{album.title}</h2>
+                    <p className="text-muted-foreground truncate">{Array.isArray(artistList) ? artistList.join(", ") : album.artist}</p>
+                  </div>
+                </div>
+                <hr className="my-4 border-border" />
+                <p className="text-base leading-relaxed whitespace-pre-line">{localizeText(album.description, language)}</p>
+                <hr className="my-4 border-border" />
+                <div className="flex flex-wrap items-center gap-2">
+                  {album.genre && <span className="lg-pill"><Mic className="w-3.5 h-3.5" />{album.genre}</span>}
+                  {releaseDate
+                    ? <span className="lg-pill"><Calendar className="w-3.5 h-3.5" />{localizeReleaseDate(releaseDate, language)}</span>
+                    : album.year && <span className="lg-pill"><Calendar className="w-3.5 h-3.5" />{album.year}</span>}
+                  {duration
+                    ? <span className="lg-pill"><Clock className="w-3.5 h-3.5" />{localizeDuration(duration, language)}</span>
+                    : tracklist.length > 0 && <span className="lg-pill"><Music className="w-3.5 h-3.5" />{tracklist.length} {t.tracklist}</span>}
+                  {label && <span className="lg-pill"><Disc3 className="w-3.5 h-3.5" />{label}</span>}
+                </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="min-h-[300px] mb-12">
             {activeTab === "description" && (
               <div className="space-y-6">
-                <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                  <span className="px-3 py-1 bg-secondary rounded-lg">{album.genre}</span>
-                  <span>•</span>
-                  <span>{album.year}</span>
-                  {album.vinylColor && (<><span>•</span><span>{t.vinylColors?.[String(album.vinylColor).toLowerCase()] || album.vinylColor} {t.vinylWord}</span></>)}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="lg-pill"><Mic className="w-3.5 h-3.5" />{album.genre}</span>
+                  <span className="lg-pill"><Clock className="w-3.5 h-3.5" />{album.year}</span>
+                  {album.vinylColor && (
+                    <span className="lg-pill">
+                      <Disc3 className="w-3.5 h-3.5" />
+                      {t.vinylColors?.[String(album.vinylColor).toLowerCase()] || album.vinylColor} {t.vinylWord}
+                    </span>
+                  )}
                 </div>
 
-                {album.description && (
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2">{t.description}</h3>
-                    <p className="text-muted-foreground">{localizeText(album.description, language)}</p>
-                  </div>
-                )}
+                {album.description && (() => {
+                  const full = String(localizeText(album.description, language));
+                  const long = full.length > DESCRIPTION_LIMIT;
+                  const short = long ? full.slice(0, DESCRIPTION_LIMIT).replace(/\s+\S*$/, "") + "…" : full;
+                  return (
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2">{t.description}</h3>
+                      {long ? (
+                        <button
+                          type="button"
+                          onClick={() => setShowDetails(true)}
+                          className="block w-full text-left text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
+                          aria-haspopup="dialog"
+                        >
+                          {short}
+                        </button>
+                      ) : (
+                        <p className="text-muted-foreground">{full}</p>
+                      )}
+                    </div>
+                  );
+                })()}
 
                 {album.variants && album.variants.length > 0 && (
                   <div id="variant-section" className="border-t border-border pt-6">
@@ -504,11 +608,11 @@ const AlbumPage = () => {
                 <div className="border-t border-border pt-6">
                   <h3 className="text-lg font-semibold mb-3">{t.quantity}</h3>
                   <div className="flex items-center gap-4">
-                    <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="lg-btn lg-btn-clear w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition flex items-center justify-center">
+                    <button onClick={() => setQuantity(q => Math.max(1, q - 1))} className="lg-btn lg-btn-lib lg-btn-clear w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition flex items-center justify-center">
                       <span className="text-xl font-bold">-</span>
                     </button>
                     <span className="text-2xl font-bold w-12 text-center">{quantity}</span>
-                    <button onClick={() => setQuantity(q => Math.min(4, q + 1))} disabled={quantity >= 4} className="lg-btn lg-btn-clear w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed">
+                    <button onClick={() => setQuantity(q => Math.min(4, q + 1))} disabled={quantity >= 4} className="lg-btn lg-btn-lib lg-btn-clear w-10 h-10 rounded-lg border-2 border-border hover:border-primary transition flex items-center justify-center disabled:opacity-40 disabled:cursor-not-allowed">
                       <span className="text-xl font-bold">+</span>
                     </button>
                   </div>
