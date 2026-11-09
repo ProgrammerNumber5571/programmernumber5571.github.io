@@ -539,8 +539,8 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                   {coverForTint && <img src={coverForTint} alt="" className="w-20 h-20 rounded-lg object-cover shrink-0" />}
                   <div className="min-w-0">
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t.description}</p>
-                    <h2 className="text-2xl font-bold leading-tight truncate">{album.title}</h2>
-                    <p className="text-muted-foreground truncate">{Array.isArray(artistList) ? artistList.join(", ") : album.artist}</p>
+                    <h2 className="text-xl sm:text-2xl font-bold leading-tight break-words">{album.title}</h2>
+                    <p className="text-muted-foreground break-words">{Array.isArray(artistList) ? artistList.join(", ") : album.artist}</p>
                   </div>
                 </div>
                 <hr className="my-4 border-border" />
