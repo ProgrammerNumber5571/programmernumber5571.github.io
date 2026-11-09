@@ -9,7 +9,9 @@ export function optimizeImageUrl(url) {
   if (/\.gif($|\?)/i.test(url)) return url; // leave animated covers alone
   const [head, tail] = url.split(UPLOAD);
   if (/^[^/]*\b[fq]_/.test(tail)) return url; // already has a format/quality transformation
-  return `${head}${UPLOAD}f_auto,q_auto/${tail}`;
+  // c_limit,w_1400 only ever shrinks: covers and banners are often uploaded at 3000px+,
+  // far more than any screen here shows, and this keeps each request a fraction of the size.
+  return `${head}${UPLOAD}f_auto,q_auto,c_limit,w_1400/${tail}`;
 }
 
 // Applies optimizeImageUrl to every string inside a data structure (arrays and plain objects).
