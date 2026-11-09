@@ -4,6 +4,7 @@ import { ArrowRight, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import { albums } from "./Albums.jsx";
 import { useLanguage } from "./LanguageContext.jsx";
+import { displayTitle } from "../lib/editions.js";
 
 export const Hero = () => {
   const { t } = useLanguage();
@@ -96,7 +97,7 @@ export const Hero = () => {
                     ) : (
                       <img
                         src={coverImage}
-                        alt={`${featuredAlbum.title} cover`}
+                        alt={`${displayTitle(featuredAlbum)} cover`}
                         className="w-full h-full object-cover"
                       />
                     )}

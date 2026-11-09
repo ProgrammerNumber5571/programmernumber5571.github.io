@@ -7,7 +7,7 @@ import { ShoppingCart } from "lucide-react";
 import { albums } from "./Albums.jsx";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useLanguage } from "./LanguageContext.jsx";
-import { FORMATS, formatLabel, formatOf, groupEditions } from "../lib/editions.js";
+import { FORMATS, displayTitle, formatLabel, formatOf, groupEditions } from "../lib/editions.js";
 import { useShopifyCart } from "../contexts/Shopifycartcontext";
 import { FavoriteButton } from "./FavoritesSystem";
 import { toast } from "sonner";
@@ -238,7 +238,7 @@ export const Collections = () => {
                       <div className="w-40 h-40 rounded-lg overflow-hidden shadow-xl">
                         <img
                           src={Array.isArray(album.image) ? album.image[0] : album.image}
-                          alt={`${album.title} cover`}
+                          alt={`${displayTitle(album)} cover`}
                           loading="lazy"
                           className="w-full h-full object-cover"
                         />
@@ -276,7 +276,7 @@ export const Collections = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className={`font-serif text-xl font-bold hover:underline transition-colors ${accentColors.text}`}>
-                          {album.title}
+                          {displayTitle(album)}
                         </h3>
                         {album.isExplicit && (
                           <span className="text-xs text-black font-bold px-2 py-0.5 bg-gray-400 border border-border rounded select-none">

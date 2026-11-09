@@ -10,6 +10,7 @@ import { albums as rawAlbums } from "./Albums.jsx";
 import { useLanguage } from "./LanguageContext.jsx";
 import { useShopifyCart } from "../contexts/Shopifycartcontext";
 import { toast } from "sonner";
+import { displayTitle, groupEditions } from "../lib/editions.js";
 
 type VinylColor =
   | "black"
@@ -130,7 +131,8 @@ export const FeaturedAlbums = () => {
     }
   };
   // New releases lead the homepage regardless of catalog order
-  const featuredAlbums: Album[] = [...normalizeAlbums(rawAlbums)]
+  // (one card per album: its vinyl/CD/cassette editions share a single page)
+  const featuredAlbums: Album[] = [...normalizeAlbums(groupEditions(rawAlbums).map((g: { primary: any }) => g.primary))]
     .sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0))
     .slice(0, 6);
 
@@ -183,7 +185,7 @@ export const FeaturedAlbums = () => {
                       <div className="w-40 h-40 rounded-lg overflow-hidden shadow-xl">
                         <img loading="lazy" decoding="async"
                           src={Array.isArray(album.image) ? album.image[0] : album.image}
-                          alt={`${album.title} cover`}
+                          alt={`${displayTitle(album)} cover`}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -224,7 +226,7 @@ export const FeaturedAlbums = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className={`font-serif text-xl hover:underline font-bold transition-colors ${accentColors.text}`}>
-                          {album.title}
+                          {displayTitle(album)}
                         </h3>
                         {album.isExplicit && (
                           <span className="bg-gray-400 text-black border px-2 py-1 rounded text-xs font-bold self-center select-none">E</span>

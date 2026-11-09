@@ -18,9 +18,12 @@ export const formatOf = (album) => (FORMATS.includes(album.format) ? album.forma
 
 // Only a trailing "(…)" / "[…]" that is purely a format marker is dropped, so "(Deluxe)" and
 // "(İlk Basma Nəşr)" keep different editions of a record apart.
-const FORMAT_MARKER = /\s*[([]\s*(?:\d\s*LP|LP|CD|Kaset+|Cassette|2LP\s*\+\s*CD)\s*[)\]]\s*$/i;
+const FORMAT_MARKER = /\s*[([]\s*(?:\d\s*LP|LP|CD|Kas+et+|Cassette|2LP\s*\+\s*CD)\s*[)\]]\s*$/i;
 
-const normalize = (s) => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
+// Title without its trailing format marker, e.g. "DON'T BE DUMB (2LP)" -> "DON'T BE DUMB"
+export const displayTitle = (album) => String(album.title).replace(FORMAT_MARKER, '').trim();
+
+const normalize =(s) => String(s).toLowerCase().replace(/\s+/g, ' ').trim();
 
 export const editionKey = (album) => {
   const artist = Array.isArray(album.artist) ? album.artist[0] : album.artist;

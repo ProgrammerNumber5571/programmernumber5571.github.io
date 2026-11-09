@@ -1,5 +1,5 @@
-﻿import { useState, useRef, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { useParams, Link, useNavigate, useSearchParams, Navigate } from "react-router-dom";
 import { Button } from "./ui/Button.tsx";
 import {
   ArrowLeft, ChevronLeft, ChevronRight, ShoppingCart,
@@ -99,13 +99,11 @@ const FeaturesList = ({ features }) => {
   );
 };
 
-const AlbumPage = () => {
-  const { albumId } = useParams();
+const AlbumPageInner = ({ album, editions, onFormat }) => {
   const navigate = useNavigate();
   const { t, language } = useLanguage();
   const { currentUser } = useAuth();
   const { addToCart, loading: cartLoading } = useShopifyCart();
-  const album = albums.find((a) => a.id === parseInt(albumId || "", 10));
   usePageTitle(album?.title);
 
   // Apple Music-style backdrop: a mesh of the cover's own colours (see lib/coverPalette.js).
@@ -301,6 +299,11 @@ const AlbumPage = () => {
     setMusicVideoUrl(null);
   };
 
+  // With variants on offer, adding to the cart is greyed out until one is chosen (it stays clickable
+  // so pressing it still scrolls to the picker and flags it)
+  const needsVariant = !!(album.variants && album.variants.length > 0 && !selectedVariant);
+  const greyed = needsVariant ? " grayscale opacity-60 cursor-not-allowed hover:!scale-100" : "";
+
   const handleAddToCart = async () => {
     if (album.variants && album.variants.length > 0 && !selectedVariant) {
       setVariantError(true);
@@ -445,24 +448,23 @@ const AlbumPage = () => {
               })}
             </div>
             {(() => {
-              // other formats of this record (vinyl / CD / cassette), same artist and title
-              const editions = getEditions(albums, album);
+              // the formats this record comes in (vinyl / CD / cassette) share this one page
               if (editions.length < 2) return null;
               return (
                 <div role="group" aria-label="Format" className="grid gap-2 pt-1 sm:flex sm:flex-wrap" style={{ gridTemplateColumns: `repeat(${Math.min(editions.length, 3)}, minmax(0, 1fr))` }}>
                   {editions.map((e) => {
                     const current = e.id === album.id;
                     return (
-                      <Link
+                      <button
+                        type="button"
                         key={e.id}
-                        to={`/album/${e.id}`}
-                        replace
-                        aria-current={current ? "page" : undefined}
+                        onClick={() => !current && onFormat(formatOf(e))}
+                        aria-pressed={current}
                         className={`lg-btn lg-btn-lib ${current ? "lg-btn-prominent" : "lg-btn-clear"} inline-flex flex-col sm:flex-row items-center justify-center sm:gap-2 min-w-0 h-14 sm:h-10 px-2 sm:px-4 text-sm font-medium leading-tight`}
                       >
                         <span className="truncate max-w-full">{formatLabel(formatOf(e), language)}</span>
                         <span className="text-xs sm:text-sm opacity-70">{e.price} ₼</span>
-                      </Link>
+                      </button>
                     );
                   })}
                 </div>
@@ -923,7 +925,8 @@ const AlbumPage = () => {
                   size="lg"
                   onClick={handleAddToCart}
                   disabled={cartLoading}
-                  className="h-14 font-bold px-8 shadow-xl shadow-primary/20 bg-primary text-primary-foreground"
+                  aria-disabled={needsVariant}
+                  className={"h-14 font-bold px-8 shadow-xl shadow-primary/20 bg-primary text-primary-foreground" + greyed}
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   {cartLoading ? t.adding : t.addToCart}
@@ -940,7 +943,8 @@ const AlbumPage = () => {
               <Button
                 onClick={handleAddToCart}
                 disabled={cartLoading}
-                className="font-bold px-5 bg-primary text-primary-foreground min-w-0"
+                aria-disabled={needsVariant}
+                className={"font-bold px-5 bg-primary text-primary-foreground min-w-0" + greyed}
               >
                 <ShoppingCart className="mr-2 h-4 w-4 shrink-0" />
                 <span className="truncate">{cartLoading ? t.adding : t.addToCart}</span>
@@ -1003,6 +1007,30 @@ const AlbumPage = () => {
       </div>
     </div>
   );
+};
+
+// One page per record: the vinyl, CD and cassette listings are editions of it. Old CD/cassette
+// URLs (/album/<id>) redirect to the record's page with ?format= set.
+const AlbumPage = () => {
+  const { albumId } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requested = albums.find((a) => a.id === parseInt(albumId || "", 10));
+  if (!requested) return <AlbumPageInner album={undefined} editions={[]} onFormat={() => {}} />;
+
+  const editions = getEditions(albums, requested);
+  const primary = editions[0];
+  const wanted = searchParams.get("format");
+  if (requested.id !== primary.id && !wanted) {
+    return <Navigate to={`/album/${primary.id}?format=${formatOf(requested)}`} replace />;
+  }
+  const album = editions.find((e) => formatOf(e) === wanted) || primary;
+  const onFormat = (format) => {
+    const next = new URLSearchParams(searchParams);
+    if (format === formatOf(primary)) next.delete("format");
+    else next.set("format", format);
+    setSearchParams(next, { replace: true });
+  };
+  return <AlbumPageInner key={album.id} album={album} editions={editions} onFormat={onFormat} />;
 };
 
 export default AlbumPage;
