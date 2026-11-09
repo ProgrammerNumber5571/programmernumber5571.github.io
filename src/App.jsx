@@ -58,6 +58,27 @@ function App() {
     applyStoredUserSettings();
   }, []);
 
+  // Images can't be right-clicked (no "Save image as" menu) or dragged out of the page.
+  // A deterrent only: anyone determined can still get at them through the browser's tools.
+  useEffect(() => {
+    const isMedia = (el) => {
+      if (!(el instanceof Element)) return false;
+      if (el.closest('img, picture, video, canvas, svg image')) return true;
+      return getComputedStyle(el).backgroundImage.includes('url(');
+    };
+    const block = (e) => {
+      // also look under the pointer, since overlays and gradients often sit on top of an image
+      const stack = e.clientX || e.clientY ? document.elementsFromPoint(e.clientX, e.clientY) : [e.target];
+      if (stack.some(isMedia)) e.preventDefault();
+    };
+    document.addEventListener('contextmenu', block);
+    document.addEventListener('dragstart', block);
+    return () => {
+      document.removeEventListener('contextmenu', block);
+      document.removeEventListener('dragstart', block);
+    };
+  }, []);
+
   return (
     <LanguageProvider>
       <QueryClientProvider client={queryClient}>

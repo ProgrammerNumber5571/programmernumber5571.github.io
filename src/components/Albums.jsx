@@ -1,4 +1,4 @@
-import { optimizeMedia } from "../lib/cloudinary.js";
+﻿import { optimizeMedia } from "../lib/cloudinary.js";
 
 /*
   TEMPLATES:
@@ -680,6 +680,11 @@ const sororiteLP = {
   cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1790002717/1402178-sororite_182255-51761539_bcw08f.jpg",
   vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1790002733/Untitled_lfr0ft.png"]
 };
+
+const c = {
+  cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1794225632/34e66c648d7495d730625fd2b1d65721.1000x1000x1-880322954_wlvxvo.png",
+  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1794225630/c_vinylmock1_xe1qcu.webp"]
+}
 
 const rawAlbums = [
   {
@@ -3036,7 +3041,7 @@ const rawAlbums = [
     accentColor: "white",
     format: "vinyl",
     description: {
-      az: "Playboi Carti, Whole Lotta Red-dən təxminən dörd il ərzində Future, Latto və Trippie Redd kimi məşhurlarla birlikdə çıxış edərək, demək olar ki, orada olmayıb. Buna baxmayaraq, bu, onun böyük fanatlarının sonda sadəcə MUSIC kimi qısaldılmış adı ilə çıxan I AM MUSIC albomu ilə bağlı davamlı olaraq səs-küy salmasının qarşısını ala bilməyib. Mahnının uzunluğu gözləmə müddətini təsdiqləyir və ifaçının xoş gəlişini xəbər verən POP OUT və CRUSH kimi qəzəbli rep mahnıları ilə başlayır. 30 mahnıdan ibarət və 77 dəqiqəlik davam edən albomda onun səsləri aqressiv şəkildə şişirdilmiş, sintezator ağırlığı ilə məşhurlaşdığı post-trap ilə daha pop-trap arasında dəyişir, lakin bütün bunlar şübhəsiz ki, onun stilistik diapazonundadır. Karti əvvəlcə qonaq seçimini yüksək səviyyəli albom buraxılışları üçün adət halını aldığı kimi, jiletə yaxın saxlayırdı. Lakin Kendrick Lamarın GOOD CREDITə tüpürdüyünü, Future-ın TRIM-ə görə hisslərini ifadə etdiyini və ya əməkdaşlıq karyerasının əsas dayağı Lil Uzi Vertin TWIN TRIM də qələbə ilə sürüşdüyünü görməmək mümkün olmazdı. The Weeknd-in RATHER LIE mahnısındakı ən diqqət çəkən hissə, bəlkə də, onun buradakı zərfləri itələməsinin ən açıq nümunəsidir, baxmayaraq ki, Travis Scott-un PHILLY mahnısında və Young Thug və Ty Dolla $ign-dən ibarət komandanın WE NEED ALL DA VIBES mahnısında çıxışları bu istiqaməti daha da inandırıcı edir. Bu kimi dostları ilə belə, Carti özü daha parlaq şəkildə parlayır, nəfəsli, demək olar ki, falsetto səsi I SEEEEEE YOU BABY BOI video oyun arpecioları və xırıltılı xırıltısı COCAINE NOSE-nin kinematoqrafik səs-küyü ətrafında fırlanır. Yalnız gələcəyə baxmaqla kifayətlənməyərək, klassik 1017 Brick Squad kasetlərini xatırladan RADAR-da səslənən Atlantanın 2010-cu illərin əvvəllərindəki səsinə demək olar ki, nostaljik bir qiymətləndirmə var.",
+      az: "Playboi Carti, Whole Lotta Red-dən təxminən dörd il ərzində Future, Latto və Trippie Redd kimi məşhurlarla birlikdə çıxış edərək, demək olar ki, orada olmayıb. Buna baxmayaraq, bu, onun böyük fanatlarının sonda sadəcə MUSIC kimi qısaldılmış adı ilə çıxan I AM MUSIC albomu ilə bağlı davamlı olaraq səs-küy salmasının qarşısını ala bilməyib. Mahnının uzunluğu gözləmə müddətini təsdiqləyir və ifaçının xoş gəlişini xəbər verən POP OUT və CRUSH kimi qəzəbli rep mahnıları ilə başlayır. 30 mahnıdan ibarət və 77 dəqiqəlik davam edən albomda onun səsləri aqressiv şəkildə şişirdilmiş, sintezator ağırlığı ilə məşhurlaşdığı post-trap ilə daha pop-trap arasında dəyişir, lakin bütün bunlar şübhəsiz ki, onun stilistik diapazonundadır. Karti əvvəlcə qonaq seçimini yüksək səviyyəli albom buraxılışları üçün adət halını aldığı kimi, jiletə yaxın saxlayırdı. Lakin Kendrick Lamarın GOOD CREDIT-ə tüpürdüyünü, Future-ın TRIM-ə görə hisslərini ifadə etdiyini və ya əməkdaşlıq karyerasının əsas dayağı Lil Uzi Vertin TWIN TRIM də qələbə ilə sürüşdüyünü görməmək mümkün olmazdı. The Weeknd-in RATHER LIE mahnısındakı ən diqqət çəkən hissə, bəlkə də, onun buradakı zərfləri itələməsinin ən açıq nümunəsidir, baxmayaraq ki, Travis Scott-un PHILLY mahnısında və Young Thug və Ty Dolla $ign-dən ibarət komandanın WE NEED ALL DA VIBES mahnısında çıxışları bu istiqaməti daha da inandırıcı edir. Bu kimi dostları ilə belə, Carti özü daha parlaq şəkildə parlayır, nəfəsli, demək olar ki, falsetto səsi I SEEEEEE YOU BABY BOI video oyun arpecioları və xırıltılı xırıltısı COCAINE NOSE-nin kinematoqrafik səs-küyü ətrafında fırlanır. Yalnız gələcəyə baxmaqla kifayətlənməyərək, klassik 1017 Brick Squad kasetlərini xatırladan RADAR-da səslənən Atlantanın 2010-cu illərin əvvəllərindəki səsinə demək olar ki, nostaljik bir qiymətləndirmə var.",
       en: "Playboi Carti has been all but absent in the roughly four years since Whole Lotta Red, popping up alongside stars like Future, Latto and Trippie Redd. Even so, that couldn't stop his massive fanbase from constantly buzzing about I AM MUSIC, the album that ultimately arrived under the shortened title MUSIC. Its length justifies the wait, opening with raging rap songs like POP OUT and CRUSH that herald the artist's welcome return. Across 30 songs and 77 minutes, his vocals shift between the aggressively distorted, synth-heavy post-trap he became famous for and something more pop-trap, yet all of it sits firmly within his stylistic range. Carti initially kept his guest list close to the vest, as has become customary for high-profile album rollouts. But it would be impossible to miss Kendrick Lamar spitting on GOOD CREDIT, Future airing out his feelings on TRIM, or career-long collaborator Lil Uzi Vert gliding to victory on TWIN TRIM. The Weeknd's standout turn on RATHER LIE is perhaps the clearest example of the envelope-pushing here, though Travis Scott's appearance on PHILLY and the Young Thug and Ty Dolla $ign team-up on WE NEED ALL DA VIBES make the direction even more convincing. Even with friends like these, Carti himself shines brightest, his breathy, almost falsetto voice swirling around the video-game arpeggios of I SEEEEEE YOU BABY BOI and the cinematic din of COCAINE NOSE with his raspy growl. And not content to only look forward, there's an almost nostalgic appreciation of Atlanta's early-2010s sound on RADAR, which recalls classic 1017 Brick Squad tapes.",
       ru: "Playboi Carti почти не появлялся на публике в течение примерно четырёх лет после Whole Lotta Red, лишь изредка выступая вместе со звёздами вроде Future, Latto и Trippie Redd. Тем не менее это не помешало его огромной армии фанатов постоянно шуметь вокруг альбома I AM MUSIC, который в итоге вышел под сокращённым названием MUSIC. Его продолжительность оправдывает ожидание: он открывается яростными рэп-треками POP OUT и CRUSH, возвещающими долгожданное возвращение артиста. На протяжении 30 песен и 77 минут его вокал колеблется между агрессивно искажённым, насыщенным синтезаторами пост-трэпом, прославившим его, и чем-то более поп-трэповым, но всё это, безусловно, в пределах его стилистического диапазона. Поначалу Carti держал список гостей в секрете, как это стало привычным для громких релизов. Но невозможно не заметить, как Kendrick Lamar читает на GOOD CREDIT, Future изливает чувства на TRIM, а многолетний соратник Lil Uzi Vert победно скользит по TWIN TRIM. Яркое участие The Weeknd в RATHER LIE — пожалуй, самый очевидный пример выхода за рамки, хотя появления Travis Scott на PHILLY и тандема Young Thug и Ty Dolla $ign на WE NEED ALL DA VIBES делают это направление ещё убедительнее. Даже с такими друзьями сам Carti сияет ярче всех: его воздушный, почти фальцетный голос вьётся вокруг видеоигровых арпеджио I SEEEEEE YOU BABY BOI и кинематографичного гула COCAINE NOSE с хриплым рычанием. Не ограничиваясь взглядом в будущее, на RADAR звучит почти ностальгическая дань звучанию Атланты начала 2010-х, напоминающая классические кассеты 1017 Brick Squad.",
     },
@@ -4946,6 +4951,48 @@ const rawAlbums = [
       { id: 19, name: "Altruism Kills", duration: "1:56", isExplicit: false, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2cljuYbOighVMTxp2tfw4i" },
       { id: 20, name: "Sweet Pitcher", duration: "2:50", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6jGTimlQWsUQt6GshB5rTw" },
       { id: 21, name: "Lift, Jump, Exhale", duration: "2:32", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0QM0MUw4u1X96lE5E8aJjJ" },
+    ],
+  },
+  {
+    id: 98,
+    title: "c",
+    releaseDate: "18 Sentyabr 2026",
+    duration: "15 mahnı, 39 dəqiqə",
+    label: "deadAir",
+    spotifyAlbumId: "6cwZdsIawCaF4Ukh7KV24l",
+    artist: ["Lucy Bedroque"],
+    price: 99.99,
+    genre: "Hip-Hop/Rap",
+    year: 2026,
+    isNew: true,
+    isExplicit: true,
+    image: c.cover,
+    vinylImages: c.vinyl,
+    accentColor: "red",
+    format: "vinyl",
+    vinylColor: "red",
+    sleeveColor: "black",
+    description: {
+      az: "c — amerikalı musiqiçi Lucy Bedroque-nin ikinci studiya albomu və Lucy Bedroque təxəllüsü ilə çıxan ilk albomudur; 18 sentyabr 2026-cı ildə deadAir etiketi ilə buraxılıb. Albomun çıxışı əvvəlcə 2026-cı ilin iyununa elan olunmuşdu, sonra qeyri-müəyyən müddətə təxirə salındı və nəhayət sənətçinin Paradise Chateau oyununda yeni tarix açıqlandı. Layihədən əvvəl aparıcı sinql kimi “Speed Demon” təqdim edilib; albom CD, vinil, kaset, rəqəmsal yükləmə və striminq formatlarında əlçatandır.",
+      en: "c is the second studio album by American musician Lucy Bedroque and the first released under the Lucy Bedroque name, issued through deadAir on September 18, 2026. It was first announced for June 2026, then delayed indefinitely before the new date was revealed in the artist's game Paradise Chateau. The lead single “Speed Demon” preceded the release, and the album is available on CD, vinyl, cassette, digital download and streaming.",
+      ru: "c — второй студийный альбом американского музыканта Lucy Bedroque и первый, вышедший под именем Lucy Bedroque; он был выпущен лейблом deadAir 18 сентября 2026 года. Релиз сначала анонсировали на июнь 2026 года, затем отложили на неопределённый срок, а новая дата была объявлена в игре артиста Paradise Chateau. Ведущим синглом стал «Speed Demon», а альбом доступен на CD, виниле, кассете, в цифровом виде и на стриминговых платформах.",
+    },
+    tracklist: [
+      { id: 1, name: "ALL SPEAKERS GO TO HEAVEN", duration: "3:30", isExplicit: true, features: "" },
+      { id: 2, name: "THE 9TH CIRCLE", duration: "2:01", isExplicit: true, features: "" },
+      { id: 3, name: "SPEED DEMON", duration: "2:25", isExplicit: true, features: "" },
+      { id: 4, name: "STONE IN FOCUS", duration: "2:29", isExplicit: true, features: "" },
+      { id: 5, name: "MISS BEHAVIOR", duration: "3:12", isExplicit: true, features: "" },
+      { id: 6, name: "B.Y.O.B.", duration: "2:42", isExplicit: true, features: "" },
+      { id: 7, name: "OROCHIMARU", duration: "2:44", isExplicit: true, features: "" },
+      { id: 8, name: "MARRIED TO MY JEWELER", duration: "1:44", isExplicit: true, features: "" },
+      { id: 9, name: "C SECTION", duration: "2:37", isExplicit: true, features: "" },
+      { id: 10, name: "CO POISON", duration: "2:12", isExplicit: true, features: "" },
+      { id: 11, name: "SAFESPACE", duration: "2:52", isExplicit: true, features: "" },
+      { id: 12, name: "ZYGOTE", duration: "2:30", isExplicit: true, features: "" },
+      { id: 13, name: "SSJ2", duration: "3:11", isExplicit: true, features: "" },
+      { id: 14, name: "ERASE YOUR SOCIAL", duration: "2:30", isExplicit: true, features: "" },
+      { id: 15, name: "PEACE IN PANDEMONIUM", duration: "2:52", isExplicit: true, features: "" },
     ],
   },
 ];

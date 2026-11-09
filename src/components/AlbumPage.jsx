@@ -487,14 +487,24 @@ const AlbumPage = () => {
                 aria-modal="true"
                 aria-label={t.description}
                 onClick={(e) => e.stopPropagation()}
-                className="glass-panel relative w-full max-w-2xl overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+                className={`glass-panel relative w-full max-w-2xl overflow-hidden rounded-2xl border border-border bg-card shadow-2xl ${palette ? "text-white [&_.text-muted-foreground]:text-white/70 [&_hr]:border-white/15" : ""}`}
               >
-                <div className="max-h-[85vh] overflow-y-auto overflow-x-hidden p-6">
+                {palette && (
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      backgroundColor: palette.base,
+                      backgroundImage: `radial-gradient(90% 80% at 0% 0%, ${palette.blobs[0]}, transparent 70%), radial-gradient(80% 70% at 100% 25%, ${palette.blobs[1]}, transparent 70%), radial-gradient(90% 80% at 40% 110%, ${palette.blobs[2]}, transparent 70%)`,
+                    }}
+                  />
+                )}
+                <div className="relative max-h-[85vh] overflow-y-auto overflow-x-hidden p-6">
                 <button
                   type="button"
                   onClick={closeDetails}
                   aria-label="Close"
-                  className="lg-btn lg-btn-lib lg-btn-ghost absolute top-4 right-4 p-2 rounded-full"
+                  className="lg-btn lg-btn-lib lg-btn-ghost absolute top-4 right-4 z-10 p-2 rounded-full"
                 >
                   <X className="w-4 h-4" />
                 </button>
