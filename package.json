@@ -12,10 +12,13 @@
     "deploy": "git push origin gh-pages:source-latest",
     "test": "vitest run",
     "ios:sync": "vite build && cap sync ios",
-    "ios:open": "cap open ios"
+    "ios:open": "cap open ios",
+    "android:sync": "vite build && cap sync android",
+    "android:open": "cap open android"
   },
   "proxy": "https://localhost:5000",
   "dependencies": {
+    "@capacitor/android": "^8.6.0",
     "@capacitor/core": "^8.6.0",
     "@capacitor/ios": "^8.6.0",
     "@capacitor/splash-screen": "^8.0.2",

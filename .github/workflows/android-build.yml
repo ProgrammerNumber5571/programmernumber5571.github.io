@@ -1,0 +1,69 @@
+name: Android build
+
+# Manual only: Actions tab > "Android build" > "Run workflow".
+# Always produces an installable debug APK. If the signing secrets exist (see ANDROID.md) it also
+# produces a signed release bundle (.aab) for Google Play.
+on:
+  workflow_dispatch:
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      VERSION_CODE: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: source-latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Build the web app and sync it into the Android project
+        run: |
+          npm ci
+          npm run android:sync
+
+      - name: Debug APK (installable straight onto a phone)
+        working-directory: android
+        run: ./gradlew assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backrooms-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+
+      - name: Signed release bundle for Google Play
+        id: release
+        working-directory: android
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_B64" ]; then
+            echo "No ANDROID_KEYSTORE_B64 secret, skipping the signed release bundle."
+            echo "built=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+          export KEYSTORE_PATH="$RUNNER_TEMP/release.keystore"
+          ./gradlew bundleRelease
+          echo "built=true" >> "$GITHUB_OUTPUT"
+
+      - if: steps.release.outputs.built == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: backrooms-release-aab
+          path: android/app/build/outputs/bundle/release/*.aab
