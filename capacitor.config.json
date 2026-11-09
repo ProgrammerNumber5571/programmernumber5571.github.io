@@ -1,0 +1,13 @@
+﻿{
+  "appId": "com.backrooms.store",
+  "appName": "Backrooms",
+  "webDir": "dist",
+  "ios": {
+    "contentInset": "always",
+    "backgroundColor": "#0f0e0d"
+  },
+  "plugins": {
+    "SplashScreen": { "launchAutoHide": true, "launchShowDuration": 800, "backgroundColor": "#0f0e0d" }
+  }
+}
+
