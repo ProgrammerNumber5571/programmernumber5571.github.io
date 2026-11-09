@@ -10,6 +10,7 @@ import { CassetteTape } from "./CassetteTape.tsx";
 import { Button } from "./ui/Button.tsx";
 import { useLanguage, localizeText } from "./LanguageContext.jsx";
 import { usePageTitle } from "./usePageTitle.js";
+import { displayTitle, groupEditions } from "../lib/editions.js";
 
 const getAccentColor = (color) => {
   const colorMap = {
@@ -118,7 +119,8 @@ const ArtistPage = () => {
     );
   }
 
-  const sortedAlbums = [...artistAlbums].sort((a, b) => b.year - a.year);
+  // one entry per record: its vinyl/CD/cassette editions share a single album page
+  const sortedAlbums = groupEditions(artistAlbums).map((g) => g.primary).sort((a, b) => b.year - a.year);
   const latestAlbum = sortedAlbums[0];
 
   return (
@@ -152,23 +154,23 @@ const ArtistPage = () => {
           </Link>
         </div>
 
-        <div className="relative pt-80 pb-8 px-8">
+        <div className="relative pt-64 sm:pt-80 pb-8 px-4 sm:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6">
               {artistProfileImage && !profileError && (
-                <div className="relative vinyl-record-container">
+                <div className="relative vinyl-record-container shrink-0">
                   <img
                     src={artistProfileImage}
                     alt={artist}
-                    className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-background shadow-2xl"
+                    className="w-20 h-20 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-background shadow-2xl"
                     onError={() => setProfileError(true)}
                   />
                 </div>
               )}
 
-              <div className="flex-1">
-                <div className="flex items-center gap-4">
-                  <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-2 drop-shadow-lg">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-2 drop-shadow-lg">
                     {artist}
                   </h1>
                   <button
@@ -187,7 +189,7 @@ const ArtistPage = () => {
       </div>
 
       {latestAlbum && (
-        <div className="px-8 py-8 max-w-7xl mx-auto">
+        <div className="px-4 sm:px-8 py-8 max-w-7xl mx-auto">
           <h2 className="text-2xl font-bold mb-6">{t.latestRelease}</h2>
           <Link
             to={`/album/${latestAlbum.id}`}
@@ -195,8 +197,8 @@ const ArtistPage = () => {
             onMouseEnter={() => setHoveredAlbumId(latestAlbum.id)}
             onMouseLeave={() => setHoveredAlbumId(null)}
           >
-            <div className="flex items-center gap-6 p-4 rounded-lg hover:bg-muted/50 transition-all">
-              <div className="relative w-40 h-40 flex-shrink-0">
+            <div className="flex items-center gap-4 sm:gap-6 p-2 sm:p-4 rounded-lg hover:bg-muted/50 transition-all">
+              <div className="relative w-28 h-28 sm:w-40 sm:h-40 flex-shrink-0">
                 {latestAlbum.image ? (
                   <img loading="lazy" decoding="async"
                     src={Array.isArray(latestAlbum.image) ? latestAlbum.image[0] : latestAlbum.image}
@@ -223,20 +225,20 @@ const ArtistPage = () => {
                   </div>
                 )}
               </div>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <p className="text-sm text-muted-foreground mb-1">
                   {latestAlbum.year}
                 </p>
                 <div className="flex items-center gap-3 mb-2">
                   <h3
-                    className={`text-2xl font-bold text-foreground transition-all ${hoveredAlbumId === latestAlbum.id ? 'underline' : ''}`}
+                    className={`text-xl sm:text-2xl font-bold text-foreground transition-all ${hoveredAlbumId === latestAlbum.id ? 'underline' : ''}`}
                     style={{
                       color: hoveredAlbumId === latestAlbum.id
                         ? getAccentColor(latestAlbum.accentColor)
                         : undefined
                     }}
                   >
-                    {latestAlbum.title}
+                    {displayTitle(latestAlbum)}
                   </h3>
                   {latestAlbum.isExplicit && (
                     <span className="text-sm font-bold px-2.5 py-1 bg-gray-400 text-black border border-border rounded flex-shrink-0 select-none">
@@ -250,7 +252,7 @@ const ArtistPage = () => {
         </div>
       )}
 
-      <div className="px-8 py-8 max-w-7xl mx-auto">
+      <div className="px-4 sm:px-8 py-8 max-w-7xl mx-auto">
         <h2 className="text-2xl font-bold mb-6">{t.discography}</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
@@ -258,7 +260,7 @@ const ArtistPage = () => {
             <Link
               key={album.id}
               to={`/album/${album.id}`}
-              className="group relative"
+              className="group relative min-w-0"
               onMouseEnter={() => setHoveredId(album.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
@@ -274,7 +276,7 @@ const ArtistPage = () => {
                     <div className="w-40 h-40 rounded-lg overflow-hidden shadow-xl">
                       <img loading="lazy" decoding="async"
                         src={Array.isArray(album.image) ? album.image[0] : album.image}
-                        alt={`${album.title} cover`}
+                        alt={`${displayTitle(album)} cover`}
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -307,14 +309,14 @@ const ArtistPage = () => {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <h3
-                    className={`font-serif text-xl font-bold text-foreground transition-all ${hoveredId === album.id ? 'underline' : ''}`}
+                    className={`min-w-0 break-words font-serif text-lg sm:text-xl font-bold text-foreground transition-all ${hoveredId === album.id ? 'underline' : ''}`}
                     style={{
                       color: hoveredId === album.id
                         ? getAccentColor(album.accentColor)
                         : undefined
                     }}
                   >
-                    {album.title}
+                    {displayTitle(album)}
                   </h3>
                   {album.isExplicit && (
                     <span className="text-xs font-bold px-2 py-0.5 bg-gray-400 text-black border border-border rounded flex-shrink-0 select-none">
