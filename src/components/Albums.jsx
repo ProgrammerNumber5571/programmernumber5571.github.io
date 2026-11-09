@@ -684,6 +684,22 @@ const sororiteLP = {
 const c = {
   cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1794225632/34e66c648d7495d730625fd2b1d65721.1000x1000x1-880322954_wlvxvo.png",
   vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1794225630/c_vinylmock1_xe1qcu.webp"]
+};
+
+const cCD = {
+  cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1794225632/34e66c648d7495d730625fd2b1d65721.1000x1000x1-880322954_wlvxvo.png",
+  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1794225631/c_cdmock1_hbzvht.webp",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1794225631/c_cdmock2_dbrwp7.webp"]
+};
+
+const cCassette = {
+  cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1794225632/34e66c648d7495d730625fd2b1d65721.1000x1000x1-880322954_wlvxvo.png",
+  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1794225631/C_ocardmock_c83b0ce4-804f-414f-b451-722a70d99427_g7iwlu.webp"]
+};
+
+const luhLeakyzVol1 = {
+  cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1794225631/500x500-000000-80-0-0_ilaikr.jpg",
+  
 }
 
 const rawAlbums = [
@@ -2758,10 +2774,10 @@ const rawAlbums = [
       { id: 6, name: "Bleu", isExplicit: true, duration: "3:11", spotifyEmbed: "https://open.spotify.com/embed/track/1y5aiIuDFg0SLj7CYjMPOZ" },
       { id: 7, name: "Temps De Chasse", isExplicit: true, duration: "3:40", spotifyEmbed: "https://open.spotify.com/embed/track/6rdIrOFeXM1k1lX6gXrMeQ?si=2f2cc1a3ac6b44ed" },
       { id: 8, name: "Pop", isExplicit: true, duration: "3:23", spotifyEmbed: "https://open.spotify.com/embed/track/2nx0d7CJJpSEikuUlMjwVj" },
-      { id: 9, name: "Retraite",  isExplicit: true, duration: "3:12", spotifyEmbed:"https://open.spotify.com/embed/track/5ABrlAFm8bIA3gvUvoc7Sy" },
+      { id: 9, name: "Retraite", isExplicit: true, duration: "3:12", spotifyEmbed: "https://open.spotify.com/embed/track/5ABrlAFm8bIA3gvUvoc7Sy" },
       { id: 10, name: "En été", isExplicit: true, duration: "2:47", spotifyEmbed: "https://open.spotify.com/embed/track/7MzdamT9kZ3uFFWOLjYN30" },
       { id: 11, name: "Rapunzel", isExplicit: true, duration: "3:28", spotifyEmbed: "https://open.spotify.com/embed/track/0fJr4yPte78Cl7wa1ZYE6h" },
-      { id: 12, name: "J'adore", isExplicit: true, duration: "3:25", spotifyEmbed:  "https://open.spotify.com/embed/track/1Menul8KHa5YAvVZQKi63k" },
+      { id: 12, name: "J'adore", isExplicit: true, duration: "3:25", spotifyEmbed: "https://open.spotify.com/embed/track/1Menul8KHa5YAvVZQKi63k" },
       { id: 13, name: "Took It Up", isExplicit: true, duration: "3:27", spotifyEmbed: "https://open.spotify.com/embed/track/1SvpcdgplcRo1xIgWOTSUS" },
       { id: 14, name: "Violette", isExplicit: true, duration: "4:07", spotifyEmbed: "https://open.spotify.com/embed/track/3aRDkzeKv7ycD8XpJTXH7g" },
       { id: 15, name: "Blocs", isExplicit: true, duration: "5:01", spotifyEmbed: "https://open.spotify.com/embed/track/2E2HgPPeUmCtlNmXQTHhXS" },
@@ -4955,7 +4971,7 @@ const rawAlbums = [
   },
   {
     id: 98,
-    title: "c",
+    title: "c (LP)",
     releaseDate: "18 Sentyabr 2026",
     duration: "15 mahnı, 39 dəqiqə",
     label: "deadAir",
@@ -4978,24 +4994,103 @@ const rawAlbums = [
       ru: "c — второй студийный альбом американского музыканта Lucy Bedroque и первый, вышедший под именем Lucy Bedroque; он был выпущен лейблом deadAir 18 сентября 2026 года. Релиз сначала анонсировали на июнь 2026 года, затем отложили на неопределённый срок, а новая дата была объявлена в игре артиста Paradise Chateau. Ведущим синглом стал «Speed Demon», а альбом доступен на CD, виниле, кассете, в цифровом виде и на стриминговых платформах.",
     },
     tracklist: [
-      { id: 1, name: "ALL SPEAKERS GO TO HEAVEN", duration: "3:30", isExplicit: true, features: "" },
-      { id: 2, name: "THE 9TH CIRCLE", duration: "2:01", isExplicit: true, features: "" },
-      { id: 3, name: "SPEED DEMON", duration: "2:25", isExplicit: true, features: "" },
-      { id: 4, name: "STONE IN FOCUS", duration: "2:29", isExplicit: true, features: "" },
-      { id: 5, name: "MISS BEHAVIOR", duration: "3:12", isExplicit: true, features: "" },
-      { id: 6, name: "B.Y.O.B.", duration: "2:42", isExplicit: true, features: "" },
-      { id: 7, name: "OROCHIMARU", duration: "2:44", isExplicit: true, features: "" },
-      { id: 8, name: "MARRIED TO MY JEWELER", duration: "1:44", isExplicit: true, features: "" },
-      { id: 9, name: "C SECTION", duration: "2:37", isExplicit: true, features: "" },
-      { id: 10, name: "CO POISON", duration: "2:12", isExplicit: true, features: "" },
-      { id: 11, name: "SAFESPACE", duration: "2:52", isExplicit: true, features: "" },
-      { id: 12, name: "ZYGOTE", duration: "2:30", isExplicit: true, features: "" },
-      { id: 13, name: "SSJ2", duration: "3:11", isExplicit: true, features: "" },
-      { id: 14, name: "ERASE YOUR SOCIAL", duration: "2:30", isExplicit: true, features: "" },
-      { id: 15, name: "PEACE IN PANDEMONIUM", duration: "2:52", isExplicit: true, features: "" },
+      { id: 1, name: "ALL SPEAKERS GO TO HEAVEN", duration: "3:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/3zKdA7oG1Fh7Qo18n55LV3" },
+      { id: 2, name: "THE 9TH CIRCLE", duration: "2:01", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2c5jFqzmrM0XyJgWF63d4C" },
+      { id: 3, name: "SPEED DEMON", duration: "2:25", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0EeOf7vFKG9BQeyX0XdkGE" },
+      { id: 4, name: "STONE IN FOCUS", duration: "2:29", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4J0jCv9V4U2eoNHP0ta2zJ" },
+      { id: 5, name: "MISS BEHAVIOR", duration: "3:12", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5DaK0bzgMYLGUEGKKe8kMH" },
+      { id: 6, name: "B.Y.O.B.", duration: "2:42", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1IjLLOz3hmXBcqwIYt0Cxi" },
+      { id: 7, name: "OROCHIMARU", duration: "2:44", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2etPfXcKrBkVN0Ejmqk10K" },
+      { id: 8, name: "MARRIED TO MY JEWELER", duration: "1:44", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7cZVOLh3KxQJs6TY2pmUCx" },
+      { id: 9, name: "C SECTION", duration: "2:37", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5m1NhECNVfCMb2ov6lYOh4" },
+      { id: 10, name: "CO POISON", duration: "2:12", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5WIk0ewZnxrt7zMiDeG6os" },
+      { id: 11, name: "SAFESPACE", duration: "2:52", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6UoXKg3NiFTVW56Y5vNJ78" },
+      { id: 12, name: "ZYGOTE", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1ix59Tny21Dw6uDvHipNJc" },
+      { id: 13, name: "SSJ2", duration: "3:11", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/79209KOIW18hbquPZaXaDp" },
+      { id: 14, name: "ERASE YOUR SOCIAL", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6VyuRrtlCvxzL9n4HRlhFi" },
+      { id: 15, name: "PEACE IN PANDEMONIUM", duration: "2:52", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1QIJivmbJu0ti0rTk1CujQ" },
+    ],
+  },
+  {
+    id: 99,
+    title: "c (CD)",
+    releaseDate: "18 Sentyabr 2026",
+    duration: "15 mahnı, 39 dəqiqə",
+    label: "deadAir",
+    spotifyAlbumId: "6cwZdsIawCaF4Ukh7KV24l",
+    artist: ["Lucy Bedroque"],
+    price: 49.,
+    genre: "Hip-Hop/Rap",
+    year: 2026,
+    isNew: true,
+    isExplicit: true,
+    image: cCD.cover,
+    vinylImages: cCD.vinyl,
+    accentColor: "red",
+    format: "cd",
+    description: {
+      az: "c — amerikalı musiqiçi Lucy Bedroque-nin ikinci studiya albomu və Lucy Bedroque təxəllüsü ilə çıxan ilk albomudur; 18 sentyabr 2026-cı ildə deadAir etiketi ilə buraxılıb. Albomun çıxışı əvvəlcə 2026-cı ilin iyununa elan olunmuşdu, sonra qeyri-müəyyən müddətə təxirə salındı və nəhayət sənətçinin Paradise Chateau oyununda yeni tarix açıqlandı. Layihədən əvvəl aparıcı sinql kimi “Speed Demon” təqdim edilib; albom CD, vinil, kaset, rəqəmsal yükləmə və striminq formatlarında əlçatandır.",
+      en: "c is the second studio album by American musician Lucy Bedroque and the first released under the Lucy Bedroque name, issued through deadAir on September 18, 2026. It was first announced for June 2026, then delayed indefinitely before the new date was revealed in the artist's game Paradise Chateau. The lead single “Speed Demon” preceded the release, and the album is available on CD, vinyl, cassette, digital download and streaming.",
+      ru: "c — второй студийный альбом американского музыканта Lucy Bedroque и первый, вышедший под именем Lucy Bedroque; он был выпущен лейблом deadAir 18 сентября 2026 года. Релиз сначала анонсировали на июнь 2026 года, затем отложили на неопределённый срок, а новая дата была объявлена в игре артиста Paradise Chateau. Ведущим синглом стал «Speed Demon», а альбом доступен на CD, виниле, кассете, в цифровом виде и на стриминговых платформах.",
+    },
+    tracklist: [
+      { id: 1, name: "ALL SPEAKERS GO TO HEAVEN", duration: "3:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/3zKdA7oG1Fh7Qo18n55LV3" },
+      { id: 2, name: "THE 9TH CIRCLE", duration: "2:01", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2c5jFqzmrM0XyJgWF63d4C" },
+      { id: 3, name: "SPEED DEMON", duration: "2:25", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0EeOf7vFKG9BQeyX0XdkGE" },
+      { id: 4, name: "STONE IN FOCUS", duration: "2:29", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4J0jCv9V4U2eoNHP0ta2zJ" },
+      { id: 5, name: "MISS BEHAVIOR", duration: "3:12", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5DaK0bzgMYLGUEGKKe8kMH" },
+      { id: 6, name: "B.Y.O.B.", duration: "2:42", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1IjLLOz3hmXBcqwIYt0Cxi" },
+      { id: 7, name: "OROCHIMARU", duration: "2:44", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2etPfXcKrBkVN0Ejmqk10K" },
+      { id: 8, name: "MARRIED TO MY JEWELER", duration: "1:44", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7cZVOLh3KxQJs6TY2pmUCx" },
+      { id: 9, name: "C SECTION", duration: "2:37", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5m1NhECNVfCMb2ov6lYOh4" },
+      { id: 10, name: "CO POISON", duration: "2:12", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5WIk0ewZnxrt7zMiDeG6os" },
+      { id: 11, name: "SAFESPACE", duration: "2:52", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6UoXKg3NiFTVW56Y5vNJ78" },
+      { id: 12, name: "ZYGOTE", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1ix59Tny21Dw6uDvHipNJc" },
+      { id: 13, name: "SSJ2", duration: "3:11", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/79209KOIW18hbquPZaXaDp" },
+      { id: 14, name: "ERASE YOUR SOCIAL", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6VyuRrtlCvxzL9n4HRlhFi" },
+      { id: 15, name: "PEACE IN PANDEMONIUM", duration: "2:52", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1QIJivmbJu0ti0rTk1CujQ" },
+    ],
+  },
+  {
+    id: 100,
+    title: "c (Kaset)",
+    releaseDate: "18 Sentyabr 2026",
+    duration: "15 mahnı, 39 dəqiqə",
+    label: "deadAir",
+    spotifyAlbumId: "6cwZdsIawCaF4Ukh7KV24l",
+    artist: ["Lucy Bedroque"],
+    price: 29.99,
+    genre: "Hip-Hop/Rap",
+    year: 2026,
+    isNew: true,
+    isExplicit: true,
+    image: cCassette.cover,
+    vinylImages: cCassette.vinyl,
+    accentColor: "red",
+    format: "cassette",
+    description: {
+      az: "c — amerikalı musiqiçi Lucy Bedroque-nin ikinci studiya albomu və Lucy Bedroque təxəllüsü ilə çıxan ilk albomudur; 18 sentyabr 2026-cı ildə deadAir etiketi ilə buraxılıb. Albomun çıxışı əvvəlcə 2026-cı ilin iyununa elan olunmuşdu, sonra qeyri-müəyyən müddətə təxirə salındı və nəhayət sənətçinin Paradise Chateau oyununda yeni tarix açıqlandı. Layihədən əvvəl aparıcı sinql kimi “Speed Demon” təqdim edilib; albom CD, vinil, kaset, rəqəmsal yükləmə və striminq formatlarında əlçatandır.",
+      en: "c is the second studio album by American musician Lucy Bedroque and the first released under the Lucy Bedroque name, issued through deadAir on September 18, 2026. It was first announced for June 2026, then delayed indefinitely before the new date was revealed in the artist's game Paradise Chateau. The lead single “Speed Demon” preceded the release, and the album is available on CD, vinyl, cassette, digital download and streaming.",
+      ru: "c — второй студийный альбом американского музыканта Lucy Bedroque и первый, вышедший под именем Lucy Bedroque; он был выпущен лейблом deadAir 18 сентября 2026 года. Релиз сначала анонсировали на июнь 2026 года, затем отложили на неопределённый срок, а новая дата была объявлена в игре артиста Paradise Chateau. Ведущим синглом стал «Speed Demon», а альбом доступен на CD, виниле, кассете, в цифровом виде и на стриминговых платформах.",
+    },
+    tracklist: [
+      { id: 1, name: "ALL SPEAKERS GO TO HEAVEN", duration: "3:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/3zKdA7oG1Fh7Qo18n55LV3" },
+      { id: 2, name: "THE 9TH CIRCLE", duration: "2:01", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2c5jFqzmrM0XyJgWF63d4C" },
+      { id: 3, name: "SPEED DEMON", duration: "2:25", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/0EeOf7vFKG9BQeyX0XdkGE" },
+      { id: 4, name: "STONE IN FOCUS", duration: "2:29", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/4J0jCv9V4U2eoNHP0ta2zJ" },
+      { id: 5, name: "MISS BEHAVIOR", duration: "3:12", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5DaK0bzgMYLGUEGKKe8kMH" },
+      { id: 6, name: "B.Y.O.B.", duration: "2:42", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1IjLLOz3hmXBcqwIYt0Cxi" },
+      { id: 7, name: "OROCHIMARU", duration: "2:44", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/2etPfXcKrBkVN0Ejmqk10K" },
+      { id: 8, name: "MARRIED TO MY JEWELER", duration: "1:44", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/7cZVOLh3KxQJs6TY2pmUCx" },
+      { id: 9, name: "C SECTION", duration: "2:37", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5m1NhECNVfCMb2ov6lYOh4" },
+      { id: 10, name: "CO POISON", duration: "2:12", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/5WIk0ewZnxrt7zMiDeG6os" },
+      { id: 11, name: "SAFESPACE", duration: "2:52", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6UoXKg3NiFTVW56Y5vNJ78" },
+      { id: 12, name: "ZYGOTE", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1ix59Tny21Dw6uDvHipNJc" },
+      { id: 13, name: "SSJ2", duration: "3:11", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/79209KOIW18hbquPZaXaDp" },
+      { id: 14, name: "ERASE YOUR SOCIAL", duration: "2:30", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/6VyuRrtlCvxzL9n4HRlhFi" },
+      { id: 15, name: "PEACE IN PANDEMONIUM", duration: "2:52", isExplicit: true, features: "", spotifyEmbed: "https://open.spotify.com/embed/track/1QIJivmbJu0ti0rTk1CujQ" },
     ],
   },
 ];
 
-// Cloudinary images are served as AVIF/WebP at auto quality (see lib/cloudinary.js)
 export const albums = optimizeMedia(rawAlbums);
