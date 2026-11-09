@@ -449,7 +449,7 @@ const AlbumPage = () => {
               const editions = getEditions(albums, album);
               if (editions.length < 2) return null;
               return (
-                <div role="group" aria-label="Format" className="flex flex-wrap gap-2 pt-1">
+                <div role="group" aria-label="Format" className="grid gap-2 pt-1 sm:flex sm:flex-wrap" style={{ gridTemplateColumns: `repeat(${Math.min(editions.length, 3)}, minmax(0, 1fr))` }}>
                   {editions.map((e) => {
                     const current = e.id === album.id;
                     return (
@@ -458,10 +458,10 @@ const AlbumPage = () => {
                         to={`/album/${e.id}`}
                         replace
                         aria-current={current ? "page" : undefined}
-                        className={`lg-btn lg-btn-lib ${current ? "lg-btn-prominent" : "lg-btn-clear"} inline-flex items-center gap-2 h-10 px-4 text-sm font-medium`}
+                        className={`lg-btn lg-btn-lib ${current ? "lg-btn-prominent" : "lg-btn-clear"} inline-flex flex-col sm:flex-row items-center justify-center sm:gap-2 min-w-0 h-14 sm:h-10 px-2 sm:px-4 text-sm font-medium leading-tight`}
                       >
-                        {formatLabel(formatOf(e), language)}
-                        <span className="opacity-70">{e.price} ₼</span>
+                        <span className="truncate max-w-full">{formatLabel(formatOf(e), language)}</span>
+                        <span className="text-xs sm:text-sm opacity-70">{e.price} ₼</span>
                       </Link>
                     );
                   })}

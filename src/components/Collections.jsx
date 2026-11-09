@@ -120,7 +120,7 @@ export const Collections = () => {
         </div>
 
         {/* Format switcher */}
-        <div role="tablist" aria-label="Format" className="mb-6 flex flex-wrap gap-2">
+        <div role="tablist" aria-label="Format" className="mb-6 grid grid-cols-4 gap-2 sm:flex sm:flex-wrap">
           {["all", ...FORMATS].map((f) => {
             const active = formatTab === f;
             const count = f === "all" ? groupEditions(matching).length : formatCounts[f];
@@ -131,10 +131,10 @@ export const Collections = () => {
                 role="tab"
                 aria-selected={active}
                 onClick={() => setFormatTab(f)}
-                className={`lg-btn lg-btn-lib ${active ? "lg-btn-prominent" : "lg-btn-clear"} h-11 px-5 rounded-full text-sm font-medium`}
+                className={`lg-btn lg-btn-lib ${active ? "lg-btn-prominent" : "lg-btn-clear"} min-w-0 h-14 sm:h-11 px-1 sm:px-5 flex items-center justify-center flex-col sm:flex-row gap-0 sm:gap-2 rounded-full text-sm font-medium leading-tight`}
               >
-                {f === "all" ? t.all : formatLabel(f, language)}
-                <span className="ml-2 opacity-70">{count}</span>
+                <span className="truncate max-w-full">{f === "all" ? t.all : formatLabel(f, language)}</span>
+                <span className="text-xs sm:text-sm opacity-70">{count}</span>
               </button>
             );
           })}
@@ -316,14 +316,14 @@ export const Collections = () => {
                     <FavoriteButton albumId={album.id} size="medium" className="shrink-0" />
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-muted-foreground">
                     <span className="px-2 py-1 bg-secondary rounded">
                       {album.genre}
                     </span>
                     <span>•</span>
                     <span>{album.year}</span>
-                    <span>•</span>
-                    <span className="flex gap-1">
+                    <span className="hidden sm:inline">•</span>
+                    <span className="flex gap-1 basis-full sm:basis-auto">
                       {album.editionFormats.map((f) => (
                         <span key={f} className="px-2 py-1 rounded border border-border text-xs uppercase tracking-wide">
                           {formatLabel(f, language)}
