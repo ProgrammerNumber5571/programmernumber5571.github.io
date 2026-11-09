@@ -10,7 +10,7 @@ import { albums as rawAlbums } from "./Albums.jsx";
 import { useLanguage } from "./LanguageContext.jsx";
 import { useShopifyCart } from "../contexts/Shopifycartcontext";
 import { toast } from "sonner";
-import { displayTitle, groupEditions } from "../lib/editions.js";
+import { displayTitle, formatLabel, formatOf, getEditions, groupEditions } from "../lib/editions.js";
 
 type VinylColor =
   | "black"
@@ -116,7 +116,7 @@ const getAccentColors = (color?: string) => {
 export const FeaturedAlbums = () => {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { addToCart } = useShopifyCart();
 
   // Adds directly when the album is linked to Shopify; otherwise opens the
@@ -263,10 +263,18 @@ export const FeaturedAlbums = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-muted-foreground">
                     <span className="px-2 py-1 bg-secondary rounded">{album.genre}</span>
                     <span>•</span>
                     <span>{album.year}</span>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="flex gap-1 basis-full sm:basis-auto">
+                      {getEditions(rawAlbums, album).map((e: any) => (
+                        <span key={e.id} className="px-2 py-1 rounded border border-border text-xs uppercase tracking-wide">
+                          {formatLabel(formatOf(e), language)}
+                        </span>
+                      ))}
+                    </span>
                   </div>
 
                   <div className="flex items-center justify-between pt-4 border-t border-border">

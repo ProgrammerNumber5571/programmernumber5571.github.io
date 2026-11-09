@@ -947,7 +947,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                 className={"font-bold px-5 bg-primary text-primary-foreground min-w-0" + greyed}
               >
                 <ShoppingCart className="mr-2 h-4 w-4 shrink-0" />
-                <span className="truncate">{cartLoading ? t.adding : t.addToCart}</span>
+                <span className="truncate">{cartLoading ? t.adding : needsVariant ? t.selectDesign : t.addToCart}</span>
               </Button>
             </div>
           </div>
