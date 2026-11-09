@@ -31,10 +31,16 @@ const ArtistPage = () => {
   const { t, language } = useLanguage();
   const [hoveredId, setHoveredId] = useState(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [infoClosing, setInfoClosing] = useState(false);
+  // the popup animates out before it is unmounted (animation classes in index.css)
+  const closeInfo = () => {
+    setInfoClosing(true);
+    setTimeout(() => { setShowInfo(false); setInfoClosing(false); }, 220);
+  };
 
   useEffect(() => {
     if (!showInfo) return;
-    const onKeyDown = (e) => { if (e.key === "Escape") setShowInfo(false); };
+    const onKeyDown = (e) => { if (e.key === "Escape") closeInfo(); };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [showInfo]);
@@ -167,7 +173,7 @@ const ArtistPage = () => {
                   </h1>
                   <button
                     onClick={() => setShowInfo(true)}
-                    className="mt-3 w-11 h-11 rounded-full bg-secondary/70 text-foreground hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors flex-shrink-0"
+                    className="lg-btn lg-btn-lib lg-btn-clear mt-3 w-11 h-11 rounded-full bg-secondary/70 text-foreground hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors flex-shrink-0"
                     aria-label={t.description}
                     aria-haspopup="dialog"
                   >
@@ -326,8 +332,8 @@ const ArtistPage = () => {
 
       {showInfo && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
-          onClick={() => setShowInfo(false)}
+          className={`fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 ${infoClosing ? "details-out" : "details-in"}`}
+          onClick={closeInfo}
         >
           <div
             role="dialog"
