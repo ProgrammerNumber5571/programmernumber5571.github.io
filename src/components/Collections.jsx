@@ -5,15 +5,16 @@ import { CassetteTape } from '../components/CassetteTape.tsx';
 import { Button } from "../components/ui/Button.tsx";
 import { ShoppingCart } from "lucide-react";
 import { albums } from "./Albums.jsx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useLanguage } from "./LanguageContext.jsx";
+import { FORMATS, formatLabel, formatOf, groupEditions } from "../lib/editions.js";
 import { useShopifyCart } from "../contexts/Shopifycartcontext";
 import { FavoriteButton } from "./FavoritesSystem";
 import { toast } from "sonner";
 import { usePageTitle } from "./usePageTitle.js";
 
 export const Collections = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   usePageTitle(t.allCollection);
   const navigate = useNavigate();
   const { addToCart } = useShopifyCart();
@@ -27,6 +28,16 @@ export const Collections = () => {
     } else {
       navigate(`/album/${album.id}`);
     }
+  };
+  // the format lives in the address (?format=cd) so it can be linked to and survives back/forward
+  const [searchParams, setSearchParams] = useSearchParams();
+  const formatParam = searchParams.get("format");
+  const formatTab = FORMATS.includes(formatParam) ? formatParam : "all";
+  const setFormatTab = (value) => {
+    const next = new URLSearchParams(searchParams);
+    if (value === "all") next.delete("format");
+    else next.set("format", value);
+    setSearchParams(next, { replace: true });
   };
   const [genreFilter, setGenreFilter] = useState("All");
   const [yearFilter, setYearFilter] = useState("All");
@@ -69,12 +80,22 @@ export const Collections = () => {
     return colorMap[color || "default"] || colorMap.default;
   };
 
-  let filteredAlbums = albums.filter((album) => {
+  const matching = albums.filter((album) => {
     const genreMatch = genreFilter === "All" || album.genre === genreFilter;
     const yearMatch = yearFilter === "All" || album.year.toString() === yearFilter;
     const artistMatch = artistFilter === "All" || album.artist === artistFilter;
     return genreMatch && yearMatch && artistMatch;
   });
+
+  // "All": one card per album listing the formats it comes in; a format tab lists that
+  // format's own editions.
+  const formatCounts = Object.fromEntries(
+    FORMATS.map((f) => [f, matching.filter((a) => formatOf(a) === f).length])
+  );
+  let filteredAlbums =
+    formatTab === "all"
+      ? groupEditions(matching).map((g) => ({ ...g.primary, editionFormats: g.editions.map(formatOf) }))
+      : matching.filter((a) => formatOf(a) === formatTab).map((a) => ({ ...a, editionFormats: [formatOf(a)] }));
 
   if (sortOrder === "cheap") {
     filteredAlbums.sort((a, b) => a.price - b.price);
@@ -96,6 +117,27 @@ export const Collections = () => {
           <p className="text-muted-foreground text-lg">
             {filteredAlbums.length} {t.discoverRecords}
           </p>
+        </div>
+
+        {/* Format switcher */}
+        <div role="tablist" aria-label="Format" className="mb-6 flex flex-wrap gap-2">
+          {["all", ...FORMATS].map((f) => {
+            const active = formatTab === f;
+            const count = f === "all" ? groupEditions(matching).length : formatCounts[f];
+            return (
+              <button
+                key={f}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setFormatTab(f)}
+                className={`lg-btn lg-btn-lib ${active ? "lg-btn-prominent" : "lg-btn-clear"} h-11 px-5 rounded-full text-sm font-medium`}
+              >
+                {f === "all" ? t.all : formatLabel(f, language)}
+                <span className="ml-2 opacity-70">{count}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Filter + Sort Controls */}
@@ -280,6 +322,14 @@ export const Collections = () => {
                     </span>
                     <span>•</span>
                     <span>{album.year}</span>
+                    <span>•</span>
+                    <span className="flex gap-1">
+                      {album.editionFormats.map((f) => (
+                        <span key={f} className="px-2 py-1 rounded border border-border text-xs uppercase tracking-wide">
+                          {formatLabel(f, language)}
+                        </span>
+                      ))}
+                    </span>
                   </div>
 
                   <div className="flex items-center justify-between pt-4 border-t border-border">

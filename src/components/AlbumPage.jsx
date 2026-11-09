@@ -17,6 +17,7 @@ import { loadInteractions, addInteraction, addReplyToInteraction } from './album
 import { usePageTitle } from './usePageTitle.js';
 import { useCoverPalette } from '../lib/coverPalette.js';
 import { cleanAlbumTitle } from './spotifyClient.js';
+import { formatLabel, formatOf, getEditions } from '../lib/editions.js';
 
 // Descriptions longer than this are cut off; clicking one opens the full text with the album's details
 const DESCRIPTION_LIMIT = 220;
@@ -443,6 +444,30 @@ const AlbumPage = () => {
                 );
               })}
             </div>
+            {(() => {
+              // other formats of this record (vinyl / CD / cassette), same artist and title
+              const editions = getEditions(albums, album);
+              if (editions.length < 2) return null;
+              return (
+                <div role="group" aria-label="Format" className="flex flex-wrap gap-2 pt-1">
+                  {editions.map((e) => {
+                    const current = e.id === album.id;
+                    return (
+                      <Link
+                        key={e.id}
+                        to={`/album/${e.id}`}
+                        replace
+                        aria-current={current ? "page" : undefined}
+                        className={`lg-btn lg-btn-lib ${current ? "lg-btn-prominent" : "lg-btn-clear"} inline-flex items-center gap-2 h-10 px-4 text-sm font-medium`}
+                      >
+                        {formatLabel(formatOf(e), language)}
+                        <span className="opacity-70">{e.price} ₼</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              );
+            })()}
             {(() => {
               const ratedReviews = interactions.filter(i => i.type === 'review' && i.rating);
               if (ratedReviews.length === 0) return null;
