@@ -157,6 +157,8 @@ const translations = {
     sortExpensive: "Bahadan Ucuza",
     // Artist page
     artistNotFound: "Artist Tapılmadı",
+    bornLabel: "Doğum tarixi",
+    countryLabel: "Ölkə",
     artistNoDescription: "Bu artist haqqında məlumat tezliklə əlavə olunacaq.",
     latestRelease: "Son Buraxılış",
     discography: "Diskografiya",
@@ -442,6 +444,8 @@ const translations = {
     sortExpensive: "Most Expensive → Cheapest",
     // Artist page
     artistNotFound: "Artist Not Found",
+    bornLabel: "Born",
+    countryLabel: "Country",
     artistNoDescription: "Information about this artist is coming soon.",
     latestRelease: "Latest Release",
     discography: "Discography",
@@ -727,6 +731,8 @@ const translations = {
     sortExpensive: "Сначала дорогие",
     // Artist page
     artistNotFound: "Исполнитель не найден",
+    bornLabel: "Дата рождения",
+    countryLabel: "Страна",
     artistNoDescription: "Информация об этом исполнителе скоро появится.",
     latestRelease: "Последний релиз",
     discography: "Дискография",

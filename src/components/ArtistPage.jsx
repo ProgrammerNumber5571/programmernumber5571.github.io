@@ -8,9 +8,10 @@ import { VinylRecord } from "./VinylRecord.tsx";
 import { CDDisc } from "./CDDisc.tsx";
 import { CassetteTape } from "./CassetteTape.tsx";
 import { Button } from "./ui/Button.tsx";
-import { useLanguage, localizeText } from "./LanguageContext.jsx";
+import { useLanguage, localizeText, localizeReleaseDate } from "./LanguageContext.jsx";
 import { usePageTitle } from "./usePageTitle.js";
 import { displayTitle, groupEditions } from "../lib/editions.js";
+import { useCoverPalette } from "../lib/coverPalette.js";
 
 const getAccentColor = (color) => {
   const colorMap = {
@@ -105,6 +106,8 @@ const ArtistPage = () => {
 
   const artistBanner = bannerFromUrl || artistProfile.banner;
   const artistProfileImage = profileFromUrl || artistProfile.profileImage;
+  // the page takes on the banner's colours (see lib/coverPalette.js), like the album page does with its cover
+  const palette = useCoverPalette(artistBanner);
 
   if (artistAlbums.length === 0) {
     return (
@@ -124,9 +127,33 @@ const ArtistPage = () => {
   const latestAlbum = sortedAlbums[0];
 
   return (
-    <div className="min-h-screen bg-background text-foreground artist-page">
+    <div className="min-h-screen bg-background text-foreground artist-page relative isolate">
+      {palette && (
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none cover-backdrop" aria-hidden="true">
+          <div className="absolute inset-0 [.light_&]:hidden" style={{ backgroundColor: palette.base }} />
+          <div
+            className="absolute inset-x-0 top-0 h-[1100px] [.light_&]:opacity-40"
+            style={{
+              backgroundImage: [
+                `radial-gradient(55% 42% at 14% 40%, ${palette.blobs[0]}, transparent 72%)`,
+                `radial-gradient(48% 38% at 84% 34%, ${palette.blobs[1]}, transparent 72%)`,
+                `radial-gradient(75% 50% at 52% 62%, ${palette.blobs[2]}, transparent 78%)`,
+              ].join(', '),
+              WebkitMaskImage: 'linear-gradient(to bottom, #000 55%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, #000 55%, transparent 100%)',
+            }}
+          />
+        </div>
+      )}
       <div className="relative">
-        <div className="absolute inset-0 h-[500px] overflow-hidden">
+        <div
+          className="absolute inset-0 h-[500px] overflow-hidden"
+          style={palette ? {
+            // dissolve the banner into the page's colours instead of ending on a hard edge
+            WebkitMaskImage: 'linear-gradient(to bottom, #000 50%, transparent 100%)',
+            maskImage: 'linear-gradient(to bottom, #000 50%, transparent 100%)',
+          } : undefined}
+        >
           {artistBanner && !bannerError ? (
             <>
               <img
@@ -135,7 +162,16 @@ const ArtistPage = () => {
                 className="w-full h-full object-cover"
                 onError={() => setBannerError(true)}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background" />
+              {/* the banner fades into the page: its own colour in dark theme, the plain background in light */}
+              <div className={`absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background ${palette ? "hidden [.light_&]:block" : ""}`} />
+              {palette && (
+                <div
+                  className="absolute inset-0 [.light_&]:hidden"
+                  style={{
+                    backgroundImage: `linear-gradient(to bottom, color-mix(in srgb, ${palette.base} 30%, transparent), color-mix(in srgb, ${palette.base} 60%, transparent))`,
+                  }}
+                />
+              )}
             </>
           ) : (
             <div className="w-full h-full bg-gradient-to-b from-muted via-card to-background" />
@@ -342,9 +378,19 @@ const ArtistPage = () => {
             aria-modal="true"
             aria-label={artist}
             onClick={(e) => e.stopPropagation()}
-            className="glass-panel bg-background border border-border w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+            className={`glass-panel relative bg-background border border-border w-full max-w-md rounded-2xl shadow-2xl overflow-hidden ${palette ? "[.light_&]:text-foreground text-white [&_.text-muted-foreground]:text-white/70 [.light_&_.text-muted-foreground]:!text-muted-foreground [&_.bg-secondary]:bg-white/15" : ""}`}
           >
-            <div className="p-8">
+            {palette && (
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 pointer-events-none [.light_&]:opacity-40"
+                style={{
+                  backgroundColor: palette.base,
+                  backgroundImage: `radial-gradient(90% 80% at 0% 0%, ${palette.blobs[0]}, transparent 70%), radial-gradient(80% 70% at 100% 25%, ${palette.blobs[1]}, transparent 70%), radial-gradient(90% 80% at 40% 110%, ${palette.blobs[2]}, transparent 70%)`,
+                }}
+              />
+            )}
+            <div className="relative p-8">
               <div className="flex items-center gap-4 mb-6">
                 {artistProfileImage && !profileError && (
                   <img
@@ -371,6 +417,23 @@ const ArtistPage = () => {
                   <p className="text-xs text-muted-foreground">{t.latestRelease}</p>
                 </div>
               </div>
+
+              {(artistProfile.birthDate || artistProfile.country) && (
+                <dl className="grid grid-cols-2 gap-x-6 gap-y-3 mb-6 text-sm">
+                  {artistProfile.birthDate && (
+                    <div>
+                      <dt className="text-xs text-muted-foreground">{t.bornLabel}</dt>
+                      <dd className="font-medium">{localizeReleaseDate(artistProfile.birthDate, language)}</dd>
+                    </div>
+                  )}
+                  {artistProfile.country && (
+                    <div>
+                      <dt className="text-xs text-muted-foreground">{t.countryLabel}</dt>
+                      <dd className="font-medium">{localizeText(artistProfile.country, language)}</dd>
+                    </div>
+                  )}
+                </dl>
+              )}
 
               <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2">
                 {t.description}

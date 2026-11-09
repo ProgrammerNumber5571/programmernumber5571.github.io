@@ -551,6 +551,19 @@ html.liquid-glass.light .lg-btn-lib:not(.lg-btn-prominent):not(.lg-btn-danger) {
   text-shadow: none;
 }
 
+/* Buttons that sit on top of artwork: always dark glass with white text, in either theme,
+   so they stay readable over white covers. */
+html.liquid-glass .lg-btn-lib.lg-btn-media,
+html.liquid-glass.light .lg-btn-lib.lg-btn-media:not(.lg-btn-prominent):not(.lg-btn-danger) {
+  --lg-btn-tint: rgb(0 0 0 / 0.55);
+  color: #fff;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.5);
+}
+html.liquid-glass .lg-btn-lib.lg-btn-media:not(:disabled):hover,
+html.liquid-glass.light .lg-btn-lib.lg-btn-media:not(:disabled):hover {
+  --lg-btn-tint: rgb(0 0 0 / 0.7);
+}
+
 /* A button inside other glass shouldn't inherit the parent's highlight/lens;
    it gets its own highlight from liquidGlass.js. */
 html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens, .lg-btn) .lg-btn {

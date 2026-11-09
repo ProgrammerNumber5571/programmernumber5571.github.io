@@ -55,6 +55,7 @@ function buildPalette(pixels) {
   let avgG = 0;
   let avgB = 0;
   let n = 0;
+  let coloured = 0; // pixels with real colour in them
 
   for (let i = 0; i < pixels.length; i += 4) {
     if (pixels[i + 3] < 128) continue;
@@ -63,9 +64,16 @@ function buildPalette(pixels) {
     avgG += pixels[i + 1];
     avgB += pixels[i + 2];
     n++;
-    // vivid, mid-tone pixels define the artwork's colour; near-black/white/grey ones don't
-    const weight = s * (1 - Math.abs(2 * l - 1)) ** 0.6;
+    // vivid, mid-tone pixels define the artwork's colour; near-black/white/grey ones don't.
+    // Saturation alone is useless near black (rgb(0,3,2) is "100% saturated", and image
+    // compression leaves exactly that kind of noise on a black cover), so weight by the
+    // absolute chroma and ignore the extreme ends of the lightness range.
+    if (l < 0.04 || l > 0.95) continue;
+    const chroma = (Math.max(pixels[i], pixels[i + 1], pixels[i + 2]) - Math.min(pixels[i], pixels[i + 1], pixels[i + 2])) / 255;
+    if (chroma < 0.07) continue; // compression noise / grey
+    const weight = chroma * (1 - Math.abs(2 * l - 1)) ** 0.6;
     if (weight < 0.02) continue;
+    coloured++;
     const bin = bins[Math.floor(h / (360 / BINS)) % BINS];
     bin.weight += weight;
     bin.h += h * weight;
@@ -75,10 +83,11 @@ function buildPalette(pixels) {
   if (!n) return null;
 
   const ranked = bins.filter((b) => b.weight > 0).sort((a, b) => b.weight - a.weight);
-  const total = ranked.reduce((sum, b) => sum + b.weight, 0);
 
-  // Essentially monochrome artwork: a neutral palette from its average tone
-  if (!ranked.length || total / n < 0.04) {
+  // Essentially monochrome artwork (black, white, grey; or too few coloured pixels to matter):
+  // a neutral palette from its average tone. Counted in pixels, not weight, so a dark cover
+  // with a real tint still keeps its colour.
+  if (!ranked.length || coloured / n < 0.06) {
     const [, , l] = rgbToHsl(avgR / n, avgG / n, avgB / n);
     const tone = clamp(l, 0.12, 0.6);
     return {
@@ -105,12 +114,17 @@ function buildPalette(pixels) {
   };
 }
 
+// Images on hosts that don't send CORS headers can't be read from a canvas. Only a tiny copy is
+// needed for the palette, so fall back to fetching one through an image proxy that does.
+const proxied = (url) => `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=64&h=64&fit=cover&output=jpg`;
+
 export function getCoverPalette(url) {
   if (!url) return Promise.resolve(null);
   if (!cache.has(url)) {
     cache.set(
       url,
       loadPixels(url)
+        .catch(() => (/^https?:/i.test(url) ? loadPixels(proxied(url)) : Promise.reject(new Error('unreadable'))))
         .then(buildPalette)
         .catch(() => null)
     );
