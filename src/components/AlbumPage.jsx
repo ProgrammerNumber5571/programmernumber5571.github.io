@@ -660,7 +660,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                         </span>
                       )}
                     </div>
-                    <div className={`grid grid-cols-4 gap-3 ${variantError ? 'ring-2 ring-red-500 rounded-lg p-2' : ''}`}>
+                    <div className={`grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-3 ${variantError ? 'ring-2 ring-red-500 rounded-lg p-2' : ''}`}>
                       {album.variants.map((variant) => (
                         <button
                           key={variant.id}
@@ -673,12 +673,12 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                           className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${selectedVariant === variant.id ? "border-primary ring-2 ring-primary/50" : "border-border hover:border-primary/50"}`}
                         >
                           <img loading="lazy" decoding="async" src={variant.image} alt={variant.name} className="w-full h-full object-cover" />
-                          <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-1 text-center">
-                            <p className="text-xs text-white font-medium truncate">{variant.name}</p>
+                          <div className="absolute bottom-0 left-0 right-0 bg-black/70 backdrop-blur-sm p-2 sm:p-1 text-center">
+                            <p className="text-sm sm:text-xs text-white font-medium line-clamp-2 sm:truncate leading-snug">{variant.name}</p>
                           </div>
                           {selectedVariant === variant.id && (
                             <div className="absolute top-2 right-2 bg-primary text-primary-foreground rounded-full p-1">
-                              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="w-5 h-5 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                               </svg>
                             </div>

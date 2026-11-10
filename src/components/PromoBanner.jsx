@@ -39,9 +39,53 @@ const promos = pool
     id: album.id,
     albumId: album.id,
     media: album.animatedCover || getCover(album),
+    still: getCover(album) || posterFor(album.animatedCover),
     backdrop: getCover(album) || posterFor(album.animatedCover) || album.animatedCover,
     title: album.title,
   }));
+
+// The animated covers were uploaded as small GIFs (a few hundred px wide), which look blurry when
+// stretched over a phone's 3x screen. So the sharp still cover is always drawn, and the animation is
+// only laid over it when the video has enough pixels for the size it is shown at.
+function PromoMedia({ promo }) {
+  const [sharp, setSharp] = useState(false);
+  const animated = isVideo(promo.media);
+  const still = promo.still || (animated ? undefined : promo.media);
+
+  const checkSharp = (e) => {
+    const v = e.currentTarget;
+    const needed = v.clientWidth * (window.devicePixelRatio || 1) * 0.75;
+    setSharp(v.videoWidth >= needed);
+  };
+
+  return (
+    <div className="relative z-10 h-3/4 aspect-square max-w-[85%] rounded-xl overflow-hidden shadow-2xl">
+      {still && (
+        <img
+          decoding="async"
+          src={still}
+          alt={promo.title}
+          className="absolute inset-0 w-full h-full object-contain"
+        />
+      )}
+      {animated && (
+        <video
+          src={promo.media}
+          poster={still ? undefined : posterFor(promo.media)}
+          autoPlay
+          loop
+          muted
+          playsInline
+          onLoadedMetadata={checkSharp}
+          aria-hidden="true"
+          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
+            sharp || !still ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      )}
+    </div>
+  );
+}
 
 export function PromoBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -127,24 +171,7 @@ export function PromoBanner() {
                 opacity: 0.55,
               }}
             />
-            {isVideo(promo.media) ? (
-              <video
-                src={promo.media}
-                poster={posterFor(promo.media)}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="relative z-10 h-3/4 max-w-[85%] object-contain rounded-xl shadow-2xl"
-              />
-            ) : (
-              <img decoding="async"
-                src={promo.media}
-                alt={promo.title}
-                loading={promo.id === promos[0]?.id ? 'eager' : 'lazy'}
-                className="relative z-10 h-3/4 max-w-[85%] object-contain rounded-xl shadow-2xl"
-              />
-            )}
+            <PromoMedia promo={promo} />
           </Link>
         ))}
       </div>

@@ -28,9 +28,24 @@ function ownImageDomain() {
   };
 }
 
+// Identifies this build. It is baked into the app and also published as /version.json, so a browser
+// running an older cached copy can notice a newer deploy exists (see src/lib/updateCheck.js).
+const BUILD_ID = Date.now().toString(36);
+
+function publishVersion() {
+  return {
+    name: 'publish-version',
+    apply: 'build',
+    generateBundle() {
+      this.emitFile({ type: 'asset', fileName: 'version.json', source: JSON.stringify({ id: BUILD_ID }) });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), ownImageDomain()],
+  plugins: [react(), ownImageDomain(), publishVersion()],
   define: {
+    __BUILD_ID__: JSON.stringify(BUILD_ID),
     __IMG_PROXY__: JSON.stringify(useOwnDomain),
     __IMG_PREFIX__: JSON.stringify(useOwnDomain ? OWN_PATH : CLOUDINARY),
   },
