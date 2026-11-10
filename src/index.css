@@ -838,14 +838,14 @@ html:not(.light) .album-hero-fade {
 }
 @media (max-width: 767px) {
   html.has-tabbar {
-    --tabbar-h: calc(4.5rem + env(safe-area-inset-bottom));
+    --tabbar-h: calc(5.5rem + env(safe-area-inset-bottom));
   }
   /* where the bar's top edge is right now (it shrinks into a floating pill while scrolling down) */
   html.has-tabbar {
     --tabbar-now: var(--tabbar-h);
   }
   html.has-tabbar.tabbar-compact {
-    --tabbar-now: calc(4.25rem + env(safe-area-inset-bottom));
+    --tabbar-now: calc(4.5rem + env(safe-area-inset-bottom));
   }
   html.has-tabbar body {
     padding-bottom: var(--tabbar-h);

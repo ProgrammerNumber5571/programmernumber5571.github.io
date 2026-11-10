@@ -44,6 +44,7 @@ export const MobileTabBar = () => {
   // Like Instagram: scrolling down shrinks the bar into a small floating pill (icons only),
   // scrolling up (or being at the top) brings the full bar back.
   const [compact, setCompact] = useState(false);
+  const [pressed, setPressed] = useState(false); // finger down on the bar: the glass swells slightly, like iOS 26
   const [morphing, setMorphing] = useState(false); // the pill snaps instead of gliding while the bar resizes
   useEffect(() => {
     if (!visible) return undefined;
@@ -103,24 +104,31 @@ export const MobileTabBar = () => {
   return (
     <nav
       aria-label="Main"
-      className="md:hidden fixed left-0 right-0 mx-auto z-40 border-border bg-card/95 px-3 shadow-[0_-8px_24px_-12px_rgb(0_0_0/0.5)] transition-[width,bottom,border-radius,padding] duration-500 ease-[cubic-bezier(0.34,1.3,0.55,1)] motion-reduce:transition-none"
+      // An opted-in Liquid Glass lens (refraction + rim light, see liquidGlass.js). It is positioned inline
+      // rather than with the "fixed" class on purpose: nav.fixed is the full-width top bar, which only gets
+      // plain frosting. Without Liquid Glass the utility classes give a frosted pill instead.
+      className="lg-lens md:hidden left-0 right-0 mx-auto z-40 border border-border/60 bg-background/60 px-1.5 py-1.5 backdrop-blur-xl shadow-[0_12px_32px_-10px_rgb(0_0_0/0.55)] transition-[width,bottom,transform] duration-[600ms] ease-[cubic-bezier(0.32,1.35,0.5,1)] motion-reduce:transition-none"
       style={{
-        width: compact ? "min(17.5rem, calc(100% - 4rem))" : "100%",
-        bottom: compact ? "calc(0.75rem + env(safe-area-inset-bottom))" : "0px",
-        borderRadius: compact ? "1.75rem" : "1.5rem 1.5rem 0 0",
-        borderWidth: compact ? "1px" : "1px 0 0 0",
-        paddingTop: compact ? "0.375rem" : "0.5rem",
-        paddingBottom: compact ? "0.375rem" : "calc(0.5rem + env(safe-area-inset-bottom))",
+        position: "fixed",
+        width: compact ? "min(15.5rem, calc(100% - 4rem))" : "calc(100% - 1.5rem)",
+        bottom: "calc(0.75rem + env(safe-area-inset-bottom))",
+        borderRadius: "9999px",
+        transform: pressed ? "scale(1.02)" : "scale(1)",
       }}
+      onPointerDown={() => setPressed(true)}
+      onPointerUp={() => setPressed(false)}
+      onPointerCancel={() => setPressed(false)}
+      onPointerLeave={() => setPressed(false)}
     >
       <ul ref={listRef} className="relative flex items-stretch justify-between">
         {/* the gliding highlight */}
         <span
           aria-hidden="true"
-          className="tabbar-pill pointer-events-none absolute inset-y-0 rounded-full bg-primary/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.14)]"
+          className="tabbar-pill pointer-events-none absolute inset-y-0 rounded-full bg-primary/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.4),inset_0_0_0_1px_rgb(255_255_255/0.14),0_4px_14px_-4px_rgb(0_0_0/0.45)]"
           style={{
             width: pill?.width ?? 0,
-            transform: `translateX(${pill?.left ?? 0}px)`,
+            // while a finger is down the selection bubble stretches, then springs back (Apple's lens "lift")
+            transform: `translateX(${pill?.left ?? 0}px) scale(${pressed ? "1.14,1.1" : "1,1"})`,
             opacity: pill && activeIndex >= 0 ? 1 : 0,
             transition: settled && !morphing ? undefined : "none",
           }}
