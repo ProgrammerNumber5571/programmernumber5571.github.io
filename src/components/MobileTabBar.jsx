@@ -41,10 +41,51 @@ export const MobileTabBar = () => {
   const [pill, setPill] = useState(null); // { left, width }
   const [settled, setSettled] = useState(false); // false until the first position is placed (no slide-in from 0)
 
+  // Like Instagram: scrolling down shrinks the bar into a small floating pill (icons only),
+  // scrolling up (or being at the top) brings the full bar back.
+  const [compact, setCompact] = useState(false);
+  const [morphing, setMorphing] = useState(false); // the pill snaps instead of gliding while the bar resizes
+  useEffect(() => {
+    if (!visible) return undefined;
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const dy = y - last;
+      if (y < 48) setCompact(false);
+      else if (dy > 10) setCompact(true);
+      else if (dy < -10) setCompact(false);
+      if (Math.abs(dy) > 10 || y < 48) last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [visible]);
+  useEffect(() => {
+    document.documentElement.classList.toggle("tabbar-compact", visible && compact);
+    return () => document.documentElement.classList.remove("tabbar-compact");
+  }, [visible, compact]);
+  const firstRun = useRef(true);
+  useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return undefined;
+    }
+    setMorphing(true);
+    const id = setTimeout(() => setMorphing(false), 600);
+    return () => clearTimeout(id);
+  }, [compact]);
+
   const measure = () => {
     const el = itemRefs.current[activeIndex];
     if (el) setPill({ left: el.offsetLeft, width: el.offsetWidth });
   };
+  // keep the pill under the active tab while the bar changes width
+  useEffect(() => {
+    if (!visible || !listRef.current || typeof ResizeObserver === "undefined") return undefined;
+    const ro = new ResizeObserver(measure);
+    ro.observe(listRef.current);
+    return () => ro.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible, activeIndex]);
   useLayoutEffect(() => {
     if (!visible) return undefined;
     measure();
@@ -62,8 +103,15 @@ export const MobileTabBar = () => {
   return (
     <nav
       aria-label="Main"
-      className="md:hidden fixed bottom-0 inset-x-0 z-40 rounded-t-3xl border-t border-border bg-card/95 px-3 pt-2 shadow-[0_-8px_24px_-12px_rgb(0_0_0/0.5)]"
-      style={{ paddingBottom: "calc(0.5rem + env(safe-area-inset-bottom))" }}
+      className="md:hidden fixed left-0 right-0 mx-auto z-40 border-border bg-card/95 px-3 shadow-[0_-8px_24px_-12px_rgb(0_0_0/0.5)] transition-[width,bottom,border-radius,padding] duration-500 ease-[cubic-bezier(0.34,1.3,0.55,1)] motion-reduce:transition-none"
+      style={{
+        width: compact ? "min(17.5rem, calc(100% - 4rem))" : "100%",
+        bottom: compact ? "calc(0.75rem + env(safe-area-inset-bottom))" : "0px",
+        borderRadius: compact ? "1.75rem" : "1.5rem 1.5rem 0 0",
+        borderWidth: compact ? "1px" : "1px 0 0 0",
+        paddingTop: compact ? "0.375rem" : "0.5rem",
+        paddingBottom: compact ? "0.375rem" : "calc(0.5rem + env(safe-area-inset-bottom))",
+      }}
     >
       <ul ref={listRef} className="relative flex items-stretch justify-between">
         {/* the gliding highlight */}
@@ -74,7 +122,7 @@ export const MobileTabBar = () => {
             width: pill?.width ?? 0,
             transform: `translateX(${pill?.left ?? 0}px)`,
             opacity: pill && activeIndex >= 0 ? 1 : 0,
-            transition: settled ? undefined : "none",
+            transition: settled && !morphing ? undefined : "none",
           }}
         />
         {tabs.map(({ to, icon: Icon, label, count }, i) => {
@@ -84,9 +132,10 @@ export const MobileTabBar = () => {
               <Link
                 to={to}
                 aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center justify-center gap-1 rounded-full py-2 text-[11px] font-semibold leading-none transition-colors duration-300 ${
-                  active ? "text-primary" : "text-muted-foreground"
-                }`}
+                aria-label={label}
+                className={`flex flex-col items-center justify-center rounded-full text-[11px] font-semibold leading-none transition-[color,padding] duration-300 ${
+                  compact ? "py-2" : "gap-1 py-2"
+                } ${active ? "text-primary" : "text-muted-foreground"}`}
               >
                 <span className={`relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${active ? "scale-110 -translate-y-px" : ""}`}>
                   <Icon className="w-6 h-6" />
@@ -96,7 +145,14 @@ export const MobileTabBar = () => {
                     </span>
                   )}
                 </span>
-                <span className="truncate max-w-full px-0.5">{label}</span>
+                <span
+                  aria-hidden={compact}
+                  className={`truncate max-w-full px-0.5 overflow-hidden transition-[max-height,opacity,margin] duration-300 ${
+                    compact ? "max-h-0 opacity-0" : "max-h-4 opacity-100"
+                  }`}
+                >
+                  {label}
+                </span>
               </Link>
             </li>
           );

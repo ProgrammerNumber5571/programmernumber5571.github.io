@@ -998,7 +998,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
           </div>
 
           {/* Mobile: price + add-to-cart stay visible while scrolling */}
-          <div className="glass-panel md:hidden fixed bottom-[var(--tabbar-h,0px)] inset-x-0 z-40 bg-background/95 backdrop-blur border-t border-border px-4 pt-3 pb-3 flex items-center justify-between gap-3">
+          <div className="glass-panel md:hidden fixed bottom-[var(--tabbar-now,var(--tabbar-h,0px))] transition-[bottom] duration-500 inset-x-0 z-40 bg-background/95 backdrop-blur border-t border-border px-4 pt-3 pb-3 flex items-center justify-between gap-3">
             <p className="text-xl font-serif font-bold shrink-0">{(album.price * quantity).toFixed(2)} ₼</p>
             <div className="flex items-center gap-3 min-w-0">
               <FavoriteButton albumId={album.id} size="medium" className="shrink-0" />
