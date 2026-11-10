@@ -497,19 +497,6 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
             <div className="flex items-center pt-1">
               <FavoriteButton albumId={album.id} size="medium" />
             </div>
-            {album.description && (
-              <div className="border-y border-border py-3 text-sm text-muted-foreground">
-                <p
-                  className="whitespace-pre-line"
-                  style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-                >
-                  {localizeText(album.description, language)}
-                </p>
-                <button type="button" onClick={() => setShowDetails(true)} className="mt-1 font-bold text-foreground" aria-haspopup="dialog">
-                  {t.more || 'MORE'}
-                </button>
-              </div>
-            )}
             {(() => {
               // the formats this record comes in (vinyl / CD / cassette) share this one page
               if (editions.length < 2) return null;
