@@ -1,4 +1,4 @@
-import { optimizeMedia } from "../lib/cloudinary.js";
+﻿import { optimizeMedia } from "../lib/cloudinary.js";
 
 /*
   TEMPLATES:
@@ -705,6 +705,17 @@ const luhLeakyzVol1 = {
     "https://res.cloudinary.com/deroy68n9/image/upload/v1794225629/LUHLEAKYZVOL.1_VINYL_04_2048x_qe9yuu.webp",
     "https://res.cloudinary.com/deroy68n9/image/upload/v1794225629/LUHLEAKYZVOL.1_VINYL_05_2048x_brnrvw.webp",
     "https://res.cloudinary.com/deroy68n9/image/upload/v1794225629/LUHLEAKYZVOL.1_VINYL_06_2048x_jrudzy.webp"
+  ]
+};
+
+const luhLeakyzVol1CD = {
+  cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1794225631/500x500-000000-80-0-0_ilaikr.jpg",
+  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1794225629/LUH_LEAKYZ_VOL._1__JEWEL_CASE_CD__01-745f23c0f9a44ca69f7d7e1e5d07c657_2048x_qiahnq.webp",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1794225632/LUH_LEAKYZ_VOL._1__JEWEL_CASE_CD__02-4e7dda48bf914f5db8a7445f6fad27b0_2048x_fz8jny.webp",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1794225632/LUH_LEAKYZ_VOL._1__JEWEL_CASE_CD__03-7d101f2b1b194098ae62b21a5d08b45e_2048x_bffbq9.webp",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1794225632/LUH_LEAKYZ_VOL._1__JEWEL_CASE_CD__04-043035f29b5043d88bbb6dab1d993a71_2048x_uolnhm.webp",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1794225632/LUH_LEAKYZ_VOL._1__JEWEL_CASE_CD__05-11f0d7e587d94282831f8b665e5c6cc9_2048x_tngfkx.webp",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1794225630/LUH_LEAKYZ_VOL._1__JEWEL_CASE_CD__06-688ee53951cc49d0a9b9b60f3afba78f_2048x_wfbfzk.webp"
   ]
 };
 
@@ -5137,7 +5148,46 @@ const rawAlbums = [
       { id: 13, name: "Martian", isExplicit: true, features: "", duration: "2:54", spotifyEmbed: "https://open.spotify.com/embed/track/1CXKoF2fu51ZGoKYy0Gqmy" },
       { id: 14, name: "Last Day", isExplicit: true, features: "", duration: "2:32", spotifyEmbed: "https://open.spotify.com/embed/track/5Rlpx1R2OmQPWJi2EfyTmG" },
     ],
-  }
+  },
+  {
+    id: 102,
+    title: "Luh Leakyz Vol. 1 (CD)",
+    releaseDate: "23 Oktyabr 2026",
+    duration: "14 mahnı, 40 dəqiqə",
+    label: "Lyfestyle Corporation / Field Trip Recordings / Capitol Records",
+    spotifyAlbumId: "2AyMtdDF0mmc6bI4ljSIaN",
+    artist: ["Yeat"],
+    price: 39.99,
+    genre: "Hip-Hop/Rap",
+    year: 2026,
+    isNew: true,
+    isExplicit: true,
+    image: luhLeakyzVol1CD.cover,
+    vinylImages: luhLeakyzVol1CD.vinyl,
+    accentColor: "grey",
+    format: "cd",
+    description: {
+      az: "Luh Leakyz Vol. 1 — amerikalı reper Yeat-in beşinci studiya miksteypi və debüt “grail tape”-idir. 2021-ci ildən 2026-cı ilin əvvəlinə qədər sızdırılmış 14 mahnını bir araya gətirir. Miksteyp 23 oktyabr 2026-cı ildə Lyfestyle Corporation, Field Trip Recordings və Capitol Records vasitəsilə buraxılıb; Yeat-in Fortnite-a personaj kimi əlavə olunması və oyuna dörd nəşr olunmamış Jam Track-in gəlməsindən bir həftə sonra elan edilib. Yeganə qonaq Summrs-dır (“Countup”). Rage və trap janrlarında olan layihə Billboard 200-də 39-cu yerdən başlayıb və Yeat-in ardıcıl onuncu çartlara düşən işi olub.",
+      en: "Luh Leakyz Vol. 1 is the fifth studio mixtape by American rapper Yeat, and his long-teased “grail tape”. It collects 14 tracks that leaked between 2021 and early 2026. It was released on October 23, 2026 through Lyfestyle Corporation, Field Trip Recordings and Capitol Records, announced about a week after Yeat joined Fortnite as a character and four unreleased Jam Tracks were added to the game. Summrs is the only guest (“Countup”). The rage and trap project debuted at No. 39 on the Billboard 200 with 17,000 album-equivalent units, Yeat's tenth consecutive charting project.",
+      ru: "Luh Leakyz Vol. 1 — пятый студийный микстейп американского рэпера Yeat и его давно обещанная «grail tape». В неё вошли 14 треков, утёкших в сеть с 2021 по начало 2026 года. Микстейп вышел 23 октября 2026 года на Lyfestyle Corporation, Field Trip Recordings и Capitol Records; о нём объявили примерно через неделю после того, как Yeat появился в Fortnite в качестве персонажа и в игру добавили четыре неизданных Jam Track. Единственный гость — Summrs («Countup»). Проект в стиле rage и trap дебютировал на 39-м месте в Billboard 200 с 17 000 эквивалентных единиц и стал десятым подряд чартовым релизом Yeat.",
+    },
+    tracklist: [
+      { id: 1, name: "Lil Krazy", isExplicit: true, features: "", duration: "2:45", spotifyEmbed: "https://open.spotify.com/embed/track/3301sy6RP2XMn67qrjzY0y" },
+      { id: 2, name: "Time Passëd", isExplicit: true, features: "", duration: "2:22", spotifyEmbed: "https://open.spotify.com/embed/track/2A1cugjbWnNb9xg1ZMEqi6" },
+      { id: 3, name: "Liv Dis Lyfe", isExplicit: true, features: "", duration: "2:17", spotifyEmbed: "https://open.spotify.com/embed/track/0NDrCAVGZgsQbOvOCCYFEe" },
+      { id: 4, name: "Real Trendsettër", isExplicit: true, features: "", duration: "2:57", spotifyEmbed: "https://open.spotify.com/embed/track/2TtAFx0HcxsVNol1icg4yF" },
+      { id: 5, name: "When tha World Ends", isExplicit: true, features: "", duration: "3:11", spotifyEmbed: "https://open.spotify.com/embed/track/3rzONr4PlNPtXiO9TGY0XE" },
+      { id: 6, name: "MARCHING", isExplicit: true, features: "", duration: "3:00", spotifyEmbed: "https://open.spotify.com/embed/track/6kqjS74GiIXe5ix90gGEDY" },
+      { id: 7, name: "SKLUB", isExplicit: true, features: "", duration: "2:58", spotifyEmbed: "https://open.spotify.com/embed/track/0gJfNHX3p51C4ufniFFgpF" },
+      { id: 8, name: "u could", isExplicit: true, features: "", duration: "2:49", spotifyEmbed: "https://open.spotify.com/embed/track/2VIavnKL2Hpth0fJS10A3S" },
+      { id: 9, name: "X with the boot up", isExplicit: true, features: "", duration: "2:58", spotifyEmbed: "https://open.spotify.com/embed/track/663KAYJ2tUKQhHQLd5LwAz" },
+      { id: 10, name: "Diseasë", isExplicit: true, features: "", duration: "3:31", spotifyEmbed: "https://open.spotify.com/embed/track/1awtLtmFAcsAO1P7OTeOSj" },
+      { id: 11, name: "HeliMAn", isExplicit: true, features: "", duration: "3:12", spotifyEmbed: "https://open.spotify.com/embed/track/6pcjEinytl5H0ToCdQVoGH" },
+      { id: 12, name: "Countup", isExplicit: true, features: "Yeat & Summrs", duration: "2:35", spotifyEmbed: "https://open.spotify.com/embed/track/0Avd3IwLnCDp3HErwUIsjA" },
+      { id: 13, name: "Martian", isExplicit: true, features: "", duration: "2:54", spotifyEmbed: "https://open.spotify.com/embed/track/1CXKoF2fu51ZGoKYy0Gqmy" },
+      { id: 14, name: "Last Day", isExplicit: true, features: "", duration: "2:32", spotifyEmbed: "https://open.spotify.com/embed/track/5Rlpx1R2OmQPWJi2EfyTmG" },
+    ],
+  },
 ];
 
 export const albums = optimizeMedia(rawAlbums);
