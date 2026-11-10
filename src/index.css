@@ -832,6 +832,12 @@ html:not(.light) .album-hero-fade {
   }
 }
 
+/* The tab bar pill has no outline: no rim light, no edge highlight image, just the soft sheen and drop shadow */
+html.liquid-glass nav.tabbar-glass {
+  background-image: radial-gradient(240px circle at var(--lg-mx, 18%) var(--lg-my, -30%), rgb(255 255 255 / 0.1), transparent 70%);
+  box-shadow: var(--lg-shadow), var(--lg-drop);
+}
+
 /* Phone tab bar (MobileTabBar.jsx): while it shows, reserve room for it below the page */
 :root {
   --tabbar-h: 0px;

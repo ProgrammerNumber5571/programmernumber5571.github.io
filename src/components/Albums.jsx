@@ -1,4 +1,4 @@
-import { optimizeMedia } from "../lib/imageUrls.js";
+﻿import { optimizeMedia } from "../lib/imageUrls.js";
 
 /*
   TEMPLATES:
@@ -3750,6 +3750,7 @@ const rawAlbums = [
     isExplicit: true,
     image: adl.cover,
     vinylImages: adl.vinyl,
+    animatedCover: "https://res.cloudinary.com/deroy68n9/video/upload/v1794326951/P1312674000_Anull_video_gr280_sdr_1080x1080-_upc6pf.mp4",
     vinylColor: "yellow",
     sleeveColor: "yellow",
     accentColor: "yellow",
@@ -3792,6 +3793,7 @@ const rawAlbums = [
     isExplicit: true,
     image: adlCD.cover,
     vinylImages: adlCD.vinyl,
+    animatedCover: "https://res.cloudinary.com/deroy68n9/video/upload/v1794326951/P1312674000_Anull_video_gr280_sdr_1080x1080-_upc6pf.mp4",
     accentColor: "yellow",
     format: "cd",
     description: {

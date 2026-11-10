@@ -96,7 +96,7 @@ const rawArtistProfiles = {
     birthDate: "14 Oktyabr 2000",
     country: { az: "ABŞ", en: "United States", ru: "США" },
     banner: "https://res.cloudinary.com/deroy68n9/image/upload/v1768927082/kenCarson_banner_hysazj.jpg",
-    profileImage: "https://res.cloudinary.com/deroy68n9/image/upload/v1768927088/kenCarson_pfp_uhaqem.jpg",
+    profileImage: "https://res.cloudinary.com/deroy68n9/image/upload/v1794326938/2400x2400bb-100_lysxnq.jpg",
     merchBanner: 'https://res.cloudinary.com/deroy68n9/image/upload/v1769169961/Logos-Desktop-kenCarson_2c683634_gosfgv.png'
   },
   "Destroy Lonely": {

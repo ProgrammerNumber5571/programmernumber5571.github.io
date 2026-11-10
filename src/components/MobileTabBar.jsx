@@ -107,7 +107,7 @@ export const MobileTabBar = () => {
       // An opted-in Liquid Glass lens (refraction + rim light, see liquidGlass.js). It is positioned inline
       // rather than with the "fixed" class on purpose: nav.fixed is the full-width top bar, which only gets
       // plain frosting. Without Liquid Glass the utility classes give a frosted pill instead.
-      className="lg-lens md:hidden left-0 right-0 mx-auto z-40 border border-border/60 bg-background/60 px-1.5 py-1.5 backdrop-blur-xl shadow-[0_12px_32px_-10px_rgb(0_0_0/0.55)] transition-[width,bottom,transform] duration-[600ms] ease-[cubic-bezier(0.32,1.35,0.5,1)] motion-reduce:transition-none"
+      className="lg-lens tabbar-glass md:hidden left-0 right-0 mx-auto z-40 bg-background/60 px-1.5 py-1.5 backdrop-blur-xl shadow-[0_12px_32px_-10px_rgb(0_0_0/0.55)] transition-[width,bottom,transform] duration-[600ms] ease-[cubic-bezier(0.32,1.35,0.5,1)] motion-reduce:transition-none"
       style={{
         position: "fixed",
         width: compact ? "min(15.5rem, calc(100% - 4rem))" : "calc(100% - 1.5rem)",
@@ -124,7 +124,7 @@ export const MobileTabBar = () => {
         {/* the gliding highlight */}
         <span
           aria-hidden="true"
-          className="tabbar-pill pointer-events-none absolute inset-y-0 rounded-full bg-primary/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.4),inset_0_0_0_1px_rgb(255_255_255/0.14),0_4px_14px_-4px_rgb(0_0_0/0.45)]"
+          className="tabbar-pill pointer-events-none absolute inset-y-0 rounded-full bg-primary/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.3),0_4px_14px_-4px_rgb(0_0_0/0.45)]"
           style={{
             width: pill?.width ?? 0,
             // while a finger is down the selection bubble stretches, then springs back (Apple's lens "lift")
