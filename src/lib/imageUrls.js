@@ -22,6 +22,11 @@ export function optimizeImageUrl(url) {
   return `${PREFIX}${OPTIMIZE}${tail}`;
 }
 
+// A ~48px version of an optimized image. Stretched over a big area it is already a soft blur, so a
+// decorative backdrop needs no CSS blur filter (a 60px filter blur on a full-width layer is costly).
+export const tinyFor = (url) =>
+  typeof url === 'string' && url.includes('w_1400') ? url.replace('w_1400', 'w_48') : url;
+
 export const isVideoUrl = (url) => /\.(mp4|webm|mov)(\?|$)/i.test(String(url || ''));
 
 // A still first frame for a converted video, shown while it loads (Cloudinary serves any

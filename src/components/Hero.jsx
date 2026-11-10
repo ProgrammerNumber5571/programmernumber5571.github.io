@@ -6,9 +6,12 @@ import { albums } from "./Albums.jsx";
 import { useLanguage } from "./LanguageContext.jsx";
 import { displayTitle } from "../lib/editions.js";
 import { posterFor } from "../lib/imageUrls.js";
+import { useInView, useVideoPlayback } from "../lib/useInView.js";
 
 export const Hero = () => {
   const { t } = useLanguage();
+  const [sectionRef, inView] = useInView();
+  useVideoPlayback(sectionRef, inView);
   const featuredAlbum = albums.find(album => album.id === 36) || albums[0];
 
   const getCoverImage = (album) => {
@@ -29,7 +32,7 @@ export const Hero = () => {
   const isVideo = coverImage && (coverImage.endsWith('.mp4') || coverImage.endsWith('.webm') || coverImage.endsWith('.mov'));
 
   return (
-    <section className="min-h-screen flex items-center pt-20 relative overflow-hidden">
+    <section ref={sectionRef} className="min-h-screen flex items-center pt-20 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
 
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -111,10 +114,10 @@ export const Hero = () => {
                 featuredAlbum?.sleeveColor ? `from-${featuredAlbum.sleeveColor}-500/20` : 'from-primary/20'
               } to-transparent rounded-lg transform -rotate-6`} />
 
-              <div className="relative z-10 animate-float ml-24 sm:ml-[230px]">
+              <div className={`relative z-10 ml-24 sm:ml-[230px] ${inView ? "animate-float" : ""}`}>
                 <VinylRecord
                   size="xl"
-                  spinning={true}
+                  spinning={inView}
                   vinylColor={featuredAlbum?.vinylColor || "purple"}
                 />
               </div>

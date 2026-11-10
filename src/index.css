@@ -775,3 +775,8 @@ img {
 .grecaptcha-badge {
   visibility: hidden !important;
 }
+
+/* Card hover is paused while the page is scrolling (set by main.jsx). */
+html.is-scrolling .bg-card {
+  pointer-events: none;
+}

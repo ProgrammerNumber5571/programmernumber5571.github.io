@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "./ui/Button";
 import { VinylRecord } from "./VinylRecord";
 import { useLanguage } from "./LanguageContext.jsx";
+import { useInView } from "../lib/useInView.js";
 import { toast } from "sonner";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../Firebase/Firebase.js";
@@ -9,6 +10,7 @@ import { db } from "../Firebase/Firebase.js";
 export const Newsletter = () => {
   const { t } = useLanguage();
   const [email, setEmail] = useState("");
+  const [sectionRef, inView] = useInView();
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -31,16 +33,16 @@ export const Newsletter = () => {
   };
 
   return (
-    <section className="py-24 relative overflow-hidden">
+    <section ref={sectionRef} className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-r from-secondary via-card to-secondary" />
-      
-      {/* Decorative vinyls */}
+
+      {/* Decorative vinyls (only spin while on screen) */}
       <div className="absolute -left-16 top-1/2 -translate-y-1/2 opacity-20">
-        <VinylRecord size="xl" spinning />
+        <VinylRecord size="xl" spinning={inView} />
       </div>
       <div className="absolute -right-16 top-1/2 -translate-y-1/2 opacity-20">
-        <VinylRecord size="xl" spinning />
+        <VinylRecord size="xl" spinning={inView} />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">

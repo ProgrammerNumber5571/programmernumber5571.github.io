@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { albums } from './Albums.jsx';
-import { posterFor } from '../lib/imageUrls.js';
+import { posterFor, tinyFor } from '../lib/imageUrls.js';
+import { useInView, useVideoPlayback } from '../lib/useInView.js';
 
 // Three random albums are promoted on every visit (picked once per page
 // load, stable while browsing within the session). Albums with animated
@@ -46,11 +47,13 @@ export function PromoBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef(null);
+  const [rootRef, inView] = useInView();
+  useVideoPlayback(rootRef, inView);
 
   if (promos.length === 0) return null;
 
   useEffect(() => {
-    if (!isPaused) {
+    if (!isPaused && inView) {
       intervalRef.current = setInterval(() => {
         setCurrentSlide((prev) => (prev + 1) % promos.length);
       }, 5000);
@@ -61,7 +64,7 @@ export function PromoBanner() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPaused, promos.length]);
+  }, [isPaused, inView, promos.length]);
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
@@ -97,6 +100,7 @@ export function PromoBanner() {
 
   return (
     <div
+      ref={rootRef}
       className="relative w-full h-[380px] sm:h-[540px] md:h-[720px] lg:h-[850px] overflow-hidden group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -117,10 +121,9 @@ export function PromoBanner() {
             <div
               className="absolute inset-0 scale-125"
               style={{
-                backgroundImage: `url(${promo.backdrop})`,
+                backgroundImage: `url(${tinyFor(promo.backdrop)})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                filter: 'blur(60px) saturate(1.4)',
                 opacity: 0.55,
               }}
             />
