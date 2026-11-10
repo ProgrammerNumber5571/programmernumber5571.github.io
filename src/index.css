@@ -780,3 +780,15 @@ img {
 html.is-scrolling .bg-card {
   pointer-events: none;
 }
+
+/* Lite mode (set automatically by autoLite.js on browsers that scroll slowly): no backdrop blurs at
+   all, since painting them on the CPU is what makes those browsers lag. Panels become solid instead. */
+html.perf-lite *,
+html.perf-lite *::before,
+html.perf-lite *::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+html.perf-lite :is(nav.fixed, .glass-panel, .lg-lens, .bg-card:is(.fixed, .absolute, .sticky)) {
+  background-color: hsl(var(--background) / 0.96) !important;
+}
