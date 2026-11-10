@@ -435,7 +435,8 @@ const yeezus = {
 };
 
 const octane = {
-  cover: ['https://res.cloudinary.com/deroy68n9/image/upload/v1769241305/OCTANE2LPVINYL5_0b07d854-8265-43_bdpipu.png',
+  cover: ['https://res.cloudinary.com/deroy68n9/image/upload/v1794327650/3000x3000bb-100_sobsi3.jpg',
+    'https://res.cloudinary.com/deroy68n9/image/upload/v1769241305/OCTANE2LPVINYL5_0b07d854-8265-43_bdpipu.png',
     'https://res.cloudinary.com/deroy68n9/image/upload/v1770481122/OCTANE2LPVINYL_TUNNELEDITION_5_e_s8gidf.png',
     'https://res.cloudinary.com/deroy68n9/image/upload/v1770481124/OCTANE2LPVINYL_PLAYBACKEDITION_5_d7iufv.png',
     'https://res.cloudinary.com/deroy68n9/image/upload/v1770481123/OCTANE2LPVINYL_NUCLEAREDITION_5_fx84wb.png'
@@ -460,7 +461,8 @@ const octane = {
 };
 
 const octaneCD = {
-  cover: 'https://res.cloudinary.com/deroy68n9/image/upload/v1769241305/OCTANE2LPVINYL5_0b07d854-8265-43_bdpipu.png',
+  cover: ['https://res.cloudinary.com/deroy68n9/image/upload/v1794327650/3000x3000bb-100_sobsi3.jpg',
+    'https://res.cloudinary.com/deroy68n9/image/upload/v1769241305/OCTANE2LPVINYL5_0b07d854-8265-43_bdpipu.png'],
   vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1769241305/OCTANECD1_309e3e56-e2e8-4eeb-8be_efexql.png",
     "https://res.cloudinary.com/deroy68n9/image/upload/v1769241304/OCTANECD5_20162d97-1fd2-4609-a85_iyiduc.png",
     "https://res.cloudinary.com/deroy68n9/image/upload/v1769241304/OCTANECD2_e375e33f-3ae4-4574-be7_l0htsv.png",
@@ -1287,6 +1289,7 @@ const rawAlbums = [
     isExplicit: true,
     image: octane.cover,
     vinylImages: octane.vinyl,
+    animatedCover: "https://res.cloudinary.com/deroy68n9/video/upload/v1794327662/P1260199861_Anull_video_gr290_sdr_1080x1080-_dchbp1.mp4",
     vinylColor: "green",
     sleeveColor: "green",
     accentColor: "green",
@@ -1337,6 +1340,7 @@ const rawAlbums = [
     isNew: true,
     isExplicit: true,
     image: octaneCD.cover,
+    animatedCover: "https://res.cloudinary.com/deroy68n9/video/upload/v1794327662/P1260199861_Anull_video_gr290_sdr_1080x1080-_dchbp1.mp4",
     vinylImages: octaneCD.vinyl,
     accentColor: "green",
     format: "cd",
