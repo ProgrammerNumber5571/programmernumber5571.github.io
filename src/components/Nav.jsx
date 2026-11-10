@@ -4,9 +4,8 @@ import { useShopifyCart } from "../contexts/Shopifycartcontext";
 import { CartSidebar } from "./CartSidebar";
 
 import { Button } from "./ui/Button";
-import { Search, ShoppingBag, Heart, Settings as SettingsIcon } from "lucide-react";
+import { Search, ShoppingBag, Heart } from "lucide-react";
 import { UserMenu } from "./userMenu";
-import { Settings } from "./Settings";
 import { SearchEngine } from "./SearchEngine";
 import { useFavorites } from "./FavoritesSystem";
 import { useLanguage } from "./LanguageContext.jsx";
@@ -15,7 +14,6 @@ export const Nav = ({ albums }) => {
   const { favoritesCount } = useFavorites();
   const { cartCount } = useShopifyCart();
   const { t } = useLanguage();
-  const [settingsOpen, setSettingsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -137,17 +135,6 @@ export const Nav = ({ albums }) => {
                 </Link>
               </Button>
 
-              {/* Settings */}
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setSettingsOpen(true)}
-                className="hidden md:inline-flex text-foreground"
-                aria-label={t.settings}
-              >
-                <SettingsIcon className="w-5 h-5" />
-              </Button>
-
               {/* User menu */}
               {/* On phones the Profile tab in the bottom bar replaces this */}
               <div className="max-md:hidden">
@@ -168,7 +155,6 @@ export const Nav = ({ albums }) => {
       </nav>
 
       <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
-      <Settings isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </>
   );
 };
