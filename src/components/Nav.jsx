@@ -133,7 +133,10 @@ export const Nav = ({ albums }) => {
               </Button>
 
               {/* User menu */}
-              <UserMenu />
+              {/* On phones the Profile tab in the bottom bar replaces this */}
+              <div className="max-md:hidden">
+                <UserMenu />
+              </div>
 
             </div>
           </div>

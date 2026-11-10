@@ -167,17 +167,31 @@ export const AccountPage = () => {
               { to: '/favorites', icon: Heart, value: favoritesCount, label: t.favoritesTitle },
               { to: '/account', icon: Package, value: (profile.orders || []).length, label: t.profileStatsOrders },
               { to: '/cart', icon: ShoppingBag, value: cartCount, label: t.cart },
-            ].map(({ to, icon: Icon, value, label }) => (
-              <Link
-                key={label}
-                to={to}
-                className="rounded-2xl border border-border bg-background/60 px-2 py-3 transition-colors active:bg-muted"
-              >
-                <Icon className="mx-auto mb-1 h-5 w-5 text-primary" />
-                <p className="text-2xl font-bold leading-none">{value}</p>
-                <p className="mt-1 truncate text-xs text-muted-foreground">{label}</p>
-              </Link>
-            ))}
+            ].map(({ to, icon: Icon, value, label }) => {
+              const cls = "rounded-2xl border border-border bg-background/60 px-2 py-3 transition-colors active:bg-muted";
+              const inner = (
+                <>
+                  <Icon className="mx-auto mb-1 h-5 w-5 text-primary" />
+                  <p className="text-2xl font-bold leading-none">{value}</p>
+                  <p className="mt-1 truncate text-xs text-muted-foreground">{label}</p>
+                </>
+              );
+              // the orders tile scrolls to the orders list on this very page
+              return to === '/account' ? (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={() => document.getElementById('my-orders')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                  className={cls}
+                >
+                  {inner}
+                </button>
+              ) : (
+                <Link key={label} to={to} className={cls}>
+                  {inner}
+                </Link>
+              );
+            })}
           </div>
 
           <Button variant="outline" onClick={() => setSettingsOpen(true)} className="mt-4 gap-2">
@@ -186,6 +200,28 @@ export const AccountPage = () => {
         </div>
 
         <div className="space-y-6">
+          {/* Orders (first, right under the profile card) */}
+          <div id="my-orders" className="scroll-mt-24">
+            <Section icon={Package} title={t.myOrders}>
+              {(profile.orders || []).length === 0 ? (
+                <p className="text-muted-foreground text-sm">{t.noOrders}</p>
+              ) : (
+                <ul className="space-y-3">
+                  {profile.orders.map((order) => (
+                    <li key={order.id} className="p-4 border border-border rounded-lg bg-background">
+                      <div className="flex justify-between text-sm">
+                        <span className="font-semibold">#{order.id}</span>
+                        <span className="text-muted-foreground">{order.date}</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-1">{order.summary}</p>
+                      {order.total && <p className="font-bold mt-1">{order.total} ₼</p>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </Section>
+          </div>
+
           {/* Profile */}
           <Section icon={User} title={t.profile}>
             <div className="grid sm:grid-cols-2 gap-4">
@@ -329,26 +365,6 @@ export const AccountPage = () => {
               <Button variant="outline" size="sm" onClick={() => setShowCardForm(true)} className="gap-2">
                 <Plus className="w-4 h-4" /> {t.addCard}
               </Button>
-            )}
-          </Section>
-
-          {/* Orders */}
-          <Section icon={Package} title={t.myOrders}>
-            {(profile.orders || []).length === 0 ? (
-              <p className="text-muted-foreground text-sm">{t.noOrders}</p>
-            ) : (
-              <ul className="space-y-3">
-                {profile.orders.map((order) => (
-                  <li key={order.id} className="p-4 border border-border rounded-lg bg-background">
-                    <div className="flex justify-between text-sm">
-                      <span className="font-semibold">#{order.id}</span>
-                      <span className="text-muted-foreground">{order.date}</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-1">{order.summary}</p>
-                    {order.total && <p className="font-bold mt-1">{order.total} ₼</p>}
-                  </li>
-                ))}
-              </ul>
             )}
           </Section>
 
