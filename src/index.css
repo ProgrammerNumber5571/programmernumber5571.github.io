@@ -821,6 +821,17 @@ html:not(.light) .album-hero-fade {
   }
 }
 
+/* The tab bar's highlight pill glides between tabs with a springy overshoot */
+.tabbar-pill {
+  transition: transform 0.55s cubic-bezier(0.34, 1.4, 0.55, 1), width 0.55s cubic-bezier(0.34, 1.4, 0.55, 1), opacity 0.25s ease;
+  will-change: transform, width;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tabbar-pill {
+    transition: opacity 0.2s ease;
+  }
+}
+
 /* Phone tab bar (MobileTabBar.jsx): while it shows, reserve room for it below the page */
 :root {
   --tabbar-h: 0px;

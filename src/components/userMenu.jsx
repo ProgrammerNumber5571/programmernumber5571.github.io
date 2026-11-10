@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { User, Package, LogOut, Heart, UserCircle } from "lucide-react";
+import { User, LogOut, Heart, UserCircle } from "lucide-react";
 import { Button } from "./ui/Button.tsx";
 import { useAuth } from "../contexts/authContext";
 import { useLanguage } from "./LanguageContext.jsx";
@@ -69,10 +69,7 @@ export const UserMenu = () => {
             <p className="text-xs text-muted-foreground truncate">{currentUser.email}</p>
           </div>
           <Link to="/account" className={itemCls} onClick={() => setOpen(false)}>
-            <UserCircle className="w-4 h-4" /> {t.account}
-          </Link>
-          <Link to="/account" className={itemCls} onClick={() => setOpen(false)}>
-            <Package className="w-4 h-4" /> {t.orders}
+            <UserCircle className="w-4 h-4" /> {t.tabProfile}
           </Link>
           <Link to="/favorites" className={itemCls} onClick={() => setOpen(false)}>
             <Heart className="w-4 h-4" /> {t.favoritesTitle}

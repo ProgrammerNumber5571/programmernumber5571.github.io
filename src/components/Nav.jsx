@@ -25,7 +25,7 @@ export const Nav = ({ albums }) => {
   const navLinks = [
     { name: t.navNew, id: "new" },
     { name: t.navGenres, id: "genres" },
-    { name: t.navOrders, id: "orders" },
+    { name: t.tabProfile, to: "/account" },
     { name: t.navAbout, id: "about" },
   ];
 
@@ -62,15 +62,25 @@ export const Nav = ({ albums }) => {
             </a>
 
             <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => handleNavClick(link.id)}
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium tracking-wide"
-                >
-                  {link.name}
-                </button>
-              ))}
+              {navLinks.map((link) =>
+                link.to ? (
+                  <Link
+                    key={link.name}
+                    to={link.to}
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium tracking-wide"
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <button
+                    key={link.name}
+                    onClick={() => handleNavClick(link.id)}
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium tracking-wide"
+                  >
+                    {link.name}
+                  </button>
+                )
+              )}
             </div>
 
             {/* Action buttons */}
@@ -151,15 +161,26 @@ export const Nav = ({ albums }) => {
           {/* Mobile nav links */}
           {isOpen && (
             <div className="md:hidden py-6 border-t border-border">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => handleNavClick(link.id)}
-                  className="block w-full text-left py-3 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {link.name}
-                </button>
-              ))}
+              {navLinks.map((link) =>
+                link.to ? (
+                  <Link
+                    key={link.name}
+                    to={link.to}
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full text-left py-3 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <button
+                    key={link.name}
+                    onClick={() => handleNavClick(link.id)}
+                    className="block w-full text-left py-3 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.name}
+                  </button>
+                )
+              )}
               <div className="mt-3 pt-3 border-t border-border">
                 <Link
                   to="/favorites"

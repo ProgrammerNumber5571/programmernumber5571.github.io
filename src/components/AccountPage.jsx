@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, MapPin, CreditCard, Package, Heart, Plus, Trash2, LogOut } from 'lucide-react';
+import { User, MapPin, CreditCard, Package, Heart, Plus, Trash2, LogOut, Camera, ShoppingBag, Settings as SettingsIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '../contexts/authContext';
 import { useLanguage } from './LanguageContext.jsx';
 import { usePageTitle } from './usePageTitle.js';
 import { Button } from './ui/Button.tsx';
+import { Settings } from './Settings';
+import { useFavorites } from './FavoritesSystem';
+import { useShopifyCart } from '../contexts/Shopifycartcontext';
 import { defaultProfile, loadLocalProfile, fetchRemoteProfile, saveProfile } from './userProfileStore.js';
 
 const inputCls = "w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:outline-none";
@@ -24,6 +27,11 @@ export const AccountPage = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   usePageTitle(t.account);
+
+  const { favoritesCount } = useFavorites();
+  const { cartCount } = useShopifyCart();
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const photoInput = useRef(null);
 
   const [profile, setProfile] = useState(null);
   const [showAddressForm, setShowAddressForm] = useState(false);
@@ -48,6 +56,34 @@ export const AccountPage = () => {
     setProfile(next);
     saveProfile(currentUser.uid, next);
   };
+
+  // Profile photo: cropped to a centred square and shrunk to 256px so it stays small enough to sync
+  const onPhotoChosen = (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file || !file.type.startsWith('image/')) return;
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const size = 256;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const side = Math.min(img.width, img.height);
+      canvas.getContext('2d').drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, size, size);
+      URL.revokeObjectURL(url);
+      persist({ ...profile, photo: canvas.toDataURL('image/jpeg', 0.82) });
+      toast.success(t.savedToast);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      toast.error(t.errorTryAgain);
+    };
+    img.src = url;
+  };
+
+  const displayName = profile.name || profile.username || currentUser.displayName || t.account;
+  const initials = displayName.trim().split(/s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase() || '?';
 
   const saveIdentity = () => {
     persist(profile);
@@ -101,20 +137,51 @@ export const AccountPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-12 max-w-4xl">
-        <Link to="/" className="text-primary hover:underline mb-4 inline-block">
+        <Link to="/" className="hidden md:inline-block text-primary hover:underline mb-4">
           ← {t.backHome}
         </Link>
 
-        <div className="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <h1 className="text-5xl font-serif font-bold mb-3">{t.account}</h1>
-            <p className="text-muted-foreground">{t.accountSubtitle}</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              {t.signedInAs} <span className="font-semibold text-foreground">{currentUser.email}</span>
-            </p>
+        {/* Profile card */}
+        <div className="mb-8 rounded-3xl border border-border bg-gradient-to-b from-primary/15 via-card to-card px-5 pb-6 pt-8 text-center shadow-lg">
+          <div className="relative mx-auto h-28 w-28">
+            <div className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-primary text-4xl font-bold text-primary-foreground shadow-xl ring-4 ring-background">
+              {profile.photo ? <img src={profile.photo} alt="" className="h-full w-full object-cover" /> : initials}
+            </div>
+            <button
+              type="button"
+              onClick={() => photoInput.current?.click()}
+              aria-label={t.changePhoto}
+              className="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-2 ring-background transition-transform active:scale-90"
+            >
+              <Camera className="h-4 w-4" />
+            </button>
+            <input ref={photoInput} type="file" accept="image/*" className="hidden" onChange={onPhotoChosen} />
           </div>
-          <Button variant="outline" onClick={handleLogout} className="gap-2 self-start sm:self-auto">
-            <LogOut className="w-4 h-4" /> {t.logout}
+
+          <h1 className="mt-4 break-words text-3xl font-serif font-bold">{displayName}</h1>
+          {profile.username && <p className="font-medium text-primary">@{profile.username}</p>}
+          <p className="mt-1 break-all text-sm text-muted-foreground">{currentUser.email}</p>
+
+          <div className="mt-6 grid grid-cols-3 gap-3">
+            {[
+              { to: '/favorites', icon: Heart, value: favoritesCount, label: t.favoritesTitle },
+              { to: '/account', icon: Package, value: (profile.orders || []).length, label: t.profileStatsOrders },
+              { to: '/cart', icon: ShoppingBag, value: cartCount, label: t.cart },
+            ].map(({ to, icon: Icon, value, label }) => (
+              <Link
+                key={label}
+                to={to}
+                className="rounded-2xl border border-border bg-background/60 px-2 py-3 transition-colors active:bg-muted"
+              >
+                <Icon className="mx-auto mb-1 h-5 w-5 text-primary" />
+                <p className="text-2xl font-bold leading-none">{value}</p>
+                <p className="mt-1 truncate text-xs text-muted-foreground">{label}</p>
+              </Link>
+            ))}
+          </div>
+
+          <Button variant="outline" onClick={() => setSettingsOpen(true)} className="mt-4 gap-2">
+            <SettingsIcon className="h-4 w-4" /> {t.settings}
           </Button>
         </div>
 
@@ -291,8 +358,14 @@ export const AccountPage = () => {
               <Link to="/favorites"><Heart className="w-4 h-4" /> {t.viewAll}</Link>
             </Button>
           </Section>
+
+          <Button variant="outline" onClick={handleLogout} className="w-full gap-2 border-red-500/40 text-red-500">
+            <LogOut className="h-4 w-4" /> {t.logout}
+          </Button>
         </div>
       </div>
+
+      <Settings isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );
 };
