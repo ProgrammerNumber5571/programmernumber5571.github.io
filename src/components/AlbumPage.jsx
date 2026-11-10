@@ -382,12 +382,9 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
         </div>
       )}
       <div className="container mx-auto px-6 pt-0 md:pt-12 pb-28 md:pb-12 relative">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="max-md:hidden mb-8 font-bold">
-          <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
-        </Button>
-
         <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:block">
+          {/* Same stacked layout as on phones (cover, details, thumbnails); on wide screens it is just a centred column. */}
+          <div className="flex flex-col md:max-w-xl md:mx-auto md:mb-4">
           <div
             onTouchStart={(e) => { swipeStart.current = e.touches[0].clientX; }}
             onTouchEnd={(e) => {
@@ -398,7 +395,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
               setSelectedImage((s) => Math.min(galleryImages.length - 1, Math.max(0, s + (dx < 0 ? 1 : -1))));
               setImageError(false);
             }}
-            className="order-1 touch-pan-y relative aspect-square max-md:-mx-6 max-md:w-auto md:w-full max-md:rounded-none max-md:border-0 md:rounded-xl overflow-hidden md:shadow-2xl md:mb-6 group bg-card md:border border-border">
+            className="order-1 touch-pan-y relative aspect-square max-md:-mx-6 max-md:w-auto md:w-full max-md:rounded-none max-md:border-0 md:rounded-2xl overflow-hidden md:shadow-2xl group bg-card md:border border-border">
             {currentImage && !imageError ? (
               isVideoUrl(currentImage) ? (
                 <video
@@ -444,7 +441,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
           </div>
 
           {galleryImages.length > 1 && (
-            <div className="order-3 md:order-2 relative bg-card backdrop-blur-sm p-6 rounded-lg border border-border shadow-lg mb-8">
+            <div className="order-3 relative bg-card backdrop-blur-sm p-6 rounded-lg border border-border shadow-lg mb-8 min-w-0">
               <p className="text-sm font-medium text-foreground mb-4">{t.images} ({selectedImage + 1}/{galleryImages.length})</p>
               <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-2 scroll-smooth" style={{ scrollbarWidth: "thin" }}>
                 {galleryImages.map((img, index) => (
@@ -461,21 +458,21 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
           )}
 
           <div
-            className="album-hero-fade order-2 md:order-3 relative z-10 max-md:-mx-6 max-md:px-6 max-md:-mt-24 max-md:pt-8 max-md:pointer-events-none max-md:[&>*]:pointer-events-auto mb-10 space-y-4"
+            className="album-hero-fade order-2 relative z-10 max-md:-mx-6 max-md:px-6 max-md:-mt-24 max-md:pt-8 max-md:pointer-events-none max-md:[&>*]:pointer-events-auto md:mt-6 mb-10 space-y-4"
             style={palette ? { '--album-base': palette.base } : undefined}
           >
-            <div className="flex gap-2 flex-wrap md:hidden">
+            <div className="flex gap-2 flex-wrap">
               <span className="lg-pill">{formatLabel(formatOf(album), language)}</span>
               {album.genre && <span className="lg-pill">{album.genre}</span>}
             </div>
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-3xl sm:text-5xl font-spotify font-black tracking-tight break-words min-w-0">{album.title}</h1>
+              <h1 className="text-3xl sm:text-4xl font-spotify font-black tracking-tight break-words min-w-0">{album.title}</h1>
               {album.isExplicit && (
                 <span className="bg-gray-400 text-black border px-2 py-1 rounded text-xs font-bold self-center select-none">E</span>
               )}
             </div>
-            <div className="flex items-center gap-2 text-base md:text-2xl">
-              {profileImage && <img decoding="async" src={profileImage} alt="" className="md:hidden w-9 h-9 rounded-full object-cover shrink-0" />}
+            <div className="flex items-center gap-2 text-base md:text-xl">
+              {profileImage && <img decoding="async" src={profileImage} alt="" className="w-9 h-9 rounded-full object-cover shrink-0" />}
               {artistList.map((artist, idx) => {
                 const slug = String(artist).toLowerCase().replace(/,/g, '').replace(/\$/g, '').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                 return (
@@ -490,12 +487,12 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                 );
               })}
             </div>
-            <p className="md:hidden text-sm text-muted-foreground">{metaParts.join(' · ')}</p>
-            <div className="md:hidden flex items-center pt-1">
+            <p className="text-sm text-muted-foreground">{metaParts.join(' · ')}</p>
+            <div className="flex items-center pt-1">
               <FavoriteButton albumId={album.id} size="medium" />
             </div>
             {album.description && (
-              <div className="md:hidden border-y border-border py-3 text-sm text-muted-foreground">
+              <div className="border-y border-border py-3 text-sm text-muted-foreground">
                 <p
                   className="whitespace-pre-line"
                   style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
@@ -982,7 +979,6 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
             </div>
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-4">
-                <FavoriteButton albumId={album.id} size="large" />
                 <Button
                   size="lg"
                   onClick={handleAddToCart}
@@ -1066,8 +1062,8 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
             </div>
           </div>
 
-          <div className="md:hidden mt-10">
-            <Button variant="outline" onClick={() => navigate(-1)} className="w-full font-bold">
+          <div className="mt-10">
+            <Button variant="outline" onClick={() => navigate(-1)} className="w-full md:w-auto font-bold">
               <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
             </Button>
           </div>
