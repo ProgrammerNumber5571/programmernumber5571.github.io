@@ -19,6 +19,7 @@ import { useCoverPalette } from '../lib/coverPalette.js';
 import { cleanAlbumTitle } from './spotifyClient.js';
 import { formatLabel, formatOf, getEditions } from '../lib/editions.js';
 import { isVideoUrl, posterFor } from '../lib/imageUrls.js';
+import { artistProfiles } from './ArtistProfiles.jsx';
 
 // Descriptions longer than this are cut off; clicking one opens the full text with the album's details
 const DESCRIPTION_LIMIT = 220;
@@ -115,7 +116,8 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
   const { data: spotifyData, loading: spotifyLoading } = useSpotifyTracklist(album);
 
   const [imageError, setImageError] = useState(false);
-  const [showAnimated, setShowAnimated] = useState(true);
+  // phones start on the still cover (crisper full-width, and lighter); the toggle switches to the animation
+  const [showAnimated, setShowAnimated] = useState(() => !(typeof window !== 'undefined' && window.matchMedia?.('(max-width: 767px)').matches));
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -177,6 +179,12 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
   const label = spotifyData?.label || album?.label;
 
   const artistList = getArtistList(album);
+  const profileImage = artistProfiles[artistList[0]]?.profileImage;
+  const metaParts = [
+    releaseDate ? localizeReleaseDate(releaseDate, language) : album.year,
+    tracklist.length > 0 ? `${tracklist.length} ${t.tracklist}` : null,
+    formatLabel(formatOf(album), language),
+  ].filter(Boolean);
   const staticCovers = Array.isArray(album.image) ? album.image : album.image ? [album.image] : [];
 
   const galleryImages = [
@@ -373,13 +381,14 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/45 to-background" />
         </div>
       )}
-      <div className="container mx-auto px-6 py-12 pb-28 md:pb-12 relative">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-8 font-bold">
+      <div className="container mx-auto px-6 pt-0 md:pt-12 pb-28 md:pb-12 relative">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="absolute left-4 top-[4.5rem] z-20 max-md:rounded-full max-md:bg-black/45 max-md:text-white md:static md:mb-8 font-bold">
           <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
         </Button>
 
         <div className="max-w-4xl mx-auto">
-          <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-2xl mb-6 group bg-card border border-border">
+          <div className="flex flex-col md:block">
+          <div className="order-1 relative aspect-square max-md:-mx-6 max-md:w-auto md:w-full max-md:rounded-none max-md:border-0 md:rounded-xl overflow-hidden md:shadow-2xl md:mb-6 group bg-card md:border border-border">
             {currentImage && !imageError ? (
               isVideoUrl(currentImage) ? (
                 <video
@@ -398,7 +407,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                 <img decoding="async"
                   src={currentImage}
                   alt={album.title}
-                  className="w-full h-full object-contain transition-opacity duration-500"
+                  className="w-full h-full max-md:object-cover md:object-contain transition-opacity duration-500"
                   onError={() => setImageError(true)}
                 />
               )
@@ -406,7 +415,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
               <div className="w-full h-full flex items-center justify-center">{t.imageNotLoaded}</div>
             )}
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-mono z-20">
+            <div className="max-md:hidden absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-mono z-20">
               {selectedImage + 1} / {galleryImages.length}
             </div>
 
@@ -425,7 +434,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
           </div>
 
           {galleryImages.length > 1 && (
-            <div className="relative bg-card backdrop-blur-sm p-6 rounded-lg border border-border shadow-lg mb-8">
+            <div className="order-3 md:order-2 relative bg-card backdrop-blur-sm p-6 rounded-lg border border-border shadow-lg mb-8">
               <p className="text-sm font-medium text-foreground mb-4">{t.images} ({selectedImage + 1}/{galleryImages.length})</p>
               <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-2 scroll-smooth" style={{ scrollbarWidth: "thin" }}>
                 {galleryImages.map((img, index) => (
@@ -441,14 +450,22 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
             </div>
           )}
 
-          <div className="mb-10 space-y-4">
+          <div
+            className="album-hero-fade order-2 md:order-3 relative z-10 max-md:-mx-6 max-md:px-6 max-md:-mt-56 max-md:pt-32 mb-10 space-y-4"
+            style={palette ? { '--album-base': palette.base } : undefined}
+          >
+            <div className="flex gap-2 flex-wrap md:hidden">
+              <span className="lg-pill">{formatLabel(formatOf(album), language)}</span>
+              {album.genre && <span className="lg-pill">{album.genre}</span>}
+            </div>
             <div className="flex items-center gap-3 flex-wrap">
               <h1 className="text-3xl sm:text-5xl font-spotify font-black tracking-tight break-words min-w-0">{album.title}</h1>
               {album.isExplicit && (
                 <span className="bg-gray-400 text-black border px-2 py-1 rounded text-xs font-bold self-center select-none">E</span>
               )}
             </div>
-            <div className="flex items-center gap-2 text-2xl">
+            <div className="flex items-center gap-2 text-base md:text-2xl">
+              {profileImage && <img decoding="async" src={profileImage} alt="" className="md:hidden w-9 h-9 rounded-full object-cover shrink-0" />}
               {artistList.map((artist, idx) => {
                 const slug = String(artist).toLowerCase().replace(/,/g, '').replace(/\$/g, '').replace(/\s+/g, '-').replace(/[^\w-]/g, '');
                 return (
@@ -463,6 +480,23 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                 );
               })}
             </div>
+            <p className="md:hidden text-sm text-muted-foreground">{metaParts.join(' · ')}</p>
+            <div className="md:hidden flex items-center pt-1">
+              <FavoriteButton albumId={album.id} size="medium" />
+            </div>
+            {album.description && (
+              <div className="md:hidden border-y border-border py-3 text-sm text-muted-foreground">
+                <p
+                  className="whitespace-pre-line"
+                  style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
+                >
+                  {localizeText(album.description, language)}
+                </p>
+                <button type="button" onClick={() => setShowDetails(true)} className="mt-1 font-bold text-foreground" aria-haspopup="dialog">
+                  {t.more || 'MORE'}
+                </button>
+              </div>
+            )}
             {(() => {
               // the formats this record comes in (vinyl / CD / cassette) share this one page
               if (editions.length < 2) return null;
@@ -501,6 +535,8 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                 </div>
               );
             })()}
+          </div>
+
           </div>
 
           <div className="flex border-b border-border mb-8 overflow-x-auto">

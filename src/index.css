@@ -792,3 +792,22 @@ html.perf-lite *::after {
 html.perf-lite :is(nav.fixed, .glass-panel, .lg-lens, .bg-card:is(.fixed, .absolute, .sticky)) {
   background-color: hsl(var(--background) / 0.96) !important;
 }
+
+/* Album page, phone layout: the cover runs edge to edge and the title block melts up into it
+   (fades into the page's cover-tinted base colour in dark theme, plain background in light). */
+.album-hero-fade {
+  --fade: hsl(var(--background));
+}
+html:not(.light) .album-hero-fade {
+  --fade: var(--album-base, hsl(var(--background)));
+}
+@media (max-width: 767px) {
+  .album-hero-fade {
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      color-mix(in srgb, var(--fade) 60%, transparent) 7rem,
+      var(--fade) 14rem
+    );
+  }
+}
