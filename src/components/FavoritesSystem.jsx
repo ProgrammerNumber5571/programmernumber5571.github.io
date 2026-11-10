@@ -117,6 +117,20 @@ export const FavoritesProvider = ({ children }) => {
   );
 };
 
+// Droplets of the favorite "splash": they fan out upward from the button, arc over and fall under
+// gravity. --x/--y give the peak of each arc (px), --g the extra fall, --s the size, --d the delay.
+const SPLASH_DROPS = Array.from({ length: 12 }, (_, i) => {
+  const angle = ((-168 + i * (136 / 11)) * Math.PI) / 180; // upward fan, -168deg .. -32deg
+  const reach = 30 + ((i * 7) % 5) * 5; // 30-50px, varied so it looks like a spray not a ring
+  return {
+    '--x': `${(Math.cos(angle) * reach).toFixed(1)}px`,
+    '--y': `${(Math.sin(angle) * reach).toFixed(1)}px`,
+    '--g': `${18 + ((i * 5) % 4) * 6}px`,
+    '--s': `${i % 3 === 0 ? 8 : i % 3 === 1 ? 6 : 4}px`,
+    '--d': `${(i % 4) * 0.025}s`,
+  };
+});
+
 export const FavoriteButton = ({ albumId, size = "default", className = "" }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   // 'on' / 'off' plays the matching animation; burst restarts the sparks on each favorite
@@ -173,8 +187,9 @@ export const FavoriteButton = ({ albumId, size = "default", className = "" }) =>
         {motion === 'on' && (
           <span key={burst} className="fav-burst" aria-hidden="true">
             <span className="fav-ring" />
-            {Array.from({ length: 8 }, (_, i) => (
-              <span key={i} className="fav-spark" style={{ '--a': `${i * 45}deg` }} />
+            <span className="fav-ring fav-ring-2" />
+            {SPLASH_DROPS.map((d, i) => (
+              <span key={i} className="fav-drop" style={d} />
             ))}
           </span>
         )}

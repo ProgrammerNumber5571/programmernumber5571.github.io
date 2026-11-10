@@ -665,24 +665,29 @@ html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens, .lg-btn) .lg-btn {
   animation: fav-ring 0.6s ease-out;
 }
 
-.fav-spark {
+/* second, later ripple behind the first */
+.fav-ring-2 {
+  animation-duration: 0.75s;
+  animation-delay: 0.09s;
+  border-width: 1.5px;
+}
+
+/* a splash droplet: a little teardrop of water that arcs out and falls */
+.fav-drop {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 5px;
-  height: 5px;
-  margin: -2.5px 0 0 -2.5px;
-  border-radius: 9999px;
-  background: hsl(var(--primary));
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(circle at 35% 30%, #fff 0 18%, hsl(var(--primary)) 60%);
+  box-shadow: 0 0 6px hsl(var(--primary) / 0.55);
   opacity: 0;
-  animation: fav-spark 0.65s cubic-bezier(0.2, 0.7, 0.3, 1);
+  animation: fav-drop-arc 0.8s cubic-bezier(0.25, 0.6, 0.4, 1) var(--d, 0s);
 }
-.fav-spark:nth-child(even) {
-  width: 4px;
-  height: 4px;
-  margin: -2px 0 0 -2px;
+.fav-drop:nth-child(3n) {
   background: #fff;
-  animation-delay: 0.04s;
 }
 
 @keyframes fav-bump {
@@ -705,11 +710,12 @@ html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens, .lg-btn) .lg-btn {
 }
 @keyframes fav-ring {
   0% { transform: scale(0.3); opacity: 0.8; }
-  100% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
 }
-@keyframes fav-spark {
-  0% { transform: rotate(var(--a)) translateY(-6px) scale(0.6); opacity: 1; }
-  100% { transform: rotate(var(--a)) translateY(-30px) scale(0); opacity: 0; }
+@keyframes fav-drop-arc {
+  0% { transform: translate(0, 0) scale(0.4); opacity: 1; }
+  45% { transform: translate(calc(var(--x) * 0.75), var(--y)) scale(1); opacity: 1; }
+  100% { transform: translate(var(--x), calc(var(--y) + var(--g))) scale(0.25, 0.9); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -721,6 +727,9 @@ html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens, .lg-btn) .lg-btn {
   }
   .fav-btn:hover .fav-heart {
     scale: none;
+  }
+  .fav-burst {
+    display: none;
   }
 }
 
