@@ -89,6 +89,10 @@ function buildPalette(pixels) {
   // with a real tint still keeps its colour.
   if (!ranked.length || coloured / n < 0.06) {
     const [, , l] = rgbToHsl(avgR / n, avgG / n, avgB / n);
+    // Black artwork gets true black, not a washed-out grey
+    if (l < 0.22) {
+      return { base: 'hsl(0 0% 0%)', blobs: [hsl(0, 0, 0.1 + l * 0.4), hsl(0, 0, 0.05 + l * 0.3), hsl(0, 0, 0.04 + l * 0.2)] };
+    }
     const tone = clamp(l, 0.12, 0.6);
     return {
       base: hsl(220, 0.06, 0.1),

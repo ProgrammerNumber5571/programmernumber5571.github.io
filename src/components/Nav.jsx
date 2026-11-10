@@ -4,7 +4,7 @@ import { useShopifyCart } from "../contexts/Shopifycartcontext";
 import { CartSidebar } from "./CartSidebar";
 
 import { Button } from "./ui/Button";
-import { Search, ShoppingBag, Heart, Settings as SettingsIcon, Menu, X } from "lucide-react";
+import { Search, ShoppingBag, Heart, Settings as SettingsIcon } from "lucide-react";
 import { UserMenu } from "./userMenu";
 import { Settings } from "./Settings";
 import { SearchEngine } from "./SearchEngine";
@@ -12,7 +12,6 @@ import { useFavorites } from "./FavoritesSystem";
 import { useLanguage } from "./LanguageContext.jsx";
 
 export const Nav = ({ albums }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const { favoritesCount } = useFavorites();
   const { cartCount } = useShopifyCart();
   const { t } = useLanguage();
@@ -43,7 +42,6 @@ export const Nav = ({ albums }) => {
   };
 
   const handleNavClick = (id) => {
-    setIsOpen(false);
     if (!document.getElementById(id)) navigate("/");
     scrollToSection(id);
   };
@@ -137,17 +135,6 @@ export const Nav = ({ albums }) => {
               {/* User menu */}
               <UserMenu />
 
-              {/* Mobile menu toggle */}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden text-foreground"
-                onClick={() => setIsOpen(!isOpen)}
-                aria-label={isOpen ? t.closeWindow : "Menu"}
-                aria-expanded={isOpen}
-              >
-                {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </Button>
             </div>
           </div>
 
@@ -158,51 +145,6 @@ export const Nav = ({ albums }) => {
             </div>
           )}
 
-          {/* Mobile nav links */}
-          {isOpen && (
-            <div className="md:hidden py-6 border-t border-border">
-              {navLinks.map((link) =>
-                link.to ? (
-                  <Link
-                    key={link.name}
-                    to={link.to}
-                    onClick={() => setIsOpen(false)}
-                    className="block w-full text-left py-3 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                ) : (
-                  <button
-                    key={link.name}
-                    onClick={() => handleNavClick(link.id)}
-                    className="block w-full text-left py-3 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.name}
-                  </button>
-                )
-              )}
-              <div className="mt-3 pt-3 border-t border-border">
-                <Link
-                  to="/favorites"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-3 w-full py-3 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Heart className="w-5 h-5" />
-                  <span className="flex-1">{t.favoritesTitle}</span>
-                  <span className="min-w-5 h-5 px-1.5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
-                    {favoritesCount}
-                  </span>
-                </Link>
-                <button
-                  onClick={() => { setIsOpen(false); setSettingsOpen(true); }}
-                  className="flex items-center gap-3 w-full py-3 text-left text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <SettingsIcon className="w-5 h-5" />
-                  {t.settings}
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </nav>
 
