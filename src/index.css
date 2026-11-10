@@ -268,9 +268,14 @@ html.liquid-glass.light {
 html.liquid-glass .bg-card {
   background-color: hsl(var(--card) / 0.55);
   border-color: hsl(var(--border) / 0.6);
+  box-shadow: var(--lg-shadow), var(--lg-rim);
+}
+/* A backdrop blur makes the browser redraw that layer on every scroll frame. Album grids have dozens
+   of cards sitting on a plain background where the blur is invisible, so only cards that float over
+   other content (popups, bars: positioned elements) get it. */
+html.liquid-glass .bg-card:is(.fixed, .absolute, .sticky) {
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
   backdrop-filter: blur(18px) saturate(1.6);
-  box-shadow: var(--lg-shadow), var(--lg-rim);
 }
 
 html.liquid-glass :is(nav.fixed, .glass-panel, .lg-lens) {
@@ -305,6 +310,13 @@ html.liquid-glass.lg-refract :is(nav.fixed, .glass-panel, .lg-lens) {
     brightness(var(--lg-bright));
   backdrop-filter: var(--lg-filter, blur(0px)) blur(var(--lg-blur)) saturate(var(--lg-sat))
     brightness(var(--lg-bright));
+}
+
+/* The nav spans the whole viewport and sits over scrolling content, so an SVG displacement filter
+   there is redrawn every scroll frame. Keep the plain frosted blur for it, even in Chromium. */
+html.liquid-glass.lg-refract nav.fixed {
+  -webkit-backdrop-filter: blur(14px) saturate(var(--lg-sat)) brightness(var(--lg-bright));
+  backdrop-filter: blur(14px) saturate(var(--lg-sat)) brightness(var(--lg-bright));
 }
 
 /* Panels hold text and forms, so they get a denser tint and a softer backdrop than

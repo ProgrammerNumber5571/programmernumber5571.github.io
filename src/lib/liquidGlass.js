@@ -266,6 +266,8 @@ export function initLiquidGlass() {
     // map and an SVG filter for each of them here would be unused work, and with dozens of
     // buttons on a page it made scrolling noticeably heavier.
     if (el.classList.contains('lg-btn-lib')) return;
+    // The full-width nav is frosted by CSS only (see index.css), so it needs no lens either.
+    if (el.matches('nav.fixed')) return;
     const nested = Boolean(el.parentElement?.closest(SURFACES));
     const isButton = el.classList.contains('lg-btn');
     if (registry.has(el) || (nested && !isButton)) return;
