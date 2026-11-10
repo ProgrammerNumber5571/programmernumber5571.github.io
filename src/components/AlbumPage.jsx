@@ -116,8 +116,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
   const { data: spotifyData, loading: spotifyLoading } = useSpotifyTracklist(album);
 
   const [imageError, setImageError] = useState(false);
-  // phones start on the still cover (crisper full-width, and lighter); the toggle switches to the animation
-  const [showAnimated, setShowAnimated] = useState(() => !(typeof window !== 'undefined' && window.matchMedia?.('(max-width: 767px)').matches));
+  const [showAnimated, setShowAnimated] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -156,6 +155,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
 
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
   const audioRef = useRef(null);
+  const swipeStart = useRef(null); // touch swipe on the cover changes the image
   const [hoveredTrack, setHoveredTrack] = useState(null);
   const [expandedSpotifyTrack, setExpandedSpotifyTrack] = useState(null);
   const [musicVideoUrl, setMusicVideoUrl] = useState(null);
@@ -382,13 +382,23 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
         </div>
       )}
       <div className="container mx-auto px-6 pt-0 md:pt-12 pb-28 md:pb-12 relative">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="absolute left-4 top-[4.5rem] z-20 max-md:rounded-full max-md:bg-black/45 max-md:text-white md:static md:mb-8 font-bold">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="max-md:hidden mb-8 font-bold">
           <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
         </Button>
 
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:block">
-          <div className="order-1 relative aspect-square max-md:-mx-6 max-md:w-auto md:w-full max-md:rounded-none max-md:border-0 md:rounded-xl overflow-hidden md:shadow-2xl md:mb-6 group bg-card md:border border-border">
+          <div
+            onTouchStart={(e) => { swipeStart.current = e.touches[0].clientX; }}
+            onTouchEnd={(e) => {
+              if (swipeStart.current === null) return;
+              const dx = e.changedTouches[0].clientX - swipeStart.current;
+              swipeStart.current = null;
+              if (Math.abs(dx) < 50) return;
+              setSelectedImage((s) => Math.min(galleryImages.length - 1, Math.max(0, s + (dx < 0 ? 1 : -1))));
+              setImageError(false);
+            }}
+            className="order-1 touch-pan-y relative aspect-square max-md:-mx-6 max-md:w-auto md:w-full max-md:rounded-none max-md:border-0 md:rounded-xl overflow-hidden md:shadow-2xl md:mb-6 group bg-card md:border border-border">
             {currentImage && !imageError ? (
               isVideoUrl(currentImage) ? (
                 <video
@@ -420,10 +430,10 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
             </div>
 
             {selectedImage > 0 && (
-              <button onClick={() => setSelectedImage(s => s - 1)} className="lg-btn lg-btn-lib lg-btn-clear lg-btn-media absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronLeft /></button>
+              <button onClick={() => setSelectedImage(s => s - 1)} className="lg-btn lg-btn-lib lg-btn-clear lg-btn-media absolute left-4 top-1/2 max-md:top-[32%] -translate-y-1/2 bg-black/70 p-3 rounded-full text-white md:opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronLeft /></button>
             )}
             {selectedImage < galleryImages.length - 1 && (
-              <button onClick={() => setSelectedImage(s => s + 1)} className="lg-btn lg-btn-lib lg-btn-clear lg-btn-media absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronRight /></button>
+              <button onClick={() => setSelectedImage(s => s + 1)} className="lg-btn lg-btn-lib lg-btn-clear lg-btn-media absolute right-4 top-1/2 max-md:top-[32%] -translate-y-1/2 bg-black/70 p-3 rounded-full text-white md:opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronRight /></button>
             )}
 
             {album.animatedCover && selectedImage === 0 && (
@@ -451,7 +461,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
           )}
 
           <div
-            className="album-hero-fade order-2 md:order-3 relative z-10 max-md:-mx-6 max-md:px-6 max-md:-mt-56 max-md:pt-32 mb-10 space-y-4"
+            className="album-hero-fade order-2 md:order-3 relative z-10 max-md:-mx-6 max-md:px-6 max-md:-mt-24 max-md:pt-8 max-md:pointer-events-none max-md:[&>*]:pointer-events-auto mb-10 space-y-4"
             style={palette ? { '--album-base': palette.base } : undefined}
           >
             <div className="flex gap-2 flex-wrap md:hidden">
@@ -988,7 +998,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
           </div>
 
           {/* Mobile: price + add-to-cart stay visible while scrolling */}
-          <div className="glass-panel md:hidden fixed bottom-0 inset-x-0 z-40 bg-background/95 backdrop-blur border-t border-border px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
+          <div className="glass-panel md:hidden fixed bottom-[var(--tabbar-h,0px)] inset-x-0 z-40 bg-background/95 backdrop-blur border-t border-border px-4 pt-3 pb-3 flex items-center justify-between gap-3">
             <p className="text-xl font-serif font-bold shrink-0">{(album.price * quantity).toFixed(2)} ₼</p>
             <div className="flex items-center gap-3 min-w-0">
               <FavoriteButton albumId={album.id} size="medium" className="shrink-0" />
@@ -1054,6 +1064,12 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                   );
                 })}
             </div>
+          </div>
+
+          <div className="md:hidden mt-10">
+            <Button variant="outline" onClick={() => navigate(-1)} className="w-full font-bold">
+              <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
+            </Button>
           </div>
         </div>
       </div>

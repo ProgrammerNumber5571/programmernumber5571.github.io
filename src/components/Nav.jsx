@@ -79,7 +79,7 @@ export const Nav = ({ albums }) => {
               <Button
                 variant="ghost"
                 size="icon"
-                className={showSearch ? "text-primary bg-muted" : "text-foreground"}
+                className={`max-md:hidden ${showSearch ? "text-primary bg-muted" : "text-foreground"}`}
                 onClick={() => setShowSearch(!showSearch)}
                 aria-label={t.searchPlaceholderShort}
                 aria-pressed={showSearch}
@@ -91,7 +91,7 @@ export const Nav = ({ albums }) => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-foreground relative"
+                className="max-md:hidden text-foreground relative"
                 onClick={() => setCartOpen(true)}
                 aria-label={t.cart}
               >

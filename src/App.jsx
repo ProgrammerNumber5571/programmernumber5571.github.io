@@ -12,6 +12,7 @@ import { AuthProvider } from './contexts/authContext';
 import { ShopifyCartProvider } from './contexts/Shopifycartcontext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { MobileTabBar } from './components/MobileTabBar.jsx';
 
 const Index = lazy(() => import('./components/pages/Index'));
 const NotFound = lazy(() => import("./components/pages/NotFound"));
@@ -113,6 +114,7 @@ function App() {
                     </Routes>
                   </Suspense>
                   </ErrorBoundary>
+                  <MobileTabBar />
                 </Router>
               </ShopifyCartProvider>
             </FavoritesProvider>

@@ -815,8 +815,21 @@ html:not(.light) .album-hero-fade {
     background-image: linear-gradient(
       to bottom,
       transparent 0,
-      color-mix(in srgb, var(--fade) 60%, transparent) 7rem,
-      var(--fade) 14rem
+      color-mix(in srgb, var(--fade) 60%, transparent) 3rem,
+      var(--fade) 6rem
     );
+  }
+}
+
+/* Phone tab bar (MobileTabBar.jsx): while it shows, reserve room for it below the page */
+:root {
+  --tabbar-h: 0px;
+}
+@media (max-width: 767px) {
+  html.has-tabbar {
+    --tabbar-h: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+  html.has-tabbar body {
+    padding-bottom: var(--tabbar-h);
   }
 }
