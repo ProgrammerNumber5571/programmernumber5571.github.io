@@ -1,0 +1,55 @@
+name: iOS IPA (unsigned)
+
+# Manual only: Actions tab > "iOS IPA (unsigned)" > "Run workflow".
+# Builds the iOS app with code signing disabled and uploads Backrooms.ipa as an artifact. It is meant
+# for sideloading with AltStore or Sideloadly, which re-sign it with your own Apple ID (see IOS.md).
+# This file does not need any Apple account or secrets.
+on:
+  workflow_dispatch:
+
+jobs:
+  ipa:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: source-latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Build the web app and sync it into the iOS project
+        run: |
+          npm ci
+          npm run ios:sync
+
+      - name: Archive without code signing
+        working-directory: ios/App
+        run: |
+          xcodebuild archive \
+            -project App.xcodeproj \
+            -scheme App \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}"
+
+      - name: Package Backrooms.ipa
+        run: |
+          APP="$RUNNER_TEMP/App.xcarchive/Products/Applications/App.app"
+          test -d "$APP" || { echo "App.app not found in the archive"; ls -R "$RUNNER_TEMP/App.xcarchive/Products" | head -40; exit 1; }
+          mkdir -p "$RUNNER_TEMP/ipa/Payload"
+          cp -R "$APP" "$RUNNER_TEMP/ipa/Payload/"
+          (cd "$RUNNER_TEMP/ipa" && zip -qry "$GITHUB_WORKSPACE/Backrooms.ipa" Payload)
+          ls -lh "$GITHUB_WORKSPACE/Backrooms.ipa"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backrooms-ipa
+          path: Backrooms.ipa

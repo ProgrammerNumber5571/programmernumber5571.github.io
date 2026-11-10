@@ -41,6 +41,25 @@ it always increases. After processing (10-30 min) it shows up in TestFlight.
 
 Note: this is untested until the secrets exist; the first run may need a fix or two.
 
+## Sideload with AltStore or Sideloadly (free Apple ID, no TestFlight)
+
+`.github/workflows/ios-ipa.yml` builds an **unsigned** `Backrooms.ipa` on a GitHub-hosted Mac. It needs
+no Apple account and no secrets.
+
+1. **Actions > iOS IPA (unsigned) > Run workflow** (branch `source-latest`).
+2. Download the **backrooms-ipa** artifact from the finished run and unzip it to get `Backrooms.ipa`.
+3. Install AltServer (Windows or Mac) from altstore.io and AltStore on your iPhone, or use Sideloadly.
+   On Windows, AltServer needs the iTunes and iCloud installers from Apple's own site, not the
+   Microsoft Store versions.
+4. Open `Backrooms.ipa` in AltStore (or drag it into Sideloadly). It re-signs the app with your own
+   Apple ID and installs it. The bundle ID is changed automatically.
+
+Limits of a free Apple ID: the app expires after **7 days** and AltStore must refresh it while the
+iPhone and the computer running AltServer are on the same Wi-Fi; at most **3** sideloaded apps; no push
+notifications or Sign in with Apple. For other testers, use TestFlight instead.
+
+The build step is untested until it has run once; the first run may need a fix.
+
 ## Build and upload on a Mac (alternative)
 
 ```bash
