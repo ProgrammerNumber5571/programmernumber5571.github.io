@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { albums } from "./Albums.jsx";
 import { useLanguage } from "./LanguageContext.jsx";
 import { displayTitle } from "../lib/editions.js";
+import { posterFor } from "../lib/imageUrls.js";
 
 export const Hero = () => {
   const { t } = useLanguage();
@@ -88,6 +89,7 @@ export const Hero = () => {
                     {isVideo ? (
                       <video
                         src={coverImage}
+                        poster={posterFor(coverImage)}
                         autoPlay
                         loop
                         muted

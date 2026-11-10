@@ -18,6 +18,7 @@ import { usePageTitle } from './usePageTitle.js';
 import { useCoverPalette } from '../lib/coverPalette.js';
 import { cleanAlbumTitle } from './spotifyClient.js';
 import { formatLabel, formatOf, getEditions } from '../lib/editions.js';
+import { isVideoUrl, posterFor } from '../lib/imageUrls.js';
 
 // Descriptions longer than this are cut off; clicking one opens the full text with the album's details
 const DESCRIPTION_LIMIT = 220;
@@ -380,12 +381,27 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
         <div className="max-w-4xl mx-auto">
           <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-2xl mb-6 group bg-card border border-border">
             {currentImage && !imageError ? (
-              <img decoding="async"
-                src={currentImage}
-                alt={album.title}
-                className="w-full h-full object-contain transition-opacity duration-500"
-                onError={() => setImageError(true)}
-              />
+              isVideoUrl(currentImage) ? (
+                <video
+                  key={currentImage}
+                  src={currentImage}
+                  poster={posterFor(currentImage)}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-label={album.title}
+                  className="w-full h-full object-contain"
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                <img decoding="async"
+                  src={currentImage}
+                  alt={album.title}
+                  className="w-full h-full object-contain transition-opacity duration-500"
+                  onError={() => setImageError(true)}
+                />
+              )
             ) : (
               <div className="w-full h-full flex items-center justify-center">{t.imageNotLoaded}</div>
             )}
@@ -418,7 +434,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                     onClick={() => { setSelectedImage(index); setImageError(false); }}
                     className={`flex-shrink-0 w-28 h-28 rounded-lg overflow-hidden border-3 transition-all ${selectedImage === index ? "border-primary shadow-xl scale-105 ring-2 ring-primary/50" : "border-border hover:border-primary/50"}`}
                   >
-                    <img loading="lazy" decoding="async" src={img.url} alt={`${img.type} ${index + 1}`} className="w-full h-full object-contain" />
+                    <img loading="lazy" decoding="async" src={posterFor(img.url) || img.url} alt={`${img.type} ${index + 1}`} className="w-full h-full object-contain" />
                   </button>
                 ))}
               </div>

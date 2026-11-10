@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { albums } from './Albums.jsx';
+import { posterFor } from '../lib/imageUrls.js';
 
 // Three random albums are promoted on every visit (picked once per page
 // load, stable while browsing within the session). Albums with animated
@@ -37,7 +38,7 @@ const promos = pool
     id: album.id,
     albumId: album.id,
     media: album.animatedCover || getCover(album),
-    backdrop: getCover(album) || album.animatedCover,
+    backdrop: getCover(album) || posterFor(album.animatedCover) || album.animatedCover,
     title: album.title,
   }));
 
@@ -126,6 +127,7 @@ export function PromoBanner() {
             {isVideo(promo.media) ? (
               <video
                 src={promo.media}
+                poster={posterFor(promo.media)}
                 autoPlay
                 loop
                 muted

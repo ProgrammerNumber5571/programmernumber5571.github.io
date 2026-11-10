@@ -22,12 +22,29 @@ export function optimizeImageUrl(url) {
   return `${PREFIX}${OPTIMIZE}${tail}`;
 }
 
+export const isVideoUrl = (url) => /\.(mp4|webm|mov)(\?|$)/i.test(String(url || ''));
+
+// A still first frame for a converted video, shown while it loads (Cloudinary serves any
+// animation's first frame when the same file is requested with a .jpg extension).
+export const posterFor = (url) =>
+  typeof url === 'string' && url.startsWith(PREFIX) && isVideoUrl(url)
+    ? url.replace(/\.(mp4|webm|mov)(\?.*)?$/i, '.jpg')
+    : undefined;
+
+// Animated covers were uploaded as GIFs, which are huge (4-8 MB each) and make the browser decode and
+// repaint every frame forever. Cloudinary serves the same file as an MP4 when asked for it by
+// extension, at a few hundred KB, and the pages that show animated covers play it as a <video>.
+const toVideo = (url) =>
+  typeof url === 'string' && url.startsWith(PREFIX) && /\.gif($|\?)/i.test(url) ? url.replace(/\.gif($|\?)/i, '.mp4$1') : url;
+
 // Applies optimizeImageUrl to every string inside a data structure (arrays and plain objects).
 export function optimizeMedia(value) {
   if (typeof value === 'string') return optimizeImageUrl(value);
   if (Array.isArray(value)) return value.map(optimizeMedia);
   if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value).map(([key, inner]) => [key, optimizeMedia(inner)]));
+    return Object.fromEntries(
+      Object.entries(value).map(([key, inner]) => [key, key === 'animatedCover' ? toVideo(inner) : optimizeMedia(inner)])
+    );
   }
   return value;
 }
