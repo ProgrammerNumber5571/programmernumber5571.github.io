@@ -1068,11 +1068,15 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
             </div>
           </div>
 
-          <div className="md:hidden mt-10">
-            <Button variant="outline" onClick={() => navigate(-1)} className="w-full font-bold">
-              <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
-            </Button>
-          </div>
+          {/* Phone: Back floats just above the price bar / tab bar instead of sitting at the very end of the page */}
+          <Button
+            variant="outline"
+            onClick={() => navigate(-1)}
+            className="md:hidden fixed left-4 z-40 rounded-full px-4 font-bold shadow-lg transition-[bottom] duration-500"
+            style={{ bottom: "calc(var(--tabbar-now, var(--tabbar-h, 0px)) + 4.75rem)" }}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
+          </Button>
         </div>
       </div>
     </div>
