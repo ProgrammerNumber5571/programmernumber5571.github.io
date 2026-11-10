@@ -380,7 +380,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
         <div className="max-w-4xl mx-auto">
           <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-2xl mb-6 group bg-card border border-border">
             {currentImage && !imageError ? (
-              <img
+              <img decoding="async"
                 src={currentImage}
                 alt={album.title}
                 className="w-full h-full object-contain transition-opacity duration-500"
@@ -536,7 +536,7 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
                   <X className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-4 pr-10">
-                  {coverForTint && <img src={coverForTint} alt="" className="w-20 h-20 rounded-lg object-cover shrink-0" />}
+                  {coverForTint && <img decoding="async" src={coverForTint} alt="" className="w-20 h-20 rounded-lg object-cover shrink-0" />}
                   <div className="min-w-0">
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{t.description}</p>
                     <h2 className="text-xl sm:text-2xl font-bold leading-tight break-words">{album.title}</h2>

@@ -1,4 +1,4 @@
-import { optimizeMedia } from "../lib/cloudinary.js";
+import { optimizeMedia } from "../lib/imageUrls.js";
 
 const rawArtistProfiles = {
   "Playboi Carti": {

@@ -70,7 +70,7 @@ export const MerchPage = () => {
           <div>
             <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-2xl mb-6 bg-card border border-border">
               {currentImage && !imageError ? (
-                <img
+                <img decoding="async"
                   src={currentImage}
                   alt={item.title}
                   className="w-full h-full object-cover"
@@ -102,7 +102,7 @@ export const MerchPage = () => {
                         : "border-border hover:border-primary/50"
                       }`}
                   >
-                    <img
+                    <img decoding="async"
                       src={img}
                       alt={`${item.title} ${index + 1}`}
                       className="w-full h-full object-cover"

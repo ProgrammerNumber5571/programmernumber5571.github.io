@@ -491,6 +491,13 @@ html.liquid-glass .lg-btn-lib::after {
   z-index: -2;
   -webkit-backdrop-filter: blur(4px) saturate(1.9) brightness(1.12);
   backdrop-filter: blur(4px) saturate(1.9) brightness(1.12);
+}
+/* The feTurbulence displacement is by far the costliest part of the glass: the browser redraws it
+   on every scroll frame for every button on screen. It only runs while a button is being touched;
+   at rest the glass is the plain blur above, which looks nearly the same. */
+html.liquid-glass .lg-btn-lib:hover::after,
+html.liquid-glass .lg-btn-lib:focus-visible::after,
+html.liquid-glass .lg-btn-lib:active::after {
   filter: url(#lg-lib-distortion);
 }
 /* Apple-style motion: the glass lifts toward the pointer on hover, squeezes on press with a

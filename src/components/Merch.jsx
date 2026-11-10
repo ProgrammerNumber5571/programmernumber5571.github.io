@@ -1,4 +1,4 @@
-import { optimizeMedia } from "../lib/cloudinary.js";
+import { optimizeMedia } from "../lib/imageUrls.js";
 
 const antagonistDaggerShirt = {
   front: "https://res.cloudinary.com/deroy68n9/image/upload/v1769007844/Antagonist-Tour-2.0-Dagger-T-Shi_q4fagc.png",

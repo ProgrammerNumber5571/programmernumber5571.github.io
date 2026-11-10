@@ -262,6 +262,10 @@ export function initLiquidGlass() {
     // outermost surfaces get a lens (nested ones keep the CSS-only treatment).
     // Buttons are the exception: nested or ghost ones still get the rim highlight
     // ("specOnly"), they just don't refract.
+    // .lg-btn-lib buttons draw their glass purely in CSS (see index.css); building a displacement
+    // map and an SVG filter for each of them here would be unused work, and with dozens of
+    // buttons on a page it made scrolling noticeably heavier.
+    if (el.classList.contains('lg-btn-lib')) return;
     const nested = Boolean(el.parentElement?.closest(SURFACES));
     const isButton = el.classList.contains('lg-btn');
     if (registry.has(el) || (nested && !isButton)) return;

@@ -127,7 +127,7 @@ export const MerchCollectionsPage = () => {
                 >
                   {category.banner ? (
                     <div className="absolute inset-0 bg-black">
-                      <img
+                      <img decoding="async"
                         src={category.banner}
                         alt={category.name}
                         className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
@@ -386,7 +386,7 @@ export const MerchCollectionsPage = () => {
                     <div className="bg-card border border-border rounded-xl p-3 group-hover:border-primary/50 group-hover:shadow-lg group-hover:-translate-y-1 transition-all duration-300">
                       <div className="relative mb-3 aspect-square bg-black rounded-lg overflow-hidden">
                         {item.image ? (
-                          <img
+                          <img decoding="async"
                             src={item.image}
                             alt={item.title}
                             loading="lazy"

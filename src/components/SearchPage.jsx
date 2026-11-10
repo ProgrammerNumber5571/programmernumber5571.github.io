@@ -164,7 +164,7 @@ export function SearchPage() {
                 >
                   {/* Album Cover */}
                   <div className="relative aspect-square rounded-lg overflow-hidden mb-3 shadow-lg group-hover:shadow-xl transition-shadow">
-                    <img
+                    <img decoding="async"
                       src={Array.isArray(album.image) ? album.image[0] : album.image}
                       alt={album.title}
                       loading="lazy"

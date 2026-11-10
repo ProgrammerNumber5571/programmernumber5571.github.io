@@ -70,7 +70,7 @@ export function AccessoriesSection() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <ShoppingCart className="w-10 h-10 text-muted-foreground/40" />
                 </div>
-                <img
+                <img decoding="async"
                   src={item.image}
                   alt={item.name}
                   loading="lazy"

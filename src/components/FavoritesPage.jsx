@@ -98,7 +98,7 @@ export const FavoritesPage = () => {
                 <Link key={album.id} to={`/album/${album.id}`} className="group">
                   <div className="relative aspect-square rounded-lg overflow-hidden mb-3 bg-card border border-border shadow-lg group-hover:shadow-xl transition-shadow">
                     {cover ? (
-                      <img
+                      <img decoding="async"
                         src={cover}
                         alt={album.title}
                         loading="lazy"

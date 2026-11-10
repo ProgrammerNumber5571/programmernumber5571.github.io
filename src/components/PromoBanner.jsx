@@ -133,7 +133,7 @@ export function PromoBanner() {
                 className="relative z-10 h-3/4 max-w-[85%] object-contain rounded-xl shadow-2xl"
               />
             ) : (
-              <img
+              <img decoding="async"
                 src={promo.media}
                 alt={promo.title}
                 loading={promo.id === promos[0]?.id ? 'eager' : 'lazy'}

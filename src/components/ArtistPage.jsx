@@ -156,7 +156,7 @@ const ArtistPage = () => {
         >
           {artistBanner && !bannerError ? (
             <>
-              <img
+              <img decoding="async"
                 src={artistBanner}
                 alt={`${artist} banner`}
                 className="w-full h-full object-cover"
@@ -195,7 +195,7 @@ const ArtistPage = () => {
             <div className="flex items-center gap-4 sm:gap-6">
               {artistProfileImage && !profileError && (
                 <div className="relative vinyl-record-container shrink-0">
-                  <img
+                  <img decoding="async"
                     src={artistProfileImage}
                     alt={artist}
                     className="w-20 h-20 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-background shadow-2xl"
@@ -393,7 +393,7 @@ const ArtistPage = () => {
             <div className="relative p-8">
               <div className="flex items-center gap-4 mb-6">
                 {artistProfileImage && !profileError && (
-                  <img
+                  <img decoding="async"
                     src={artistProfileImage}
                     alt={artist}
                     className="w-16 h-16 rounded-full object-cover flex-shrink-0"

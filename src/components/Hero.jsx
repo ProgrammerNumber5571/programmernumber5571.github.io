@@ -95,7 +95,7 @@ export const Hero = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <img
+                      <img decoding="async"
                         src={coverImage}
                         alt={`${displayTitle(featuredAlbum)} cover`}
                         className="w-full h-full object-cover"
