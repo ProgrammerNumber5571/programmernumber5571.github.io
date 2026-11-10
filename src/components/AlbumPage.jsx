@@ -382,6 +382,12 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
         </div>
       )}
       <div className="container mx-auto px-6 pt-0 md:pt-12 pb-28 md:pb-12 relative">
+        <div className="max-md:hidden max-w-xl mx-auto mb-6">
+          <Button variant="outline" onClick={() => navigate(-1)} className="rounded-full px-5 font-bold">
+            <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
+          </Button>
+        </div>
+
         <div className="max-w-4xl mx-auto">
           {/* Same stacked layout as on phones (cover, details, thumbnails); on wide screens it is just a centred column. */}
           <div className="flex flex-col md:max-w-xl md:mx-auto md:mb-4">
@@ -1062,8 +1068,8 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
             </div>
           </div>
 
-          <div className="mt-10">
-            <Button variant="outline" onClick={() => navigate(-1)} className="w-full md:w-auto font-bold">
+          <div className="md:hidden mt-10">
+            <Button variant="outline" onClick={() => navigate(-1)} className="w-full font-bold">
               <ArrowLeft className="w-4 h-4 mr-2" /> {t.back}
             </Button>
           </div>

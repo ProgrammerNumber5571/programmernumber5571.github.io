@@ -181,7 +181,8 @@ export function PromoBanner() {
           e.preventDefault();
           prevSlide();
         }}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 [@media(hover:none)]:hidden transition-opacity z-20"
+        aria-label="Previous"
+        className="lg-btn lg-btn-lib lg-btn-clear lg-btn-media absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 [@media(hover:none)]:hidden transition-all z-20"
       >
         <ChevronLeft className="w-6 h-6" />
       </button>
@@ -191,7 +192,8 @@ export function PromoBanner() {
           e.preventDefault();
           nextSlide();
         }}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 [@media(hover:none)]:hidden transition-opacity z-20"
+        aria-label="Next"
+        className="lg-btn lg-btn-lib lg-btn-clear lg-btn-media absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 [@media(hover:none)]:hidden transition-all z-20"
       >
         <ChevronRight className="w-6 h-6" />
       </button>
