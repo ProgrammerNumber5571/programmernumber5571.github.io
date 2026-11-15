@@ -31,8 +31,11 @@ export const isVideoUrl = (url) => /\.(mp4|webm|mov)(\?|$)/i.test(String(url || 
 
 // A still first frame for a converted video, shown while it loads (Cloudinary serves any
 // animation's first frame when the same file is requested with a .jpg extension).
+// Videos uploaded straight to Cloudinary (…/video/upload/….mp4) work the same way, whatever the image prefix is.
+const CLOUDINARY_VIDEO = /^https:\/\/res\.cloudinary\.com\/[^/]+\/video\/upload\//i;
+
 export const posterFor = (url) =>
-  typeof url === 'string' && url.startsWith(PREFIX) && isVideoUrl(url)
+  typeof url === 'string' && (url.startsWith(PREFIX) || CLOUDINARY_VIDEO.test(url)) && isVideoUrl(url)
     ? url.replace(/\.(mp4|webm|mov)(\?.*)?$/i, '.jpg')
     : undefined;
 
