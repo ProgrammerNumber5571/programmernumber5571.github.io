@@ -133,7 +133,6 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [showDetails]);
-  const scrollContainerRef = useRef(null);
 
   const [interactions, setInteractions] = useState([]);
   const [rating, setRating] = useState(5);
@@ -428,9 +427,23 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
               <div className="w-full h-full flex items-center justify-center">{t.imageNotLoaded}</div>
             )}
 
-            <div className="max-md:hidden absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-mono z-20">
-              {selectedImage + 1} / {galleryImages.length}
-            </div>
+            {/* Position in the gallery: the white segment slides right for the next picture, left for the previous one.
+                On phones it sits higher, clear of the title block that fades up over the cover. */}
+            {galleryImages.length > 1 && (
+              <div
+                role="progressbar"
+                aria-label={t.images}
+                aria-valuemin={1}
+                aria-valuemax={galleryImages.length}
+                aria-valuenow={selectedImage + 1}
+                className="pointer-events-none absolute bottom-[6.75rem] md:bottom-5 left-1/2 -translate-x-1/2 z-20 w-44 h-1 overflow-hidden rounded-full bg-black/45 shadow-[0_0_0_1px_rgb(255_255_255/0.25),0_2px_8px_rgb(0_0_0/0.35)]"
+              >
+                <div
+                  className="h-full rounded-full bg-white transition-transform duration-500 ease-[cubic-bezier(0.32,1.25,0.5,1)] motion-reduce:transition-none"
+                  style={{ width: `${100 / galleryImages.length}%`, transform: `translateX(${selectedImage * 100}%)` }}
+                />
+              </div>
+            )}
 
             {selectedImage > 0 && (
               <button onClick={() => setSelectedImage(s => s - 1)} className="lg-btn lg-btn-lib lg-btn-clear lg-btn-media absolute left-4 top-1/2 max-md:top-[32%] -translate-y-1/2 bg-black/70 p-3 rounded-full text-white md:opacity-0 group-hover:opacity-100 transition-all z-10"><ChevronLeft /></button>
@@ -445,23 +458,6 @@ const AlbumPageInner = ({ album, editions, onFormat }) => {
               </button>
             )}
           </div>
-
-          {galleryImages.length > 1 && (
-            <div className="order-3 relative bg-card backdrop-blur-sm p-6 rounded-lg border border-border shadow-lg mb-8 min-w-0">
-              <p className="text-sm font-medium text-foreground mb-4">{t.images} ({selectedImage + 1}/{galleryImages.length})</p>
-              <div ref={scrollContainerRef} className="flex gap-4 overflow-x-auto pb-2 scroll-smooth" style={{ scrollbarWidth: "thin" }}>
-                {galleryImages.map((img, index) => (
-                  <button
-                    key={index}
-                    onClick={() => { setSelectedImage(index); setImageError(false); }}
-                    className={`flex-shrink-0 w-28 h-28 rounded-lg overflow-hidden border-3 transition-all ${selectedImage === index ? "border-primary shadow-xl scale-105 ring-2 ring-primary/50" : "border-border hover:border-primary/50"}`}
-                  >
-                    <img loading="lazy" decoding="async" src={posterFor(img.url) || img.url} alt={`${img.type} ${index + 1}`} className="w-full h-full object-contain" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
 
           <div
             className="album-hero-fade order-2 relative z-10 max-md:-mx-6 max-md:px-6 max-md:-mt-24 max-md:pt-8 max-md:pointer-events-none max-md:[&>*]:pointer-events-auto md:mt-6 mb-10 space-y-4"

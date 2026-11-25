@@ -94,12 +94,6 @@ const musicWhite = {
   ]
 };
 
-const musicSorry4DaWait = {
-  cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1773901125/music-sorry-4-da-wait_lrnbm5_kzyezh.jpg",
-  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1773899939/playboi-carti-music-sorry-4-da-wait_wamzjn.png"],
-  features: ["https://res.cloudinary.com/deroy68n9/image/upload/v1773901373/musicRed_feats_kq6dyk_aokr9l.jpg"]
-}
-
 const mbdtf = {
   cover: 'https://res.cloudinary.com/deroy68n9/image/upload/v1768226160/mbdtf_yjpzve.jpg',
   vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1768226161/mbdtf_vinyl_xmejmc.jpg",
@@ -720,6 +714,15 @@ const luhLeakyzVol1CD = {
     "https://res.cloudinary.com/deroy68n9/image/upload/v1794225630/LUH_LEAKYZ_VOL._1__JEWEL_CASE_CD__06-688ee53951cc49d0a9b9b60f3afba78f_2048x_wfbfzk.webp"
   ]
 };
+
+const musicSorry4DaWait = {
+  cover: "https://res.cloudinary.com/deroy68n9/image/upload/v1795607215/HX0ir4-W4AAv1Z4_jtt0g4.jpg",
+  vinyl: ["https://res.cloudinary.com/deroy68n9/image/upload/v1795607215/HX0ir45WoAAdMlk_jnm6kz.jpg",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1795607215/4-playboi-carti-music-sorry-4-da-wait-red-vinyl-edition-black-friday-record-store-day-2026_webp_izk3gb.png",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1795607215/5-playboi-carti-music-sorry-4-da-wait-red-vinyl-edition-black-friday-record-store-day-2026_webp_ckxheg.png",
+    "https://res.cloudinary.com/deroy68n9/image/upload/v1795607215/3-playboi-carti-music-sorry-4-da-wait-red-vinyl-edition-black-friday-record-store-day-2026_webp_qpblpz.png"
+  ]
+}
 
 const rawAlbums = [
   {
@@ -3186,6 +3189,66 @@ const rawAlbums = [
     releaseDate: "14 Mart 2025",
     duration: "30 mahnılar, 1 saat 16 dəqiqə",
     label: "AWGE/Interscope Records"
+  },
+  {
+    id: 108,
+    title: "MUSIC - SORRY 4 DA WAIT (2LP)",
+    artist: ["Playboi Carti"],
+    price: 99.99,
+    genre: "Hip-Hop/Rap",
+    year: 2025,
+    isNew: true,
+    isExplicit: true,
+    image: musicSorry4DaWait.cover,
+    vinylImages: musicSorry4DaWait.vinyl,
+    vinylColor: "red",
+    sleeveColor: "red",
+    accentColor: "red",
+    format: "vinyl",
+    description: {
+      az: "Playboi Carti, Whole Lotta Red-dən təxminən dörd il ərzində Future, Latto və Trippie Redd kimi məşhurlarla birlikdə çıxış edərək, demək olar ki, orada olmayıb. Buna baxmayaraq, bu, onun böyük fanatlarının sonda sadəcə MUSIC kimi qısaldılmış adı ilə çıxan I AM MUSIC albomu ilə bağlı davamlı olaraq səs-küy salmasının qarşısını ala bilməyib. Mahnının uzunluğu gözləmə müddətini təsdiqləyir və ifaçının xoş gəlişini xəbər verən POP OUT və CRUSH kimi qəzəbli rep mahnıları ilə başlayır. 30 mahnıdan ibarət və 77 dəqiqəlik davam edən albomda onun səsləri aqressiv şəkildə şişirdilmiş, sintezator ağırlığı ilə məşhurlaşdığı post-trap ilə daha pop-trap arasında dəyişir, lakin bütün bunlar şübhəsiz ki, onun stilistik diapazonundadır. Karti əvvəlcə qonaq seçimini yüksək səviyyəli albom buraxılışları üçün adət halını aldığı kimi, jiletə yaxın saxlayırdı. Lakin Kendrick Lamarın GOOD CREDIT-ə tüpürdüyünü, Future-ın TRIM-ə görə hisslərini ifadə etdiyini və ya əməkdaşlıq karyerasının əsas dayağı Lil Uzi Vertin TWIN TRIM də qələbə ilə sürüşdüyünü görməmək mümkün olmazdı. The Weeknd-in RATHER LIE mahnısındakı ən diqqət çəkən hissə, bəlkə də, onun buradakı zərfləri itələməsinin ən açıq nümunəsidir, baxmayaraq ki, Travis Scott-un PHILLY mahnısında və Young Thug və Ty Dolla $ign-dən ibarət komandanın WE NEED ALL DA VIBES mahnısında çıxışları bu istiqaməti daha da inandırıcı edir. Bu kimi dostları ilə belə, Carti özü daha parlaq şəkildə parlayır, nəfəsli, demək olar ki, falsetto səsi I SEEEEEE YOU BABY BOI video oyun arpecioları və xırıltılı xırıltısı COCAINE NOSE-nin kinematoqrafik səs-küyü ətrafında fırlanır. Yalnız gələcəyə baxmaqla kifayətlənməyərək, klassik 1017 Brick Squad kasetlərini xatırladan RADAR-da səslənən Atlantanın 2010-cu illərin əvvəllərindəki səsinə demək olar ki, nostaljik bir qiymətləndirmə var.",
+      en: "Playboi Carti has been all but absent in the roughly four years since Whole Lotta Red, popping up alongside stars like Future, Latto and Trippie Redd. Even so, that couldn't stop his massive fanbase from constantly buzzing about I AM MUSIC, the album that ultimately arrived under the shortened title MUSIC. Its length justifies the wait, opening with raging rap songs like POP OUT and CRUSH that herald the artist's welcome return. Across 30 songs and 77 minutes, his vocals shift between the aggressively distorted, synth-heavy post-trap he became famous for and something more pop-trap, yet all of it sits firmly within his stylistic range. Carti initially kept his guest list close to the vest, as has become customary for high-profile album rollouts. But it would be impossible to miss Kendrick Lamar spitting on GOOD CREDIT, Future airing out his feelings on TRIM, or career-long collaborator Lil Uzi Vert gliding to victory on TWIN TRIM. The Weeknd's standout turn on RATHER LIE is perhaps the clearest example of the envelope-pushing here, though Travis Scott's appearance on PHILLY and the Young Thug and Ty Dolla $ign team-up on WE NEED ALL DA VIBES make the direction even more convincing. Even with friends like these, Carti himself shines brightest, his breathy, almost falsetto voice swirling around the video-game arpeggios of I SEEEEEE YOU BABY BOI and the cinematic din of COCAINE NOSE with his raspy growl. And not content to only look forward, there's an almost nostalgic appreciation of Atlanta's early-2010s sound on RADAR, which recalls classic 1017 Brick Squad tapes.",
+      ru: "Playboi Carti почти не появлялся на публике в течение примерно четырёх лет после Whole Lotta Red, лишь изредка выступая вместе со звёздами вроде Future, Latto и Trippie Redd. Тем не менее это не помешало его огромной армии фанатов постоянно шуметь вокруг альбома I AM MUSIC, который в итоге вышел под сокращённым названием MUSIC. Его продолжительность оправдывает ожидание: он открывается яростными рэп-треками POP OUT и CRUSH, возвещающими долгожданное возвращение артиста. На протяжении 30 песен и 77 минут его вокал колеблется между агрессивно искажённым, насыщенным синтезаторами пост-трэпом, прославившим его, и чем-то более поп-трэповым, но всё это, безусловно, в пределах его стилистического диапазона. Поначалу Carti держал список гостей в секрете, как это стало привычным для громких релизов. Но невозможно не заметить, как Kendrick Lamar читает на GOOD CREDIT, Future изливает чувства на TRIM, а многолетний соратник Lil Uzi Vert победно скользит по TWIN TRIM. Яркое участие The Weeknd в RATHER LIE — пожалуй, самый очевидный пример выхода за рамки, хотя появления Travis Scott на PHILLY и тандема Young Thug и Ty Dolla $ign на WE NEED ALL DA VIBES делают это направление ещё убедительнее. Даже с такими друзьями сам Carti сияет ярче всех: его воздушный, почти фальцетный голос вьётся вокруг видеоигровых арпеджио I SEEEEEE YOU BABY BOI и кинематографичного гула COCAINE NOSE с хриплым рычанием. Не ограничиваясь взглядом в будущее, на RADAR звучит почти ностальгическая дань звучанию Атланты начала 2010-х, напоминающая классические кассеты 1017 Brick Squad.",
+    },
+    tracklist: [
+      { id: 1, name: "POP OUT", isExplicit: true, duration: "2:42", spotifyEmbed: "https://open.spotify.com/embed/track/3j3SfV4hAcR4XjCvW393Gr?si=9887770c97b546ba" },
+      { id: 2, name: "CRUSH", features: "Playboi Carti & Travis Scott", isExplicit: true, spotifyEmbed: "https://open.spotify.com/embed/track/3VdooJLOy4tLxKpnn46SMP", musicVideo: "https://www.youtube.com/watch?v=94B_-0kP684", duration: "2:53" },
+      { id: 3, name: "K POP", isExplicit: true, duration: "1:53", spotifyEmbed: "https://open.spotify.com/embed/track/00iLTetTLAeImmBlh6jOJh?si=7cda30efb9924e64", musicVideo: "https://www.youtube.com/watch?v=aqHA5WLRtMA" },
+      { id: 4, name: "EVIL J0RDAN", isExplicit: true, musicVideo: "https://youtu.be/VcRc2DHHhoM?si=DR3qRwstvsJjh3Dh", duration: "3:04", spotifyEmbed: "https://open.spotify.com/embed/track/6iycYUk3oB0NPMdaDUrN1w?si=5ded42079f854fb7" },
+      { id: 5, name: "MOJO JOJO", isExplicit: true, duration: "2:36", spotifyEmbed: "https://open.spotify.com/embed/track/3WRUvGqySBZC6RkB5c2w1S?si=779d837221d74627" },
+      { id: 6, name: "PHILLY", features: "Playboi Carti & Travis Scott", isExplicit: true, duration: "3:06", spotifyEmbed: "https://open.spotify.com/embed/track/5SIvP6TdWc9DNvKbENjnYc?si=99377f3a3aff4e3f" },
+      { id: 7, name: "RADAR", isExplicit: true, duration: "1:48", spotifyEmbed: "https://open.spotify.com/embed/track/3lAEHk0eZzMKtCUFLXz8Ln?si=805dcd22bc044f6f" },
+      { id: 8, name: "RATHER LIE", features: "Playboi Carti & The Weeknd", isExplicit: true, duration: "3:30", spotifyEmbed: "https://open.spotify.com/embed/track/68qeaZhtMZ6abrJCYt6nQn?si=f9057c5bfc304a1d" },
+      { id: 9, name: "FINE SHIT", isExplicit: true, duration: "1:47", musicVideo: "https://youtu.be/uMZiaJ4speo?si=jxBUmPC8Q8Asz4QQ", spotifyEmbed: "https://open.spotify.com/embed/track/79mFFAOYcG8ZF6AN1JecAL?si=a2c1b2d9f2524353" },
+      { id: 10, name: "BACKD00R (feat. Jhené Aiko)", features: "Playboi Carti & Kendrick Lamar", isExplicit: true, duration: "3:10", spotifyEmbed: "https://open.spotify.com/embed/track/0rNgWFQJtfttOYIHfDOHCg?si=ea427ff6cae042e2" },
+      { id: 11, name: "TOXIC (feat. Skepta)", isExplicit: true, duration: "2:15", spotifyEmbed: "https://open.spotify.com/embed/track/4evMMKc2HD6fV9slMfgkMx?si=74c072b4d15849d8" },
+      { id: 12, name: "MUNYUN", isExplicit: true, duration: "2:34", spotifyEmbed: "https://open.spotify.com/embed/track/2JJFJEvFSWyQ59Pwl2gqSF?si=2735aa5c5a164d85" },
+      { id: 13, name: "CRANK", isExplicit: true, duration: "2:28", spotifyEmbed: "https://open.spotify.com/embed/track/7xAvtuHf8nGi5OtXVPYgb3?si=462999de96134d27" },
+      { id: 14, name: "CHARGE DEM HOES A FEE", features: "Playboi Carti, Future & Travis Scott", isExplicit: true, duration: "3:45", spotifyEmbed: "https://open.spotify.com/embed/track/21aDVa64pWR8SYQ7wBRMkd?si=f90f9c8609184dc1" },
+      { id: 15, name: "GOOD CREDIT", features: "Playboi Carti & Kendrick Lamar", isExplicit: true, duration: "3:10", spotifyEmbed: "https://open.spotify.com/embed/track/2n9fC0A4ptmWqYeMXEVaok?si=fd32daf6d4c14c99" },
+      { id: 16, name: "I SEEEEEE YOU BABY BOI", isExplicit: true, duration: "2:39", spotifyEmbed: "https://open.spotify.com/embed/track/2ydagYqcyFfRtQPzKc5E8l?si=97abf2afeec941c2" },
+      { id: 17, name: "WAKE UP F1LTHY", features: "Playboi Carti & Travis Scott", isExplicit: true, duration: "2:49", spotifyEmbed: "https://open.spotify.com/embed/track/1pzN8bCzy017iK3vWzkk6Z?si=6b9903cce3d44553" },
+      { id: 18, name: "JUMPIN", features: "Playboi Carti & Lil Uzi Vert", isExplicit: true, duration: "1:33", spotifyEmbed: "https://open.spotify.com/embed/track/7oZOCPjlLpHZtIebTXhlfZ?si=1be932ea9519438f" },
+      { id: 19, name: "TRIM", features: "Playboi Carti & Future", isExplicit: true, duration: "3:14", spotifyEmbed: "https://open.spotify.com/embed/track/4qvsNsA4gQKC9HLrmPC2Vx?si=f0b1f2cbef854aef" },
+      { id: 20, name: "COCAINE NOSE", isExplicit: true, duration: "2:31", spotifyEmbed: "https://open.spotify.com/embed/track/4rXxjHSAglOynjIF8Z34dx?si=7bc9ae9a31c44438" },
+      { id: 21, name: "WE NEED ALL DA VIBES", features: "Playboi Carti, Young Thug & Ty Dolla $ign", spotifyEmbed: "https://open.spotify.com/embed/track/4XcZp2xqbiD8YsnPboNUDo?si=c08dee76131b4be5", isExplicit: true, duration: "3:02" },
+      { id: 22, name: "OLYMPIAN", isExplicit: true, duration: "2:55", spotifyEmbed: "https://open.spotify.com/embed/track/4uoADk7q83CHvXHW3k1etM?si=b15442d80db640f4" },
+      { id: 23, name: "OPM BABI", isExplicit: true, duration: "2:53", spotifyEmbed: "https://open.spotify.com/embed/track/76yJsfb1CUy5Um8nFL7jKQ?si=e289f7bba48548e7", musicVideo: "https://youtu.be/UNAWyLCfhPo?si=RM-bLSm5Y_uSLbGm" },
+      { id: 24, name: "TWIN TRIM", features: "Playboi Carti & Lil Uzi Vert", isExplicit: true, duration: "1:35", spotifyEmbed: "https://open.spotify.com/embed/track/3surY3LebvLLdJezmiKUBO?si=d8aacc5f54854d1b" },
+      { id: 25, name: "LIKE WEEZY", isExplicit: true, duration: "1:56", musicVideo: "https://youtu.be/C217vygclrk?si=kdaYGpTONUe9Bd0L", spotifyEmbed: "https://open.spotify.com/embed/track/4zK082ykqJzJGzC64NXjp1?si=b0081e43f0134666" },
+      { id: 26, name: "DIS 1 GOT IT", isExplicit: true, duration: "2:04", spotifyEmbed: "https://open.spotify.com/embed/track/4tMhjP02FRQ0KIUUEJ2oGK?si=6656a4a2dd164450", musicVideo: "https://youtu.be/0WmwToGLXHM?si=BlQ3W-NDZn4Y7d4T" },
+      { id: 27, name: "WALK", isExplicit: true, duration: "1:34", spotifyEmbed: "https://open.spotify.com/embed/track/5Qya13gFXqupr4sSmZMKDg?si=e90116f06f474b52" },
+      { id: 28, name: "HBA / H00DBYAIR", musicVideo: "https://youtu.be/GEofzpwSqho?si=R_cvXYnPFNIlHCEC", isExplicit: true, duration: "3:33", spotifyEmbed: "https://open.spotify.com/embed/track/6q2PbvM9UEig4r8xku7VIb?si=d4741c1363b64696" },
+      { id: 29, name: "OVERLY", isExplicit: true, duration: "1:46", spotifyEmbed: "https://open.spotify.com/embed/track/5tRylsadMpm8TydUgq7NWj?si=2cc0bf54efed418b" },
+      { id: 30, name: "SOUTH ATLANTA BABY", isExplicit: true, duration: "2:13", spotifyEmbed: "https://open.spotify.com/embed/track/7cHhlnawdN87aZbjO6LMRN?si=304ddfaaae2c4594" },
+      { id: 31, name: "DIFFERENT DAY", isExplicit: true, duration: "2:46", spotifyEmbed: "https://open.spotify.com/embed/track/0dApSLrXvnYWy1wagJOmpp?si=0ea2aac3da624297", musicVideo: "https://youtu.be/8VOGJYZxDjA?si=WegGoT4z9T5mkrHL" },
+      { id: 32, name: "2024", isExplicit: true, duration: "3:29", spotifyEmbed: "https://open.spotify.com/embed/track/1bAv1DWUibxCIjAk9SlzRi?si=a1b18affdcf94b7b", musicVideo: "https://youtu.be/YG3EhWlBaoI?si=AP7Au2HKY0vmpiw-" },
+      { id: 33, name: "BACKR00MS", features:"Playboi Carti & Travis Scott", isExplicit: true, duration: "2:40", spotifyEmbed: "https://open.spotify.com/embed/track/2cjhSZd6uZIrp4ddxvvBdn?si=822a22e458934630", musicVideo: "https://youtu.be/ftaXMKV3ffE?si=8yqQGRDD8hSkcqK_" },
+      { id: 33, name: "FOMDJ",  isExplicit: true, duration: "3:20", spotifyEmbed: "https://open.spotify.com/embed/track/7bO7a1KrtmGNDIOy2u3siZ?si=92e5e430842a40bf", musicVideo: "https://youtu.be/N5dOy9FGtDg?si=YZ5pOjNf7rYlA3aX" },
+    ],
+    releaseDate: "14 Mart 2025",
+    duration: "30 mahnılar, 1 saat 16 dəqiqə",
+    label: "AWGE/Interscope"
   },
   {
     id: 56,

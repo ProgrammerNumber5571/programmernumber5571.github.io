@@ -35,13 +35,13 @@ export const Hero = () => {
       stopPreview();
       return;
     }
-    const album = albums.find((a) => a.id === 36) || albums[0];
+    const album = albums.find((a) => a.id === 108) || albums[0];
     setPreview({ status: "loading", progress: 0 });
     const source = await findPreview(album);
     if (!source) {
       // nothing to play for this album: fall back to its page, where the tracklist lives
       setPreview({ status: "idle", progress: 0 });
-      navigate(`/album/${album?.id || 36}`);
+      navigate(`/album/${album?.id || 108}`);
       return;
     }
     // only one preview at a time across the site
@@ -73,7 +73,7 @@ export const Hero = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
   useEffect(() => () => audioRef.current?.pause(), []);
-  const featuredAlbum = albums.find(album => album.id === 36) || albums[0];
+  const featuredAlbum = albums.find(album => album.id === 108) || albums[0];
 
   const getCoverImage = (album) => {
     if (!album) return null;
@@ -109,8 +109,8 @@ export const Hero = () => {
                 {t.heroTag}
               </p>
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-serif font-bold leading-tight animate-fade-in" style={{ animationDelay: "0.1s" }}>
-                {t.heroNew} <br />KEN CARSON -
-                <span className="text-gradient block">XPERIMENT</span>
+                {t.heroNew} <br />PLAYBOI CARTI -
+                <span className="text-gradient block">MUSIC - SORRY 4 DA WAIT</span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-md animate-fade-in" style={{ animationDelay: "0.2s" }}>
                 {t.heroDesc}
@@ -118,8 +118,8 @@ export const Hero = () => {
             </div>
 
             <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-              <Button size="lg" className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90 px-8">
-                <Link to="/album/36">{t.shopNow}</Link>
+              <Button size="lg" variant="destructive" className="gap-2 px-8">
+                <Link to="/album/108">{t.shopNow}</Link>
                 <ArrowRight className="w-4 h-4" />
               </Button>
               <Button
@@ -144,15 +144,15 @@ export const Hero = () => {
 
             <div className="flex gap-8 sm:gap-12 pt-8 animate-fade-in" style={{ animationDelay: "0.4s" }}>
               <div>
-                <p className="text-3xl font-serif font-bold text-gradient">100+</p>
+                <p className="text-3xl font-serif font-bold text-destructive">100+</p>
                 <p className="text-sm text-muted-foreground">{t.statVinyl}</p>
               </div>
               <div>
-                <p className="text-3xl font-serif font-bold text-gradient">50+</p>
+                <p className="text-3xl font-serif font-bold text-destructive">50+</p>
                 <p className="text-sm text-muted-foreground">{t.statRare}</p>
               </div>
               <div>
-                <p className="text-3xl font-serif font-bold text-gradient">10+</p>
+                <p className="text-3xl font-serif font-bold text-destructive">10+</p>
                 <p className="text-sm text-muted-foreground">{t.statGenres}</p>
               </div>
             </div>

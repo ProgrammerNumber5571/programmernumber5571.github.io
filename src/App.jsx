@@ -1,6 +1,6 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect } from 'react';
 import { applyStoredUserSettings } from './components/applyUserSettings.js';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
 import { Toaster } from "./components/ui/Toaster";
 import { GlassFilter } from "./components/ui/GlassLayer";
 import { Toaster as Sonner } from "./components/ui/Sonner";
@@ -32,6 +32,19 @@ const AccountPage = lazy(() => import('./components/AccountPage'));
 const InfoPage = lazy(() => import('./components/pages/InfoPage'));
 
 const queryClient = new QueryClient();
+
+// A newly opened page (tapping an album, a menu link…) starts at its top instead of keeping the previous
+// page's scroll position. Back/forward ("POP") is left alone, so returning to a list keeps your place.
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  const navigationType = useNavigationType();
+  useLayoutEffect(() => {
+    if (navigationType !== 'POP') window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    // only a change of page matters, not of the navigation type or the query string
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+  return null;
+};
 
 const PageLoader = () => {
   const { t } = useLanguage();
@@ -91,6 +104,7 @@ function App() {
                 <Toaster />
                 <Sonner />
                 <Router>
+                  <ScrollToTop />
                   <ErrorBoundary>
                   <Suspense fallback={<PageLoader />}>
                     <Routes>

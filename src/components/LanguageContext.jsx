@@ -57,7 +57,7 @@ const translations = {
     // Hero
     heroTag: "Premium Vinyl Kolleksiyası",
     heroNew: "YENI!",
-    heroDesc: '"xperiment" amerikalı reper və müğənni Ken Carsonun yeni studiya albomudur.',
+    heroDesc: '"MUSIC - SORRY 4 DA WAIT" — Playboi Carti MUSIC-in yeni lüks versiyası ilə geri döndü.',
     shopNow: "İndi alış-veriş edin",
     listenPreview: "Dinləmə Önizləməsi",
     pausePreview: "Dayandır",
@@ -354,7 +354,7 @@ const translations = {
     // Hero
     heroTag: "Premium Vinyl Collection",
     heroNew: "NEW!",
-    heroDesc: '"xperiment" is the new studio album by American rapper and singer Ken Carson.',
+    heroDesc: '"MUSIC - SORRY 4 DA WAIT" — Playboi Carti has returned with a new deluxe version of MUSIC.',
     shopNow: "Shop Now",
     listenPreview: "Listen Preview",
     pausePreview: "Pause",
@@ -651,7 +651,7 @@ const translations = {
     // Hero
     heroTag: "Премиальная коллекция винила",
     heroNew: "НОВИНКА!",
-    heroDesc: "«xperiment» — новый студийный альбом американского рэпера и певца Ken Carson.",
+    heroDesc: "«MUSIC - SORRY 4 DA WAIT» — Playboi Carti вернулся с новой делюкс версий MUSIC.",
     shopNow: "Купить сейчас",
     listenPreview: "Прослушать превью",
     pausePreview: "Пауза",
